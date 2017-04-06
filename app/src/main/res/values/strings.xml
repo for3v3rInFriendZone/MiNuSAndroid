@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MiNuS</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="michael_jordan">Michael Jordan</string>
+    <string name="user_email">mickyJordan63@gmail.com</string>
+    <string name="dnevni_pregled">Dnevni pregled</string>
+    <string name="mesecni_pregled">Mesečni pregled</string>
+    <string name="godsnji_pregled">Godišnji pregled</string>
+    <string name="izvetaj_potrosnje">Izveštaj potrošnje</string>
+    <string name="podesavanja">Podešavanja</string>
+    <string name="odjavi_se">Odjavi se</string>
+</resources>
