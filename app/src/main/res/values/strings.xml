@@ -13,4 +13,6 @@
     <string name="izvetaj_potrosnje">Izveštaj potrošnje</string>
     <string name="podesavanja">Podešavanja</string>
     <string name="odjavi_se">Odjavi se</string>
+    <string name="uloguj_se">Uloguj se</string>
+    <string name="registruj_se">Registruj se</string>
 </resources>

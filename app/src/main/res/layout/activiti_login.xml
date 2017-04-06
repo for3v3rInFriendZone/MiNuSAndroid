@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/login_background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="60dp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/minus_logo" />
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Korisničko ime"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="40dp"
+        android:layout_below="@+id/logoView"
+        android:width="230dp"/>
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Lozinka"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/usernameInput"
+        android:width="230dp"/>
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/uloguj_se"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/passwordInput" />
+
+
+    <TextView
+        android:id="@+id/nisiClan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nisi clan?"
+        android:textColor="@color/primary_text"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/loginButton"
+        android:layout_marginRight="10dp"
+        android:paddingTop="60dp"/>
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/registruj_se"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/nisiClan"/>
+
+
+
+</RelativeLayout>
