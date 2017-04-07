@@ -1,5 +1,6 @@
-package android.com.minus;
+package android.com.minus.activities;
 
+import android.com.minus.R;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;

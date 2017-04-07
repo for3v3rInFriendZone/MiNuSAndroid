@@ -15,4 +15,11 @@
     <string name="odjavi_se">Odjavi se</string>
     <string name="uloguj_se">Uloguj se</string>
     <string name="registruj_se">Registruj se</string>
+    <string name="registruj_se_besplatno">Registruj se besplatno.</string>
+    <string name="vase_ime">Vaše ime</string>
+    <string name="vase_prezime">Vaše prezime</string>
+    <string name="vase_korisnicko_ime">Vaše korisniško ime</string>
+    <string name="lozinka_reg">Lozinka (barem 7 karaktera)</string>
+    <string name="email_reg">Vaša e-mail adresa</string>
+    <string name="title_activity_register_activiti">RegisterActiviti</string>
 </resources>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/login_background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/minus_logo" />
+
+    <TextView
+        android:id="@+id/registrujSe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registruj_se_besplatno"
+        android:textColor="@color/primary_text"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/logoView"
+        android:paddingTop="5dp"/>
+
+    <EditText
+        android:id="@+id/nameRegInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/vase_ime"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
+        android:layout_below="@+id/registrujSe"
+        android:width="230dp"/>
+
+    <EditText
+        android:id="@+id/surnameRegInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/vase_prezime"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/nameRegInput"
+        android:width="230dp"/>
+
+    <EditText
+        android:id="@+id/usernameRegInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/vase_korisnicko_ime"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/surnameRegInput"
+        android:width="230dp"/>
+
+    <EditText
+        android:id="@+id/passwordRegInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/lozinka_reg"
+        android:width="230dp"
+        android:layout_below="@+id/usernameRegInput"
+        android:layout_alignLeft="@+id/logoView"
+        android:layout_alignStart="@+id/logoView" />
+
+    <EditText
+        android:id="@+id/emailRegInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/email_reg"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/passwordRegInput"
+        android:width="230dp"/>
+
+    <Button
+        android:id="@+id/regButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registruj_se"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/emailRegInput" />
+
+
+
+
+</RelativeLayout>
