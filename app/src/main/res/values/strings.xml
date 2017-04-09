@@ -20,6 +20,6 @@
     <string name="vase_prezime">Vaše prezime</string>
     <string name="vase_korisnicko_ime">Vaše korisničko ime</string>
     <string name="lozinka_reg">Lozinka (barem 7 karaktera)</string>
-    <string name="email_reg">Vaša e-mail adresa</string>
+    <string name="email_reg">Vaša e_mail adresa</string>
     <string name="title_activity_register_activiti">RegisterActiviti</string>
 </resources>
