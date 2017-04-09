@@ -13,7 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activiti_login);
+        setContentView(R.layout.activity_login);
 
         Button login = (Button) findViewById(R.id.loginButton);
         Button regButton = (Button) findViewById(R.id.register);
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void toRegPage(View v) {
-        Intent i = new Intent(this, RegisterActiviti.class);
+        Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
     }
 }

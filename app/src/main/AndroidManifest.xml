@@ -24,9 +24,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RegisterActiviti"
+            android:name=".activities.RegisterActivity"
             android:label="@string/title_activity_register_activiti"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activities.BillDetailActivity"
+            android:label="@string/title_activity_register_activiti"
+            android:theme="@style/AppTheme">
+
+        </activity>
     </application>
 
 </manifest>

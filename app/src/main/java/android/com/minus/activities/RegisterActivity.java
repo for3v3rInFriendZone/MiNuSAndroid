@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class RegisterActiviti extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activiti_register);
+        setContentView(R.layout.activity_register);
 
         Button regButton = (Button)findViewById(R.id.regButton);
 
