@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/vase_ime"
         android:layout_centerHorizontal="true"
-        android:paddingTop="20dp"
+        android:paddingTop="35dp"
         android:layout_below="@+id/registrujSe"
         android:width="230dp"/>
 
@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:hint="@string/vase_prezime"
         android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
         android:layout_below="@+id/nameRegInput"
         android:width="230dp"/>
 
@@ -54,7 +53,6 @@
         android:layout_height="wrap_content"
         android:hint="@string/vase_korisnicko_ime"
         android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
         android:layout_below="@+id/surnameRegInput"
         android:width="230dp"/>
 
@@ -63,10 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/lozinka_reg"
+        android:layout_centerHorizontal="true"
         android:width="230dp"
-        android:layout_below="@+id/usernameRegInput"
-        android:layout_alignLeft="@+id/logoView"
-        android:layout_alignStart="@+id/logoView" />
+        android:layout_below="@+id/usernameRegInput" />
 
     <EditText
         android:id="@+id/emailRegInput"
@@ -74,7 +71,6 @@
         android:layout_height="wrap_content"
         android:hint="@string/email_reg"
         android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
         android:layout_below="@+id/passwordRegInput"
         android:width="230dp"/>
 
