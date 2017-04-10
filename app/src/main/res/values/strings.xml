@@ -26,4 +26,6 @@
     <string name="kolicina">Količina</string>
     <string name="cena">Cena</string>
     <string name="ukupna_cena">Ukupna cena:</string>
+    <string name="dobrodosli">Dobrodošli</string>
+    <string name="ucitavanje">Učitavanje u toku...</string>
 </resources>
