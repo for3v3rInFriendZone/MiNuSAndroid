@@ -19,7 +19,7 @@ import android.widget.AdapterView;
 import fragments.BilslListFragment;
 import model.Bill;
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BilslListFragment.OnItemSelectedListener {
 
     @Override
@@ -27,6 +27,8 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Lista računa");
+        setSupportActionBar(toolbar);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
