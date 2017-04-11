@@ -77,6 +77,89 @@
         android:layout_below="@id/red"
         android:paddingBottom="10dp"/>
 
+    <Button
+        android:id="@+id/dodajArtikal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dodaj_artikal"
+        android:layout_below="@id/odabraniDatum"
+        android:onClick="newItemView"
+        android:layout_centerHorizontal="true"/>
 
+    <TableLayout
+        android:id="@+id/tabela_artikala"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:layout_below="@id/dodajArtikal"
+        android:layout_marginLeft="20dp">
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal">
 
+            <TextView
+                android:id="@+id/textView9"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="@string/artikal"
+                android:layout_span="3" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="@string/kolicina"
+                android:layout_span="1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="@string/cena"
+                android:layout_span="2" />
+        </TableRow>
+    </TableLayout>
+
+    <TableRow
+        android:id="@+id/ukupnaCenaRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tabela_artikala">
+
+        <TextView
+            android:id="@+id/ukupno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ukupna_cena"
+            android:textColor="@color/primary_text"
+            android:paddingLeft="68dp"
+            android:textSize="17dp"
+            android:paddingTop="10dp"
+            android:layout_below="@id/tabela_artikala"
+            android:paddingRight="10dp"/>
+
+        <TextView
+            android:id="@+id/ukupno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:textSize="17dp"
+            android:paddingTop="10dp"
+            android:layout_below="@id/tabela_artikala"
+            android:background="@drawable/table_border"
+            android:text="dasds"
+            android:paddingBottom="10dp"/>
+    </TableRow>
+
+    <Button
+        android:id="@+id/dodajRacun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dodaj_racun"
+        android:onClick="newItemView"
+        android:layout_below="@+id/ukupnaCenaRed"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

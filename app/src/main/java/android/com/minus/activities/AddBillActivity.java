@@ -1,6 +1,7 @@
 package android.com.minus.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.com.minus.R;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -36,6 +38,7 @@ public class AddBillActivity extends AppCompatActivity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         showDate(year, month+1, day);
+
     }
 
     public void showDatePickerDialog(View v) {
@@ -48,4 +51,8 @@ public class AddBillActivity extends AppCompatActivity {
                 .append(month).append("/").append(year));
     }
 
+    public void newItemView(View v){
+        Intent i = new Intent(this,AddIdemActivity.class);
+        startActivity(i);
+    }
 }

@@ -43,7 +43,7 @@
         android:id="@+id/kolicina_broj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_below="@id/naziv_artikla"
         android:layout_centerHorizontal="true"/>
 
