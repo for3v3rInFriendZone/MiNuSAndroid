@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/login_background"
+    tools:context="android.com.minus.activities.AddBillActivity">
+
+    <TextView
+        android:id="@+id/novi_racun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/novi_racun"
+        android:textColor="@color/primary_text"
+        android:layout_centerHorizontal="true"
+        android:textSize="35dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"/>
+
+    <EditText
+        android:id="@+id/naziv_racun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/novi_racun"
+        android:hint="@string/naziv_racun"
+        android:layout_centerHorizontal="true"
+        android:width="230dp"
+        android:paddingBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/mesto_kupovine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/naziv_racun"
+        android:hint="@string/mesto_kupovine"
+        android:layout_centerHorizontal="true"
+        android:width="230dp"
+        android:paddingBottom="10dp"/>
+
+    <TableRow
+        android:id="@+id/red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mesto_kupovine">
+
+        <TextView
+            android:id="@+id/datum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/datum"
+            android:textColor="@color/primary_text"
+            android:paddingLeft="68dp"
+            android:textSize="17dp"
+            android:paddingTop="10dp"
+            android:layout_below="@id/mesto_kupovine"
+            android:paddingRight="10dp"/>
+
+        <Button
+            android:id="@+id/postaviDatum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mesto_kupovine"
+            android:text="Postavi datum"
+            android:layout_alignLeft="@id/datum"
+            android:onClick="showDatePickerDialog"/>
+
+    </TableRow>
+
+    <TextView
+        android:id="@+id/odabraniDatum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date_selected"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/red"
+        android:paddingBottom="10dp"/>
+
+
+
+</RelativeLayout>

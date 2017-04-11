@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import fragments.BilslListFragment;
 import model.Bill;
@@ -39,6 +40,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton newBill = (FloatingActionButton) findViewById(R.id.fab);
+        newBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newBillView(v);
+            }
+        });
     }
 
     @Override
@@ -96,4 +105,10 @@ public class MainActivity extends AppCompatActivity
         i.putExtra("item", b);
         startActivity(i);
     }
+
+    public void newBillView(View v){
+        Intent i = new Intent(this,AddBillActivity.class);
+        startActivity(i);
+    }
+
 }
