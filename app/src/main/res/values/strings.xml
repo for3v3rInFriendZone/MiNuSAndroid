@@ -29,4 +29,5 @@
     <string name="dobrodosli">Dobrodošli</string>
     <string name="ucitavanje">Učitavanje u toku...</string>
     <string name="title_item_detail">Item detail</string>
+    <string name="datum_kupovine">Datum kupovine:</string>
 </resources>

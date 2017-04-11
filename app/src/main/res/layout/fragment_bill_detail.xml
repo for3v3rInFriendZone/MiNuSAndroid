@@ -1,17 +1,93 @@
 <RelativeLayout
-    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical">
 
     <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/billIssuer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
+        android:textSize="20dp"
         android:text="Bill issuer"
         android:textIsSelectable="true"
         android:textColor="@color/primary_text"/>
+
+    <TextView
+        android:id="@+id/billLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="15dp"
+        android:text="Bill location"
+        android:textIsSelectable="true"
+        android:layout_below="@+id/billIssuer"
+        android:textColor="@color/primary_text"/>
+
+    <View
+        android:id="@+id/hr1"
+        android:layout_width="260dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/billLocation"
+        android:background="#212121"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="15dp"
+        android:text="@string/ukupna_cena"
+        android:layout_below="@+id/hr1"
+        android:textColor="@color/primary_text"/>
+
+    <TextView
+        android:id="@+id/billSumPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="676"
+        android:textColor="@color/primary_text"
+        android:paddingLeft="140dp"
+        android:layout_below="@+id/hr1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"/>
+
+    <View
+        android:id="@+id/hr2"
+        android:layout_width="260dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/billSumPrice"
+        android:background="#212121"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="@string/datum_kupovine"
+        android:textColor="@color/primary_text"
+        android:layout_below="@+id/hr2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/billDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="Neki datum"
+        android:textColor="@color/primary_text"
+        android:paddingLeft="140dp"
+        android:layout_below="@+id/hr2"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="32dp"/>
+
 </RelativeLayout>

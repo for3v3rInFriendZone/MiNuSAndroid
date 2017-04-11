@@ -29,6 +29,24 @@ public class Bill implements Serializable {
         items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
         items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
         items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
+        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
+        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
+        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
+        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
+        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
+        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
+        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
+        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
+        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
+        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
+        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
+        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
+        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
+        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
+        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
+        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
+        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
+        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
 
         return items;
     }
