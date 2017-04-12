@@ -39,6 +39,31 @@ public class AddBillActivity extends AppCompatActivity {
 
         showDate(year, month+1, day);
 
+        Button addItem = (Button) findViewById(R.id.dodajArtikal);
+        Button addBill = (Button) findViewById(R.id.dodajRacun);
+        Button datePicker = (Button) findViewById(R.id.postaviDatum);
+
+        addItem.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                newItemView(v);
+            }
+        });
+
+        addBill.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        datePicker.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
+
     }
 
     public void showDatePickerDialog(View v) {

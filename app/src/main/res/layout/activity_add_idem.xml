@@ -1,77 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/login_background"
-    tools:context="android.com.minus.activities.AddIdemActivity">
+    android:fillViewport="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/login_background"
+        tools:context="android.com.minus.activities.AddIdemActivity">
 
-    <TextView
-        android:id="@+id/novi_artikal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/novi_artikl"
-        android:textColor="@color/primary_text"
-        android:layout_centerHorizontal="true"
-        android:textSize="35dp"
-        android:paddingBottom="50dp"
-        android:paddingTop="40dp"/>
+        <TextView
+            android:id="@+id/novi_artikal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/novi_artikl"
+            android:textColor="@color/primary_text"
+            android:layout_centerHorizontal="true"
+            android:textSize="35dp"
+            android:paddingBottom="50dp"
+            android:paddingTop="40dp"/>
 
-    <EditText
-        android:id="@+id/naziv_artikla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/novi_artikal"
-        android:hint="@string/naziv_artikla"
-        android:layout_centerHorizontal="true"
-        android:width="230dp"
-        android:paddingBottom="30dp"/>
+        <EditText
+            android:id="@+id/naziv_artikla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/novi_artikal"
+            android:hint="@string/naziv_artikla"
+            android:layout_centerHorizontal="true"
+            android:width="230dp"
+            android:paddingBottom="30dp"/>
 
-    <TextView
-        android:id="@+id/kolicina"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/naziv_artikla"
-        android:textColor="@color/primary_text"
-        android:text="@string/kolicina_artikla"
-        android:textSize="17dp"
-        android:paddingLeft="68dp"/>
+        <TextView
+            android:id="@+id/kolicina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/naziv_artikla"
+            android:textColor="@color/primary_text"
+            android:text="@string/kolicina_artikla"
+            android:textSize="17dp"
+            android:paddingLeft="68dp"/>
 
-    <NumberPicker
-        android:id="@+id/kolicina_broj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/naziv_artikla"
-        android:layout_centerHorizontal="true"/>
-
-    <EditText
-        android:id="@+id/cena_artikla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/cena_artikla"
-        android:layout_centerHorizontal="true"
-        android:width="230dp"
-        android:paddingBottom="30dp"
-        android:layout_below="@+id/kolicina_broj"/>
-
-    <Button
-        android:id="@+id/dodajButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cena_artikla"
-        android:text="@string/dodaj"
-        android:layout_alignParentLeft="true"/>
+        <NumberPicker
+            android:id="@+id/kolicina_broj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/naziv_artikla"
+            android:layout_centerHorizontal="true"/>
 
 
-    <Button
-        android:id="@+id/ponistiButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cena_artikla"
-        android:text="@string/ponisti"
-        android:layout_alignParentRight="true"/>
+        <EditText
+            android:id="@+id/cena_artikla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/cena_artikla"
+            android:layout_centerHorizontal="true"
+            android:width="230dp"
+            android:paddingBottom="30dp"
+            android:layout_below="@+id/kolicina_broj"/>
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cena_artikla"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/dodajButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dodaj"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"/>
+
+
+            <Button
+                android:id="@+id/ponistiButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ponisti"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>
