@@ -43,6 +43,7 @@ public class BillDetailFragment extends Fragment {
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(bill.getName());
+                int a = 5;
             }
         }
     }
