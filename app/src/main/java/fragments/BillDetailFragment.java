@@ -1,14 +1,25 @@
 package fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.com.minus.R;
+import android.com.minus.activities.MainActivity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import model.Bill;
 
@@ -16,6 +27,10 @@ import model.Bill;
 public class BillDetailFragment extends Fragment {
 
     private Bill bill;
+    private TextView titleOfToolbar;
+    private Button deleteButton;
+    private AlertDialog.Builder dialog;
+    private Activity activity;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -39,12 +54,22 @@ public class BillDetailFragment extends Fragment {
                 }
             }
 
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(bill.getName());
-                int a = 5;
+            activity = this.getActivity();
+            titleOfToolbar = (TextView) activity.findViewById(R.id.toolbar_title);
+            deleteButton = (Button) activity.findViewById(R.id.deleteBill);
+           // CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            if (titleOfToolbar != null) {
+               // appBarLayout.setTitle(bill.getName());
+                titleOfToolbar.setText(bill.getName());
             }
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialogOpen(getContext());
+                }
+            });
+
         }
     }
 
@@ -62,6 +87,31 @@ public class BillDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    public void alertDialogOpen(Context context) {
+        dialog = new AlertDialog.Builder(context);
+        dialog.setMessage("Da li ste sigurni da želite da obrišete ovaj račun?");
+        dialog.setCancelable(true);
+
+        dialog.setPositiveButton(
+                "Da",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        NavUtils.navigateUpTo(activity, new Intent(activity, MainActivity.class));
+                    }
+                });
+
+        dialog.setNegativeButton(
+                "Ne",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = dialog.create();
+        alert11.show();
     }
 
 
