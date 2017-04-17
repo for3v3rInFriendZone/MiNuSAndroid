@@ -30,4 +30,5 @@
     <string name="ucitavanje">Učitavanje u toku...</string>
     <string name="title_item_detail">Item detail</string>
     <string name="datum_kupovine">Datum kupovine:</string>
+    <string name="pretraga_racuna">Pretraga računa...</string>
 </resources>

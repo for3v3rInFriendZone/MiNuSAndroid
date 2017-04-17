@@ -1,7 +1,6 @@
 package android.com.minus.activities;
 
 import android.com.minus.R;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,12 +17,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
 import model.Bill;
 import util.SimpleItemRecyclerViewAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private SearchView searchInput;
+    private final SimpleItemRecyclerViewAdapter adapter = new SimpleItemRecyclerViewAdapter(Bill.getItems());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,9 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Lista računa");
         setSupportActionBar(toolbar);
 
+        searchInput = (SearchView) findViewById(R.id.search_input);
         View recyclerView = findViewById(R.id.item_list);
+
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
@@ -46,6 +50,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        searchInput.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filter(newText);
+                return true;
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

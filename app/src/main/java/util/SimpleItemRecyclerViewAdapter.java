@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fragments.BillDetailFragment;
@@ -16,10 +17,12 @@ import model.Bill;
 
 public class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    private final List<Bill> mValues;
+    private List<Bill> mValues;
+    private List<Bill> mValuesCopy;
 
     public SimpleItemRecyclerViewAdapter(List<Bill> items) {
         this.mValues = items;
+        this.mValuesCopy = new ArrayList<Bill>(mValues);
     }
 
     @Override
@@ -53,4 +56,23 @@ public class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHold
     public int getItemCount() {
         return mValues.size();
     }
+
+    public void filter(String text) {
+
+        mValues.clear();
+        if(text.isEmpty()){
+            mValues.addAll(mValuesCopy);
+        } else{
+            text = text.toLowerCase();
+            for(Bill item: mValuesCopy){
+                if(item.getName().toLowerCase().contains(text) || item.getIssuer().toLowerCase().contains(text)){
+                    mValues.add(item);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+
 }
