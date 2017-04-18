@@ -13,11 +13,15 @@ import android.view.View;
 import android.com.minus.R;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import adapter.BillItemsAdapter;
 import fragments.DatePickerFragment;
+import model.Item;
 
 public class AddBillActivity extends AppCompatActivity {
 
@@ -63,6 +67,12 @@ public class AddBillActivity extends AppCompatActivity {
                 showDatePickerDialog(v);
             }
         });
+
+        ArrayList<Item> items = new ArrayList<Item>();
+        items = Item.getItems();
+        ListView listView = (ListView) findViewById(R.id.listViewItems);
+        BillItemsAdapter billItemsAdapter = new BillItemsAdapter(items,this);
+        listView.setAdapter(billItemsAdapter);
 
     }
 

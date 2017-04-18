@@ -14,11 +14,22 @@ public class Item implements Serializable{
     private int quantity;
     private double price;
 
-    public static List<Item> getItems(){
-        List<Item> items = new ArrayList<Item>();
+    public static ArrayList<Item> getItems(){
+        ArrayList<Item> items = new ArrayList<Item>();
 
         items.add(new Item("Kafa", 1, 120.00));
         items.add(new Item("Sok", 2, 220.00));
+        items.add(new Item("Cokolada", 2, 430.00));
+        items.add(new Item("Voda", 4, 523.00));
+        items.add(new Item("Mis", 2, 220.00));
+        items.add(new Item("Knjiga", 2, 220.00));
+        items.add(new Item("Torba", 2, 220.00));
+        items.add(new Item("Dezodorans", 2, 220.00));
+        items.add(new Item("Solja", 2, 220.00));
+        items.add(new Item("Sok od breske", 2, 220.00));
+        items.add(new Item("Mlevena plazma", 2, 220.00));
+        items.add(new Item("Orbit ekukaliptus", 2, 220.00));
+
 
         return items;
     }
