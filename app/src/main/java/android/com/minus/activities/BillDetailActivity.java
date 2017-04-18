@@ -1,6 +1,10 @@
 package android.com.minus.activities;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.com.minus.R;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -14,6 +18,7 @@ import fragments.BillDetailFragment;
 
 public class BillDetailActivity extends AppCompatActivity {
 
+    private AlertDialog.Builder dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +47,46 @@ public class BillDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.delete_button, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_button:
+                alertDialogOpen(BillDetailActivity.this);
+                break;
+        }
+        return true;
+    }
+
+    private void alertDialogOpen(Context applicationContext) {
+        dialog = new AlertDialog.Builder(applicationContext);
+        dialog.setMessage("Da li ste sigurni da želite da obrišete ovaj račun?");
+        dialog.setCancelable(true);
+
+        dialog.setPositiveButton(
+                "Da",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        NavUtils.navigateUpTo(BillDetailActivity.this, new Intent(BillDetailActivity.this, MainActivity.class));
+                    }
+                });
+
+        dialog.setNegativeButton(
+                "Ne",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = dialog.create();
+        alert11.show();
+    }
 
 }

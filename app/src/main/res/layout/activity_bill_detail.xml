@@ -37,13 +37,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/deleteBill"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:background="@android:drawable/ic_menu_delete" />
-
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>

@@ -14,6 +14,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,7 +30,6 @@ public class BillDetailFragment extends Fragment {
 
     private Bill bill;
     private TextView titleOfToolbar;
-    private Button deleteButton;
     private AlertDialog.Builder dialog;
     private Activity activity;
 
@@ -56,19 +57,19 @@ public class BillDetailFragment extends Fragment {
 
             activity = this.getActivity();
             titleOfToolbar = (TextView) activity.findViewById(R.id.toolbar_title);
-            deleteButton = (Button) activity.findViewById(R.id.deleteBill);
+         //   deleteButton = (Button) activity.findViewById(R.id.deleteBill);
            // CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (titleOfToolbar != null) {
                // appBarLayout.setTitle(bill.getName());
                 titleOfToolbar.setText(bill.getName());
             }
 
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alertDialogOpen(getContext());
-                }
-            });
+          //  deleteButton.setOnClickListener(new View.OnClickListener() {
+         //       @Override
+          //      public void onClick(View v) {
+          //          alertDialogOpen(getContext());
+         //       }
+         //   });
 
         }
     }
@@ -113,6 +114,5 @@ public class BillDetailFragment extends Fragment {
         AlertDialog alert11 = dialog.create();
         alert11.show();
     }
-
 
 }
