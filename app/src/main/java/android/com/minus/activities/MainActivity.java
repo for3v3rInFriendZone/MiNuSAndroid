@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         searchInput = (SearchView) findViewById(R.id.search_input);
+        searchInput.setQueryHint("Pretraga računa...");
         View recyclerView = findViewById(R.id.item_list);
 
         assert recyclerView != null;
