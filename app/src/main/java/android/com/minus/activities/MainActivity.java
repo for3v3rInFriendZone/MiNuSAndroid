@@ -18,8 +18,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import model.Bill;
 import util.SimpleItemRecyclerViewAdapter;
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private SearchView searchInput;
+    private Toolbar toolbar;
     private final SimpleItemRecyclerViewAdapter adapter = new SimpleItemRecyclerViewAdapter(Bill.getItems());
 
     @Override
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Lista računa");
         setSupportActionBar(toolbar);
 
@@ -125,16 +126,24 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.day_report) {
+            adapter.filter("22.03.2017");
+            toolbar.setTitle("Dnevni pregled");
+            TextView dayPicker = (TextView) findViewById(R.id.day_picker_report);
+            dayPicker.setVisibility(View.VISIBLE);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.month_report) {
+            toolbar.setTitle("Mesečni pregled");
 
-        }  else if (id == R.id.nav_share) {
+        } else if (id == R.id.year_report) {
+            toolbar.setTitle("Godišnji pregled");
 
-        } else if (id == R.id.nav_send) {
+        }  else if (id == R.id.nav_settings) {
 
+        } else if (id == R.id.nav_logout) {
+
+        } else if(id == R.id.all_bills) {
+            toolbar.setTitle("Lista računa");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -143,7 +152,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void newBillView(View v){
-        Intent i = new Intent(this,AddBillActivity.class);
+        Intent i = new Intent(this, AddBillActivity.class);
+        startActivity(i);
+    }
+
+    public void monthReport() {
+        Intent i = new Intent(this, LoadingScreenActivity.class);
         startActivity(i);
     }
 
