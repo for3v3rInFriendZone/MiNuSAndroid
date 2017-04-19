@@ -34,15 +34,28 @@
             android:width="230dp"
             android:paddingBottom="10dp"/>
 
-        <EditText
-            android:id="@+id/mesto_kupovine"
+        <LinearLayout
+            android:id="@+id/mapLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/naziv_racun"
-            android:hint="@string/mesto_kupovine"
-            android:layout_centerHorizontal="true"
-            android:width="230dp"
-            android:paddingBottom="10dp"/>
+            android:layout_centerHorizontal="true">
+            <EditText
+                android:id="@+id/mesto_kupovine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/mesto_kupovine"
+                android:layout_centerHorizontal="true"
+                android:width="200dp"
+                android:paddingBottom="10dp"/>
+
+            <ImageButton
+                android:id="@+id/locationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/red"
@@ -51,7 +64,8 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:layout_marginTop="18dp"
-            android:layout_below="@+id/mesto_kupovine"
+            android:layout_marginBottom="18dp"
+            android:layout_below="@+id/mapLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
@@ -66,34 +80,31 @@
                 android:layout_below="@id/mesto_kupovine"
                 android:paddingRight="10dp"/>
 
-            <Button
+            <TextView
+                android:id="@+id/odabraniDatum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_selected"
+                android:paddingBottom="10dp"
+                android:layout_marginRight="5dp"/>
+
+            <ImageButton
                 android:id="@+id/postaviDatum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mesto_kupovine"
-                android:text="Postavi datum"
-                android:layout_alignLeft="@id/datum"/>
+                android:layout_marginTop="7dp"
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/odabraniDatum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date_selected"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/red"
-            android:paddingBottom="10dp"/>
 
         <Button
             android:id="@+id/dodajArtikal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dodaj_artikal"
-            android:layout_below="@id/odabraniDatum"
+            android:layout_below="@id/red"
             android:layout_centerHorizontal="true"/>
-
-
 
         <TableLayout
             android:id="@+id/tabela_artikala"
@@ -139,8 +150,6 @@
                 android:layout_below="@id/tableRow4">
             </ListView>
         </TableLayout>
-
-
 
         <LinearLayout
             android:id="@+id/ukupnaCenaRed"
@@ -204,8 +213,6 @@
                 android:layout_centerHorizontal="true"
                 />
         </LinearLayout>
-
-
 
     </RelativeLayout>
 </ScrollView>

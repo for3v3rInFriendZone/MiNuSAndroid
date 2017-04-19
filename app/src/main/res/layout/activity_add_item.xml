@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:background="@drawable/login_background"
-        tools:context="android.com.minus.activities.AddIdemActivity">
+        tools:context="android.com.minus.activities.AddItemActivity">
 
         <TextView
             android:id="@+id/novi_artikal"

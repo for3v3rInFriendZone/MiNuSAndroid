@@ -35,7 +35,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.AddIdemActivity"
+            android:name=".activities.AddItemActivity"
             android:label="@string/title_activity_add_idem"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

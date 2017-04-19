@@ -43,7 +43,7 @@
     <string name="novi_racun">Novi račun</string>
     <string name="naziv_racun">Naziv račun</string>
     <string name="mesto_kupovine">Mesto kupovine</string>
-    <string name="datum">Datum</string>
+    <string name="datum">Datum:</string>
     <string name="dodaj_artikal">Dodaj artikal</string>
     <string name="dodaj_racun">Dodaj račun</string>
     <string name="date_selected"></string>
