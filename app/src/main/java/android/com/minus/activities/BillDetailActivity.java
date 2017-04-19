@@ -60,6 +60,9 @@ public class BillDetailActivity extends AppCompatActivity {
             case R.id.delete_button:
                 alertDialogOpen(BillDetailActivity.this);
                 break;
+            case android.R.id.home:
+                NavUtils.navigateUpTo(BillDetailActivity.this, new Intent(BillDetailActivity.this, MainActivity.class));
+                break;
         }
         return true;
     }
