@@ -17,6 +17,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Button;
+
+import fragments.BilslListFragment;
 import model.Bill;
 import util.SimpleItemRecyclerViewAdapter;
 
@@ -72,6 +76,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton newBill = (FloatingActionButton) findViewById(R.id.fab);
+        newBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newBillView(v);
+            }
+        });
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -128,4 +140,18 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onItemSelected(Bill b) {
+
+        Intent i = new Intent(this, BillDetailActivity.class);
+        i.putExtra("item", b);
+        startActivity(i);
+    }
+
+    public void newBillView(View v){
+        Intent i = new Intent(this,AddBillActivity.class);
+        startActivity(i);
+    }
+
 }

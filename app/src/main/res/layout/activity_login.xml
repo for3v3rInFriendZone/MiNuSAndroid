@@ -47,17 +47,6 @@
         android:layout_below="@+id/passwordInput" />
 
 
-    <TextView
-        android:id="@+id/nisiClan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nisi clan?"
-        android:textColor="@color/primary_text"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/loginButton"
-        android:layout_marginRight="10dp"
-        android:paddingTop="60dp"/>
-
     <Button
         android:id="@+id/register"
         android:layout_width="wrap_content"
@@ -67,6 +56,16 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/nisiClan"/>
 
+    <TextView
+        android:id="@+id/nisiClan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nisi clan?"
+        android:textColor="@color/primary_text"
+        android:paddingTop="60dp"
+        android:layout_below="@+id/loginButton"
+        android:layout_alignRight="@+id/loginButton"
+        android:layout_alignEnd="@+id/loginButton" />
 
 
 </RelativeLayout>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/login_background"
+        tools:context="android.com.minus.activities.AddBillActivity">
+
+        <TextView
+            android:id="@+id/novi_racun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/novi_racun"
+            android:textColor="@color/primary_text"
+            android:layout_centerHorizontal="true"
+            android:textSize="35dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"/>
+
+        <EditText
+            android:id="@+id/naziv_racun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/novi_racun"
+            android:hint="@string/naziv_racun"
+            android:layout_centerHorizontal="true"
+            android:width="230dp"
+            android:paddingBottom="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/mapLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/naziv_racun"
+            android:layout_centerHorizontal="true">
+            <EditText
+                android:id="@+id/mesto_kupovine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/mesto_kupovine"
+                android:layout_centerHorizontal="true"
+                android:width="200dp"
+                android:paddingBottom="10dp"/>
+
+            <ImageButton
+                android:id="@+id/locationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:layout_below="@+id/mapLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/datum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/datum"
+                android:textColor="@color/primary_text"
+                android:textSize="17dp"
+                android:paddingTop="10dp"
+                android:layout_below="@id/mesto_kupovine"
+                android:paddingRight="10dp"/>
+
+            <TextView
+                android:id="@+id/odabraniDatum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_selected"
+                android:paddingBottom="10dp"
+                android:layout_marginRight="5dp"/>
+
+            <ImageButton
+                android:id="@+id/postaviDatum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mesto_kupovine"
+                android:layout_marginTop="7dp"
+                android:background="@android:color/transparent"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/dodajArtikal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dodaj_artikal"
+            android:layout_below="@id/red"
+            android:layout_centerHorizontal="true"/>
+
+        <TableLayout
+            android:id="@+id/tabela_artikala"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            android:layout_below="@id/dodajArtikal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="@string/artikal"
+                    android:layout_span="3" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:text="@string/kolicina"
+                    android:layout_span="1" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:text="@string/cena"
+                    android:layout_span="2" />
+            </TableRow>
+
+            <ListView
+                android:id="@+id/listViewItems"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_below="@id/tableRow4">
+            </ListView>
+        </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/ukupnaCenaRed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tabela_artikala"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/ukupno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ukupna_cena"
+                android:textColor="@color/primary_text"
+                android:textSize="17dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"/>
+
+            <TextView
+                android:id="@+id/ukupno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary_text"
+                android:textSize="17dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/table_border"
+                android:text="800.00"/>
+            <TextView
+                android:id="@+id/valuta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RSD"
+                android:textColor="@color/primary_text"
+                android:textSize="17dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ukupnaCenaRed"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal">
+            <Button
+                android:id="@+id/dodajRacun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dodaj_racun"
+                android:layout_centerHorizontal="true"/>
+            <Button
+                android:id="@+id/ponistiRacun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ponisti racun"
+                android:layout_centerHorizontal="true"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>
+
