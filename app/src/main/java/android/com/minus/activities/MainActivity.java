@@ -1,6 +1,7 @@
 package android.com.minus.activities;
 
 import android.com.minus.R;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
 
-import fragments.BilslListFragment;
 import model.Bill;
 import util.SimpleItemRecyclerViewAdapter;
 
@@ -139,14 +139,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onItemSelected(Bill b) {
-
-        Intent i = new Intent(this, BillDetailActivity.class);
-        i.putExtra("item", b);
-        startActivity(i);
     }
 
     public void newBillView(View v){
