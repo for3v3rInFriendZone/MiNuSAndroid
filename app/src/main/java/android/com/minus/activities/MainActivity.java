@@ -36,6 +36,7 @@ import java.util.Calendar;
 import fragments.DatePickerFragment;
 import model.Bill;
 import util.MonthYearPickerDialog;
+import util.SimpleDividerItemDecoration;
 import util.SimpleItemRecyclerViewAdapter;
 import util.YearPickerDialog;
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     private int year, month, day;
     private ImageButton datePicker;
     private FloatingActionButton newBill;
-    private View recyclerView;
+    private RecyclerView recyclerView;
     private BarChart chart;
 
     @Override
@@ -71,9 +72,12 @@ public class MainActivity extends AppCompatActivity
         datePicker = (ImageButton) findViewById(R.id.day_date);
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
         chart = (BarChart) findViewById(R.id.bar_chart);
+
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
-        recyclerView = findViewById(R.id.item_list);
+
+        recyclerView = (RecyclerView) findViewById(R.id.item_list);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
@@ -217,7 +221,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutParams(params);
 
 
-        BarData data = new BarData(getDataSet());
+        BarData data = new BarData(getMonthDataSet());
         chart.setData(data);
         chart.animateXY(2000, 2000);
         chart.invalidate();
@@ -235,34 +239,6 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private ArrayList<IBarDataSet> getDataSet() {
-        ArrayList<BarEntry> dataSets = new ArrayList<BarEntry>();
-
-        for (int i = (int) 0; i < 30; i++) {
-            float val = (float) (Math.random()*10);
-            dataSets.add(new BarEntry(i, val));
-        }
-
-        BarDataSet barDataSet1 = new BarDataSet(dataSets, "Brand 1");
-        barDataSet1.setColor(Color.rgb(0, 155, 0));
-
-        ArrayList<IBarDataSet> idataSets = new ArrayList<IBarDataSet>();
-        idataSets.add(barDataSet1);
-
-        return idataSets;
-    }
-
-    private ArrayList<String> getXAxisValues() {
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("JAN");
-        xAxis.add("FEB");
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAY");
-        xAxis.add("JUN");
-        return xAxis;
-    }
-
     private void yearReport() {
         toolbar.setTitle("Godišnji pregled");
         newBill.setVisibility(View.GONE);
@@ -271,6 +247,11 @@ public class MainActivity extends AppCompatActivity
         ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
         params.height= 400;
         recyclerView.setLayoutParams(params);
+
+        BarData data = new BarData(getYearDataSet());
+        chart.setData(data);
+        chart.animateXY(2000, 2000);
+        chart.invalidate();
 
         dayPicker.setVisibility(View.VISIBLE);
         datePicker.setVisibility(View.VISIBLE);
@@ -293,6 +274,40 @@ public class MainActivity extends AppCompatActivity
         ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
         params.height= RecyclerView.LayoutParams.WRAP_CONTENT;
         recyclerView.setLayoutParams(params);
+    }
+
+    private ArrayList<IBarDataSet> getMonthDataSet() {
+        ArrayList<BarEntry> dataSets = new ArrayList<BarEntry>();
+
+        for (int i = (int) 0; i < 30; i++) {
+            float val = (float) (Math.random()*100);
+            dataSets.add(new BarEntry(i, val));
+        }
+
+        BarDataSet barDataSet1 = new BarDataSet(dataSets, "Vrednosti cena");
+        barDataSet1.setColor(Color.rgb(0, 155, 0));
+
+        ArrayList<IBarDataSet> idataSets = new ArrayList<IBarDataSet>();
+        idataSets.add(barDataSet1);
+
+        return idataSets;
+    }
+
+    private ArrayList<IBarDataSet> getYearDataSet() {
+        ArrayList<BarEntry> dataSets = new ArrayList<BarEntry>();
+
+        for (int i = (int) 0; i < 12; i++) {
+            float val = (float) (Math.random()*1000);
+            dataSets.add(new BarEntry(i, val));
+        }
+
+        BarDataSet barDataSet1 = new BarDataSet(dataSets, "Vrednosti cena");
+        barDataSet1.setColor(Color.rgb(0, 155, 0));
+
+        ArrayList<IBarDataSet> idataSets = new ArrayList<IBarDataSet>();
+        idataSets.add(barDataSet1);
+
+        return idataSets;
     }
 
     public void showDatePickerDialog() {
