@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         }  else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
+            logout_action();
 
         } else if(id == R.id.all_bills) {
             all_bills();
@@ -190,6 +191,11 @@ public class MainActivity extends AppCompatActivity
 
     private void newBillView(View v){
         Intent i = new Intent(this, AddBillActivity.class);
+        startActivity(i);
+    }
+
+    private void logout_action() {
+        Intent i = new Intent(this, LoadingScreenActivity.class);
         startActivity(i);
     }
 
