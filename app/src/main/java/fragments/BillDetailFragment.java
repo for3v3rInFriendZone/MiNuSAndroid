@@ -3,6 +3,8 @@ package fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.com.minus.R;
+import android.com.minus.activities.AddBillActivity;
+import android.com.minus.activities.BillDetailActivity;
 import android.com.minus.activities.MainActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,11 +21,16 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
+import adapter.BillItemsAdapter;
 import model.Bill;
+import model.Item;
 
 
 public class BillDetailFragment extends Fragment {
@@ -57,20 +64,10 @@ public class BillDetailFragment extends Fragment {
 
             activity = this.getActivity();
             titleOfToolbar = (TextView) activity.findViewById(R.id.toolbar_title);
-         //   deleteButton = (Button) activity.findViewById(R.id.deleteBill);
-           // CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (titleOfToolbar != null) {
-               // appBarLayout.setTitle(bill.getName());
+
                 titleOfToolbar.setText(bill.getName());
             }
-
-          //  deleteButton.setOnClickListener(new View.OnClickListener() {
-         //       @Override
-          //      public void onClick(View v) {
-          //          alertDialogOpen(getContext());
-         //       }
-         //   });
-
         }
     }
 
@@ -85,34 +82,15 @@ public class BillDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.billLocation)).setText(bill.getLocation());
             ((TextView) rootView.findViewById(R.id.billSumPrice)).setText(bill.getPrice().toString());
             ((TextView) rootView.findViewById(R.id.billDate)).setText(bill.getDate());
+
+            ArrayList<Item> items = new ArrayList<Item>();
+            items = Item.getItems();
+            ListView listView = (ListView) rootView.findViewById(R.id.listViewItemsDetail);
+            BillItemsAdapter billItemsAdapter = new BillItemsAdapter(items, activity);
+            listView.setAdapter(billItemsAdapter);
         }
 
         return rootView;
-    }
-
-    public void alertDialogOpen(Context context) {
-        dialog = new AlertDialog.Builder(context);
-        dialog.setMessage("Da li ste sigurni da želite da obrišete ovaj račun?");
-        dialog.setCancelable(true);
-
-        dialog.setPositiveButton(
-                "Da",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        NavUtils.navigateUpTo(activity, new Intent(activity, MainActivity.class));
-                    }
-                });
-
-        dialog.setNegativeButton(
-                "Ne",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = dialog.create();
-        alert11.show();
     }
 
 }

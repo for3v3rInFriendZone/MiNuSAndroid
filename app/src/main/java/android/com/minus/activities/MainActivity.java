@@ -39,6 +39,7 @@ import java.util.Calendar;
 import fragments.DatePickerFragment;
 import model.Bill;
 import util.MonthYearPickerDialog;
+import util.SimpleDividerItemDecoration;
 import util.SimpleItemRecyclerViewAdapter;
 import util.YearPickerDialog;
 
@@ -53,8 +54,9 @@ public class MainActivity extends AppCompatActivity
     private int year, month, day;
     private ImageButton datePicker;
     private FloatingActionButton newBill;
-    private View recyclerView;
+    private RecyclerView recyclerView;
     private BarChart mChart;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +76,13 @@ public class MainActivity extends AppCompatActivity
         datePicker = (ImageButton) findViewById(R.id.day_date);
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
         mChart = (BarChart) findViewById(R.id.bar_chart);
+
+
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
-        recyclerView = findViewById(R.id.item_list);
+
+        recyclerView = (RecyclerView) findViewById(R.id.item_list);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
@@ -219,8 +225,6 @@ public class MainActivity extends AppCompatActivity
         params.height= 400;
         recyclerView.setLayoutParams(params);
 
-
-
         showDate(month+1, year);
 
         dayPicker.setVisibility(View.VISIBLE);
@@ -304,6 +308,7 @@ public class MainActivity extends AppCompatActivity
         params.height= RecyclerView.LayoutParams.WRAP_CONTENT;
         recyclerView.setLayoutParams(params);
     }
+
 
     public void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();

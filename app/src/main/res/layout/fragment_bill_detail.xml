@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:textSize="20dp"
         android:text="Bill issuer"
         android:textIsSelectable="true"
@@ -29,12 +29,58 @@
 
     <View
         android:id="@+id/hr1"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_height="2dp"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/billLocation"
         android:background="#212121"/>
+
+    <TableLayout
+        android:id="@+id/tabela_artikala"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:layout_below="@id/hr1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp">
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="@string/artikal"
+                android:layout_span="3" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="@string/kolicina"
+                android:layout_span="1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="@string/cena"
+                android:layout_span="2" />
+        </TableRow>
+
+        <ListView
+            android:id="@+id/listViewItemsDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_below="@id/tableRow4">
+        </ListView>
+    </TableLayout>
 
 
     <TextView
@@ -44,7 +90,7 @@
         android:layout_marginTop="30dp"
         android:textSize="15dp"
         android:text="@string/ukupna_cena"
-        android:layout_below="@+id/hr1"
+        android:layout_below="@+id/tabela_artikala"
         android:textColor="@color/primary_text"/>
 
     <TextView
@@ -52,42 +98,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14dp"
+        android:textStyle="bold"
         android:text="676"
         android:textColor="@color/primary_text"
         android:paddingLeft="140dp"
-        android:layout_below="@+id/hr1"
+        android:layout_below="@+id/tabela_artikala"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="32dp" />
 
     <View
         android:id="@+id/hr2"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_height="2dp"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/billSumPrice"
         android:background="#212121"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:text="@string/datum_kupovine"
-        android:textColor="@color/primary_text"
-        android:layout_below="@+id/hr2"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"/>
+        android:layout_below="@+id/hr2">
 
-    <TextView
-        android:id="@+id/billDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:text="Neki datum"
-        android:textColor="@color/primary_text"
-        android:paddingLeft="140dp"
-        android:layout_below="@+id/hr2"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="32dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:text="@string/datum_kupovine"
+            android:textColor="@color/primary_text"
+            android:layout_marginTop="32dp"/>
+
+        <TextView
+            android:id="@+id/billDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:text="Neki datum"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/primary_text"
+            android:layout_marginTop="32dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
 </RelativeLayout>

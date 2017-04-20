@@ -14,7 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+
+import adapter.BillItemsAdapter;
 import fragments.BillDetailFragment;
+import model.Item;
 
 public class BillDetailActivity extends AppCompatActivity {
 
@@ -31,7 +37,6 @@ public class BillDetailActivity extends AppCompatActivity {
         if (actionBar != null) {
         }
         actionBar.setDisplayHomeAsUpEnabled(true);
-
 
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
