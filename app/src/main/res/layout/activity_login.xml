@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:hint="Korisničko ime"
         android:layout_centerHorizontal="true"
-        android:paddingTop="40dp"
+        android:layout_marginTop="40dp"
         android:layout_below="@+id/logoView"
         android:width="230dp"/>
 
