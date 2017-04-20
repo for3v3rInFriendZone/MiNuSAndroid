@@ -1,8 +1,8 @@
 package android.com.minus.activities;
 
-import android.app.DatePickerDialog;
 import android.com.minus.R;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,13 +20,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.DatePicker;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import java.util.Calendar;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import fragments.DatePickerFragment;
 import model.Bill;
 import util.MonthYearPickerDialog;
@@ -44,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     private int year, month, day;
     private ImageButton datePicker;
     private FloatingActionButton newBill;
+    private View recyclerView;
+    private BarChart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +70,10 @@ public class MainActivity extends AppCompatActivity
         dayPicker = (TextView) findViewById(R.id.day_picker_report);
         datePicker = (ImageButton) findViewById(R.id.day_date);
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
+        chart = (BarChart) findViewById(R.id.bar_chart);
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
-        View recyclerView = findViewById(R.id.item_list);
+        recyclerView = findViewById(R.id.item_list);
 
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
@@ -181,6 +190,10 @@ public class MainActivity extends AppCompatActivity
         dayPicker.setVisibility(View.VISIBLE);
         newBill.setVisibility(View.GONE);
 
+        ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
+        params.height= RecyclerView.LayoutParams.WRAP_CONTENT;
+        recyclerView.setLayoutParams(params);
+
         //Showing currnetly date when open window first time
         showDate(year, month+1, day);
        // adapter.filter("22.03.2017");
@@ -199,6 +212,16 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Mesečni pregled");
         newBill.setVisibility(View.GONE);
 
+        ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
+        params.height= 400;
+        recyclerView.setLayoutParams(params);
+
+
+        BarData data = new BarData(getDataSet());
+        chart.setData(data);
+        chart.animateXY(2000, 2000);
+        chart.invalidate();
+
         showDate(month+1, year);
 
         dayPicker.setVisibility(View.VISIBLE);
@@ -212,10 +235,42 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private ArrayList<IBarDataSet> getDataSet() {
+        ArrayList<BarEntry> dataSets = new ArrayList<BarEntry>();
+
+        for (int i = (int) 0; i < 30; i++) {
+            float val = (float) (Math.random()*10);
+            dataSets.add(new BarEntry(i, val));
+        }
+
+        BarDataSet barDataSet1 = new BarDataSet(dataSets, "Brand 1");
+        barDataSet1.setColor(Color.rgb(0, 155, 0));
+
+        ArrayList<IBarDataSet> idataSets = new ArrayList<IBarDataSet>();
+        idataSets.add(barDataSet1);
+
+        return idataSets;
+    }
+
+    private ArrayList<String> getXAxisValues() {
+        ArrayList<String> xAxis = new ArrayList<>();
+        xAxis.add("JAN");
+        xAxis.add("FEB");
+        xAxis.add("MAR");
+        xAxis.add("APR");
+        xAxis.add("MAY");
+        xAxis.add("JUN");
+        return xAxis;
+    }
+
     private void yearReport() {
         toolbar.setTitle("Godišnji pregled");
         newBill.setVisibility(View.GONE);
         showDate(year);
+
+        ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
+        params.height= 400;
+        recyclerView.setLayoutParams(params);
 
         dayPicker.setVisibility(View.VISIBLE);
         datePicker.setVisibility(View.VISIBLE);
@@ -234,6 +289,10 @@ public class MainActivity extends AppCompatActivity
         dayPicker.setVisibility(View.GONE);
         datePicker.setVisibility(View.GONE);
         newBill.setVisibility(View.VISIBLE);
+
+        ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
+        params.height= RecyclerView.LayoutParams.WRAP_CONTENT;
+        recyclerView.setLayoutParams(params);
     }
 
     public void showDatePickerDialog() {
