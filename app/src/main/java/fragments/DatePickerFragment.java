@@ -1,8 +1,10 @@
 package fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.com.minus.activities.AddBillActivity;
+import android.com.minus.activities.MainActivity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,8 +35,14 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        Activity activity = getActivity();
+        if(activity instanceof AddBillActivity) {
+            ((AddBillActivity) getActivity()).showDate(year, month+1, day);
+        } else if(activity instanceof MainActivity) {
+            ((MainActivity) getActivity()).showDate(year, month+1, day);
+        }
         // Do something with the date chosen by the user
-        ((AddBillActivity) getActivity()).showDate(year, month+1, day);
+
     }
 
     public DatePickerFragment() {

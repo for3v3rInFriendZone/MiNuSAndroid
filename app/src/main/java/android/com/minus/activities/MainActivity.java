@@ -1,11 +1,13 @@
 package android.com.minus.activities;
 
+import android.app.DatePickerDialog;
 import android.com.minus.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +20,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
+import fragments.DatePickerFragment;
 import model.Bill;
+import util.MonthYearPickerDialog;
 import util.SimpleItemRecyclerViewAdapter;
+import util.YearPickerDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +39,11 @@ public class MainActivity extends AppCompatActivity
     private SearchView searchInput;
     private Toolbar toolbar;
     private final SimpleItemRecyclerViewAdapter adapter = new SimpleItemRecyclerViewAdapter(Bill.getItems());
+    private TextView dayPicker;
+    private Calendar calendar;
+    private int year, month, day;
+    private ImageButton datePicker;
+    private FloatingActionButton newBill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +54,14 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Lista računa");
         setSupportActionBar(toolbar);
 
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        dayPicker = (TextView) findViewById(R.id.day_picker_report);
+        datePicker = (ImageButton) findViewById(R.id.day_date);
+        datePicker.setImageResource(R.mipmap.ic_calendar_range);
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
         View recyclerView = findViewById(R.id.item_list);
@@ -79,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FloatingActionButton newBill = (FloatingActionButton) findViewById(R.id.fab);
+        newBill = (FloatingActionButton) findViewById(R.id.fab);
         newBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,23 +149,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.day_report) {
-            adapter.filter("22.03.2017");
-            toolbar.setTitle("Dnevni pregled");
-            TextView dayPicker = (TextView) findViewById(R.id.day_picker_report);
-            dayPicker.setVisibility(View.VISIBLE);
-
+            dayReport();
         } else if (id == R.id.month_report) {
-            toolbar.setTitle("Mesečni pregled");
+            monthReport();
 
         } else if (id == R.id.year_report) {
-            toolbar.setTitle("Godišnji pregled");
+            yearReport();
 
         }  else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
 
         } else if(id == R.id.all_bills) {
-            toolbar.setTitle("Lista računa");
+            all_bills();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -151,14 +170,88 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void newBillView(View v){
+    private void newBillView(View v){
         Intent i = new Intent(this, AddBillActivity.class);
         startActivity(i);
     }
 
-    public void monthReport() {
-        Intent i = new Intent(this, LoadingScreenActivity.class);
-        startActivity(i);
+    private void dayReport() {
+
+        toolbar.setTitle("Dnevni pregled");
+        dayPicker.setVisibility(View.VISIBLE);
+        newBill.setVisibility(View.GONE);
+
+        //Showing currnetly date when open window first time
+        showDate(year, month+1, day);
+       // adapter.filter("22.03.2017");
+
+
+        datePicker.setVisibility(View.VISIBLE);
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+    }
+
+    private void monthReport() {
+        toolbar.setTitle("Mesečni pregled");
+        newBill.setVisibility(View.GONE);
+
+        showDate(month+1, year);
+
+        dayPicker.setVisibility(View.VISIBLE);
+        datePicker.setVisibility(View.VISIBLE);
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MonthYearPickerDialog pd = new MonthYearPickerDialog();
+                pd.show(getFragmentManager(), "MonthYearPickerDialog");
+            }
+        });
+    }
+
+    private void yearReport() {
+        toolbar.setTitle("Godišnji pregled");
+        newBill.setVisibility(View.GONE);
+        showDate(year);
+
+        dayPicker.setVisibility(View.VISIBLE);
+        datePicker.setVisibility(View.VISIBLE);
+
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YearPickerDialog pd = new YearPickerDialog();
+                pd.show(getFragmentManager(), "MonthYearPickerDialog");
+            }
+        });
+    }
+
+    private void all_bills() {
+        toolbar.setTitle("Lista računa");
+        dayPicker.setVisibility(View.GONE);
+        datePicker.setVisibility(View.GONE);
+        newBill.setVisibility(View.VISIBLE);
+    }
+
+    public void showDatePickerDialog() {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void showDate(int year, int month, int day) {
+        dayPicker.setText(new StringBuilder().append(day).append("/")
+                .append(month).append("/").append(year));
+    }
+
+    public void showDate(int month, int year) {
+        dayPicker.setText(new StringBuilder().append(month).append("/").append(year));
+    }
+
+    public void showDate(int year) {
+        dayPicker.setText(new StringBuilder().append(year));
     }
 
 }

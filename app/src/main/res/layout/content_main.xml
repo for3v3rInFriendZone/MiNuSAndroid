@@ -5,12 +5,29 @@
     android:layout_width="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/day_picker_report"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/day_linear"
         android:layout_height="wrap_content"
-        android:text="@string/date_selected"
-        android:visibility="gone"/>
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/day_picker_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_selected"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/day_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/day_picker_report"
+            android:visibility="gone"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/item_list"
@@ -18,8 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:scrollbars="vertical"
-        android:layout_below="@+id/day_picker_report"/>
+        android:layout_below="@+id/day_linear"/>
 
 </RelativeLayout>
 

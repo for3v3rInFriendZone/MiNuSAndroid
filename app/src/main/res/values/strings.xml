@@ -47,4 +47,6 @@
     <string name="dodaj_racun">Dodaj račun</string>
     <string name="date_selected"></string>
     <string name="nisi_clan">Nisi clan?</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Nazad</string>
 </resources>

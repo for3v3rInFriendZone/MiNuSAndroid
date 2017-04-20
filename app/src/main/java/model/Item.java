@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Dejan on 4/11/2017.
- */
 
 public class Item implements Serializable{
 
