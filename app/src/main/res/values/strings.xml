@@ -50,4 +50,8 @@
     <string name="ok">Ok</string>
     <string name="cancel">Nazad</string>
     <string name="mesecni_grafik">Mesečni grafik</string>
+    <string name="title_activity_cash_control">CashControlActivity</string>
+    <string name="regulacija_budzeta">Regulacija budžeta</string>
+    <string name="dnevni_budzet">Dnevni budžet</string>
+    <string name="mesecni_budzet">Mesečni budžet</string>
 </resources>
