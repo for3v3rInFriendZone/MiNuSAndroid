@@ -182,11 +182,18 @@ public class MainActivity extends AppCompatActivity
         } else if(id == R.id.all_bills) {
             all_bills();
 
+        } else if(id == R.id.cash_control){
+            cashControl();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void cashControl(){
+        Intent i = new Intent(this, CashControlActivity.class);
+        startActivity(i);
     }
 
     private void newBillView(View v){
