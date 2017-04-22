@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity
             yearReport();
 
         }  else if (id == R.id.nav_settings) {
+            settingsOption();
 
         } else if (id == R.id.nav_logout) {
             logout_action();
@@ -187,6 +188,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void settingsOption() {
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
     }
 
     private void newBillView(View v){

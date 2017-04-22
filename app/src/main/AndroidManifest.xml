@@ -51,12 +51,19 @@
                 android:value=".activities.MainActivity" />
 
         </activity>
+
         <activity android:name=".activities.AddItemActivity"
             android:label="@string/title_activity_add_idem"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
         <activity android:name=".activities.AddBillActivity"
             android:label="@string/title_activity_add_bill"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".activities.SettingsActivity"
+            android:label="@string/settings"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

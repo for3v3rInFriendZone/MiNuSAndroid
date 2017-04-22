@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <Preference
+        android:key="pref_key_profile_settings"
+        android:summary="@string/settings_user_detail"
+        android:title="@string/settings_user"/>
+
+    <ListPreference
+        android:key="pref_sync_font"
+        android:title="@string/settings_font"
+        android:dialogTitle="@string/settings_font"
+        android:entries="@array/font_types"
+        android:entryValues="@array/font_types"
+        android:defaultValue="@string/default_font" />
+
+    <ListPreference
+        android:key="pref_sync_colors"
+        android:title="@string/settings_color"
+        android:entries="@array/color_names"
+        android:entryValues="@array/color_values"
+        android:defaultValue="@string/default_background"/>
+
+    <CheckBoxPreference
+        android:key="pref_sync"
+        android:title="@string/settings_notification"
+        android:summary="@string/settings_notification"
+        android:defaultValue="true" />
+
+</PreferenceScreen>
