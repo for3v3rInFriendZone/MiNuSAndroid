@@ -57,6 +57,9 @@
     <string name="settings_notification">Notifikacije</string>
     <string name="default_font">Times New Roman</string>
     <string name="settings">Podešavanja</string>
+    <string name="settings_user_profile">Podešavanje profila</string>
     <string name="default_background">default</string>
+    <string name="change_password">Promena lozinke</string>
+    <string name="save_user_info">Potvrdi promene</string>
 
 </resources>

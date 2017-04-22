@@ -5,9 +5,15 @@
     android:layout_width="match_parent">
 
     <Preference
-        android:key="pref_key_profile_settings"
-        android:summary="@string/settings_user_detail"
-        android:title="@string/settings_user"/>
+        android:key="button_voicemail_category_key"
+        android:title="@string/settings_user"
+        android:summary="@string/settings_user_detail">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="android.com.minus"
+            android:targetClass="android.com.minus.activities.SettingsUserActivity" />
+    </Preference>
 
     <ListPreference
         android:key="pref_sync_font"
