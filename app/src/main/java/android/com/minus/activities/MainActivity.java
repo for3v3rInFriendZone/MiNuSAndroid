@@ -193,8 +193,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void cashControl(){
+    private void cashControl() {
         Intent i = new Intent(this, CashControlActivity.class);
+        startActivity(i);
+    }
 
     private void settingsOption() {
         Intent i = new Intent(this, SettingsActivity.class);
