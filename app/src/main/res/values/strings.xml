@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">MiNuS</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -54,4 +53,15 @@
     <string name="regulacija_budzeta">Regulacija budžeta</string>
     <string name="dnevni_budzet">Dnevni budžet</string>
     <string name="mesecni_budzet">Mesečni budžet</string>
+    <string name="settings_user">Podešavanje profila</string>
+    <string name="settings_user_detail">Promena korisnikovih informacija.</string>
+    <string name="settings_font">Podešavanje fonta</string>
+    <string name="settings_color">Promena pozadine</string>
+    <string name="settings_notification">Notifikacije</string>
+    <string name="default_font">Times New Roman</string>
+    <string name="settings">Podešavanja</string>
+    <string name="settings_user_profile">Podešavanje profila</string>
+    <string name="default_background">default</string>
+    <string name="change_password">Promena lozinke</string>
+    <string name="save_user_info">Potvrdi promene</string>
 </resources>

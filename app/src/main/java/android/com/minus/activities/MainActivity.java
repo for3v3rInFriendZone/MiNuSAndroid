@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity
             yearReport();
 
         }  else if (id == R.id.nav_settings) {
+            settingsOption();
 
         } else if (id == R.id.nav_logout) {
             logout_action();
@@ -191,8 +192,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
     private void cashControl(){
         Intent i = new Intent(this, CashControlActivity.class);
+
+    private void settingsOption() {
+        Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }
 

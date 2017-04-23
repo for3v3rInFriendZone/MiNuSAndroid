@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="font_types">
+        <item>Serif</item>
+        <item>Tahoma</item>
+        <item>Times New Roman</item>
+        <item>Georgia</item>
+        <item>Monospace</item>
+        <item>Consolas</item>
+    </string-array>
+
+    <string-array name="color_names">
+        <item>Crvena</item>
+        <item>Plava</item>
+        <item>Zelena</item>
+        <item>Braon</item>
+        <item>Žuta</item>
+        <item>Ljubičasta</item>
+        <item>Početna</item>
+    </string-array>
+
+    <string-array name="color_values">
+        <item>#ff3333</item>
+        <item>#3333ff</item>
+        <item>#006622</item>
+        <item>#4d2600</item>
+        <item>#e6e600</item>
+        <item>#b30086</item>
+        <item>default</item>
+    </string-array>
+
+</resources>

@@ -14,6 +14,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -63,11 +64,8 @@ public class BillDetailFragment extends Fragment {
             }
 
             activity = this.getActivity();
-            titleOfToolbar = (TextView) activity.findViewById(R.id.toolbar_title);
-            if (titleOfToolbar != null) {
+            activity.setTitle(bill.getName());
 
-                titleOfToolbar.setText(bill.getName());
-            }
         }
     }
 
