@@ -12,7 +12,7 @@ public class HttpRequestUser  extends AsyncTask<Void, Void, User> {
     protected User doInBackground(Void... params) {
 
         try {
-            final String url = "http://192.168.56.1:8080/user/all";
+            final String url = "http://192.168.1.54:8080/user";
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
