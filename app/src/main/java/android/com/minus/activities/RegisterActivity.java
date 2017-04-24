@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import http.HttpRequestUser;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -26,8 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void toLOginPage(View v){
+        new HttpRequestUser().execute();
         Intent i = new Intent(this, LoginActivity.class);
-
         startActivity(i);
     }
 }
