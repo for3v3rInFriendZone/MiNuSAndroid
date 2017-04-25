@@ -7,12 +7,12 @@ import android.widget.TextView;
 import model.Bill;
 
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class BillViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name, date, issuer;
     public View mView;
 
-    public ViewHolder(View view) {
+    public BillViewHolder(View view) {
         super(view);
         mView = view;
         name = (TextView) view.findViewById(R.id.name);

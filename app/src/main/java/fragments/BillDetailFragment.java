@@ -10,10 +10,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,14 +36,17 @@ import java.util.ArrayList;
 import adapter.BillItemsAdapter;
 import model.Bill;
 import model.Item;
+import util.BillRecyclerViewAdapter;
+import util.ItemRecyclerViewAdapter;
+import util.SimpleDividerItemDecoration;
 
 
 public class BillDetailFragment extends Fragment {
 
     private Bill bill;
-    private TextView titleOfToolbar;
-    private AlertDialog.Builder dialog;
     private Activity activity;
+    private ItemRecyclerViewAdapter itemAdapter = new ItemRecyclerViewAdapter(Item.getItems());
+    private RecyclerView itemRecycler;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -74,6 +81,10 @@ public class BillDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_bill_detail, container, false);
+        itemRecycler = (RecyclerView) rootView.findViewById(R.id.listViewItemsDetail);
+        itemRecycler.addItemDecoration(new SimpleDividerItemDecoration(activity));
+        assert itemRecycler != null;
+        setupRecyclerView((RecyclerView) itemRecycler);
 
         if (bill != null) {
             ((TextView) rootView.findViewById(R.id.billIssuer)).setText(bill.getIssuer());
@@ -81,14 +92,23 @@ public class BillDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.billSumPrice)).setText(bill.getPrice().toString());
             ((TextView) rootView.findViewById(R.id.billDate)).setText(bill.getDate());
 
-            ArrayList<Item> items = new ArrayList<Item>();
+
+
+            /*ArrayList<Item> items = new ArrayList<Item>();
             items = Item.getItems();
             ListView listView = (ListView) rootView.findViewById(R.id.listViewItemsDetail);
             BillItemsAdapter billItemsAdapter = new BillItemsAdapter(items, activity);
-            listView.setAdapter(billItemsAdapter);
+            listView.setAdapter(billItemsAdapter);*/
         }
 
         return rootView;
+    }
+
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(itemAdapter);
     }
 
 }

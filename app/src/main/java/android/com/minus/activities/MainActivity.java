@@ -32,7 +32,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +39,7 @@ import fragments.DatePickerFragment;
 import model.Bill;
 import util.MonthYearPickerDialog;
 import util.SimpleDividerItemDecoration;
-import util.SimpleItemRecyclerViewAdapter;
+import util.BillRecyclerViewAdapter;
 import util.YearPickerDialog;
 
 public class MainActivity extends AppCompatActivity
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity
 
     private SearchView searchInput;
     private Toolbar toolbar;
-    private final SimpleItemRecyclerViewAdapter adapter = new SimpleItemRecyclerViewAdapter(Bill.getItems());
+    private final BillRecyclerViewAdapter adapter = new BillRecyclerViewAdapter(Bill.getItems());
     private TextView dayPicker;
     private Calendar calendar;
     private int year, month, day;
@@ -132,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(Bill.getItems()));
+        recyclerView.setAdapter(new BillRecyclerViewAdapter(Bill.getItems()));
     }
 
     @Override

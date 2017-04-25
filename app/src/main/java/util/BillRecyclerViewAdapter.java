@@ -15,25 +15,25 @@ import java.util.List;
 import fragments.BillDetailFragment;
 import model.Bill;
 
-public class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder> {
 
     private List<Bill> mValues;
     private List<Bill> mValuesCopy;
 
-    public SimpleItemRecyclerViewAdapter(List<Bill> items) {
+    public BillRecyclerViewAdapter(List<Bill> items) {
         this.mValues = items;
         this.mValuesCopy = new ArrayList<Bill>(mValues);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BillViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_content, parent, false);
-        return new ViewHolder(view);
+        return new BillViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final BillViewHolder holder, final int position) {
         holder.getName().setText(mValues.get(position).getName());
         holder.getDate().setText(mValues.get(position).getDate());
         holder.getIssuer().setText(mValues.get(position).getIssuer());
