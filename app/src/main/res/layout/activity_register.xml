@@ -30,6 +30,16 @@
         android:paddingTop="5dp"/>
 
     <EditText
+        android:id="@+id/nameRegInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/vase_ime"
+        android:paddingTop="35dp"
+        android:width="230dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/registrujSe"/>
+
+    <EditText
         android:id="@+id/surnameRegInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,17 +82,6 @@
         android:text="@string/registruj_se"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/emailRegInput" />
-
-    <EditText
-        android:id="@+id/nameRegInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/vase_ime"
-        android:paddingTop="35dp"
-        android:width="230dp"
-        android:layout_below="@+id/registrujSe"
-        android:layout_alignLeft="@+id/surnameRegInput"
-        android:layout_alignStart="@+id/surnameRegInput" />
 
 
 </RelativeLayout>
