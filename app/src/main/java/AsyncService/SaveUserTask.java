@@ -4,23 +4,25 @@ import android.app.Activity;
 import android.com.minus.activities.LoginActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
+
+import DAO.UserDAO;
 import model.User;
-import util.RestService;
 
-public class GetUserTask extends AsyncTask<String, Void, Void> {
+public class SaveUserTask extends AsyncTask<String, Void, Void> {
 
-    private static final String BASE_URL = "http://192.168.1.54:8080/user";
     private Activity activity;
+    private UserDAO userDAO;
 
-    public GetUserTask(Activity activity) {
+    public SaveUserTask(Activity activity, UserDAO userDAO) {
         this.activity = activity;
+        this.userDAO = userDAO;
     }
 
     @Override
     protected Void doInBackground(String... params) {
 
         User newUser = new User(params[0], params[1], params[2], params[3], params[4]);
-        RestService.getInstance().postForObject(BASE_URL, newUser, User.class);
+        userDAO.save(newUser, "");
 
         return null;
     }
