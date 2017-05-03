@@ -7,9 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.GsonBuilder;
+import java.util.List;
 
 import DAO.UserDAO;
 import model.User;
@@ -18,11 +19,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import util.RetrofitBuilder;
 
-public class RegisterActivity extends AppCompatActivity implements Callback<ResponseBody>{
+public class RegisterActivity extends AppCompatActivity implements Callback<List<User>>{
 
     private UserDAO userDao;
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,8 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         setContentView(R.layout.activity_register);
 
         Button regButton = (Button)findViewById(R.id.regButton);
-        createUserDAO();
+        retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
+        userDao = retrofit.create(UserDAO.class);
 
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,32 +45,26 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
 
     public void toLOginPage(View v){
 
-        userDao.save(new User("wwww", "ssss", "aaaaa", "fffff", "bbbbbbbb4")).enqueue(this);
+        userDao.findAll().enqueue(this);
 
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
+      //  Intent i = new Intent(this, LoginActivity.class);
+      //  startActivity(i);
     }
 
-    private void createUserDAO() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UserDAO.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
-                .build();
-
-        userDao = retrofit.create(UserDAO.class);
-    }
 
     @Override
-    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+    public void onResponse(Call<List<User>> call, Response<List<User>> response) {
         if(response.isSuccessful()) {
-            Toast.makeText(RegisterActivity.this, "Upvote successful", Toast.LENGTH_LONG).show();
+
+            EditText username = (EditText) findViewById(R.id.nameRegInput);
+            username.setText(response.body().get(0).getUsername());
         } else {
-            Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
+
         }
     }
 
     @Override
-    public void onFailure(Call<ResponseBody> call, Throwable t) {
-        t.printStackTrace();
+    public void onFailure(Call<List<User>> call, Throwable t) {
+
     }
 }
