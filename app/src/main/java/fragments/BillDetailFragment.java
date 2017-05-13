@@ -33,11 +33,18 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import DAO.BillDAO;
+import DAO.UserDAO;
 import adapter.BillItemsAdapter;
 import model.Bill;
 import model.Item;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import util.BillRecyclerViewAdapter;
 import util.ItemRecyclerViewAdapter;
+import util.RetrofitBuilder;
 import util.SimpleDividerItemDecoration;
 
 
@@ -47,6 +54,8 @@ public class BillDetailFragment extends Fragment {
     private Activity activity;
     private ItemRecyclerViewAdapter itemAdapter = new ItemRecyclerViewAdapter(Item.getItems());
     private RecyclerView itemRecycler;
+    private Retrofit retrofit;
+    private BillDAO billDao;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -57,7 +66,12 @@ public class BillDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bill = (Bill) getArguments().getSerializable("item");
+
+        retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
+        billDao = retrofit.create(BillDAO.class);
+        activity = this.getActivity();
+
+       /* bill = (Bill) getArguments().getSerializable("item");
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             // Load the dummy content specified by the fragment
@@ -73,33 +87,42 @@ public class BillDetailFragment extends Fragment {
             activity = this.getActivity();
             activity.setTitle(bill.getName());
 
-        }
+        }*/
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_bill_detail, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_bill_detail, container, false);
         itemRecycler = (RecyclerView) rootView.findViewById(R.id.listViewItemsDetail);
         itemRecycler.addItemDecoration(new SimpleDividerItemDecoration(activity));
         assert itemRecycler != null;
         setupRecyclerView((RecyclerView) itemRecycler);
 
-        if (bill != null) {
-            ((TextView) rootView.findViewById(R.id.billIssuer)).setText(bill.getIssuer());
-            ((TextView) rootView.findViewById(R.id.billLocation)).setText(bill.getLocation());
-            ((TextView) rootView.findViewById(R.id.billSumPrice)).setText(bill.getPrice().toString());
-            ((TextView) rootView.findViewById(R.id.billDate)).setText(bill.getDate());
+        billDao.findOne(getArguments().getLong(ARG_ITEM_ID)).enqueue(new Callback<Bill>() {
+            @Override
+            public void onResponse(Call<Bill> call, Response<Bill> response) {
+                if(response.isSuccessful()){
+                    bill = response.body();
+                    activity.setTitle(bill.getName());
 
+                    ((TextView) rootView.findViewById(R.id.billIssuer)).setText(bill.getIssuer());
+                    ((TextView) rootView.findViewById(R.id.billLocation)).setText(bill.getLocation());
+                    ((TextView) rootView.findViewById(R.id.billSumPrice)).setText(bill.getPrice().toString());
+                    ((TextView) rootView.findViewById(R.id.billDate)).setText(bill.getDate());
+                } else {
 
+                }
 
-            /*ArrayList<Item> items = new ArrayList<Item>();
-            items = Item.getItems();
-            ListView listView = (ListView) rootView.findViewById(R.id.listViewItemsDetail);
-            BillItemsAdapter billItemsAdapter = new BillItemsAdapter(items, activity);
-            listView.setAdapter(billItemsAdapter);*/
-        }
+            }
+
+            @Override
+            public void onFailure(Call<Bill> call, Throwable t) {
+
+            }
+        });
 
         return rootView;
     }

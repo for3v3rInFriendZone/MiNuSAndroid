@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity
 
     private SearchView searchInput;
     private Toolbar toolbar;
-    private final BillRecyclerViewAdapter adapter = new BillRecyclerViewAdapter(Bill.getItems());
     private TextView dayPicker;
     private Calendar calendar;
     private int year, month, day;
@@ -108,20 +107,6 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            }
-        });
-
-        searchInput.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                adapter.filter(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.filter(newText);
-                return true;
             }
         });
 

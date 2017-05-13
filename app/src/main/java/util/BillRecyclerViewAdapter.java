@@ -44,7 +44,7 @@ public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder
 
                 Context context = v.getContext();
                 Intent intent = new Intent(context, BillDetailActivity.class);
-                intent.putExtra(BillDetailFragment.ARG_ITEM_ID, mValues.get(position).getName());
+                intent.putExtra(BillDetailFragment.ARG_ITEM_ID, mValues.get(position).getId());
 
                 context.startActivity(intent);
 

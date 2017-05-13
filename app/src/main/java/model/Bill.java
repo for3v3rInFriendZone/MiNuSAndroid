@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Bill implements Serializable {
 
+    private Long id;
     private String name;
     private String location;
     private String issuer;
@@ -16,7 +17,8 @@ public class Bill implements Serializable {
 
     }
 
-    public Bill(String name, String location, String issuer, String date, Double price) {
+    public Bill(Long id, String name, String location, String issuer, String date, Double price) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.issuer = issuer;
@@ -24,7 +26,7 @@ public class Bill implements Serializable {
         this.price = price;
     }
 
-    public static List<Bill> getItems() {
+   /* public static List<Bill> getItems() {
         List<Bill> items = new ArrayList<>();
         items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
         items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
@@ -49,7 +51,7 @@ public class Bill implements Serializable {
         items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
 
         return items;
-    }
+    }*/
 
 
     public String getName() {
@@ -90,6 +92,14 @@ public class Bill implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
