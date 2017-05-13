@@ -41,6 +41,7 @@ import java.util.List;
 import DAO.UserDAO;
 import fragments.DatePickerFragment;
 import model.Bill;
+import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     private BarChart mChart;
     private UserDAO userDao;
     private Retrofit retrofit;
+    private User logedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Lista računa");
         setSupportActionBar(toolbar);
+
+        logedUser = (User) getIntent().getSerializableExtra("user");
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
         assert recyclerView != null;
-        userDao.findUserBills(1L).enqueue(this);
+        userDao.findUserBills(logedUser.getId()).enqueue(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -55,9 +55,9 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
     public void toLOginPage(View v){
 
         if(isValid()) {
-            User user = new User(firstname.getText().toString(), lastname.getText().toString(),
-                    username.getText().toString(), password.getText().toString(),
-                    email.getText().toString());
+            User user = new User(username.getText().toString(), password.getText().toString(),
+                    email.getText().toString(), firstname.getText().toString(),
+                    lastname.getText().toString());
 
             userDao.save(user).enqueue(this);
         }
