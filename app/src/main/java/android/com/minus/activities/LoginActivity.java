@@ -1,13 +1,18 @@
 package android.com.minus.activities;
 
 import android.com.minus.R;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import DAO.UserDAO;
 import model.User;
@@ -17,6 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import util.LoginData;
 import util.RetrofitBuilder;
+import util.SharedSession;
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -68,7 +74,7 @@ public class LoginActivity extends AppCompatActivity{
                         if(response.body() != null) {
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             User user = response.body();
-                            i.putExtra("user", user);
+                            SharedSession.saveObjectToSharedPreference(getApplicationContext(), "userSession", "user", user);
                             startActivity(i);
                         }
                     }else {

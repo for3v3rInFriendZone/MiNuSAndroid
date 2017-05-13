@@ -1,7 +1,9 @@
 package android.com.minus.activities;
 
 import android.com.minus.R;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +35,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +51,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import util.MonthYearPickerDialog;
 import util.RetrofitBuilder;
+import util.SharedSession;
 import util.SimpleDividerItemDecoration;
 import util.BillRecyclerViewAdapter;
 import util.YearPickerDialog;
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Lista računa");
         setSupportActionBar(toolbar);
 
-        logedUser = (User) getIntent().getSerializableExtra("user");
+        logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);

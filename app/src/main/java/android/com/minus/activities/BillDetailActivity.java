@@ -1,6 +1,5 @@
 package android.com.minus.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.com.minus.R;
 import android.content.Context;
@@ -14,17 +13,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import adapter.BillItemsAdapter;
+import DAO.BillDAO;
+import DAO.UserDAO;
 import fragments.BillDetailFragment;
-import model.Item;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import util.RetrofitBuilder;
 
 public class BillDetailActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialog;
+    private BillDAO billDao;
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,9 @@ public class BillDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bill_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+
+        retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
+        billDao = retrofit.create(BillDAO.class);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -81,7 +89,21 @@ public class BillDetailActivity extends AppCompatActivity {
                 "Da",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        NavUtils.navigateUpTo(BillDetailActivity.this, new Intent(BillDetailActivity.this, MainActivity.class));
+                        billDao.delete(getIntent().getLongExtra(BillDetailFragment.ARG_ITEM_ID, 1L)).enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if(response.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Brisanje racuna je uspešno izvršeno.", Toast.LENGTH_SHORT).show();
+                                    NavUtils.navigateUpTo(BillDetailActivity.this, new Intent(BillDetailActivity.this, MainActivity.class));
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Brisanje nije uspelo", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(), "Brisanje nije uspelo", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 
