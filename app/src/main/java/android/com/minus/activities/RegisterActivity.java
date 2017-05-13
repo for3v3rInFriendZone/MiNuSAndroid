@@ -64,8 +64,6 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
 
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
-
-
     }
 
     public boolean isValid() {

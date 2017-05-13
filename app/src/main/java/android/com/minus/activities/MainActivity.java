@@ -12,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,15 +36,23 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import DAO.UserDAO;
 import fragments.DatePickerFragment;
 import model.Bill;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import util.MonthYearPickerDialog;
+import util.RetrofitBuilder;
 import util.SimpleDividerItemDecoration;
 import util.BillRecyclerViewAdapter;
 import util.YearPickerDialog;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Callback<List<Bill>> {
 
     private SearchView searchInput;
     private Toolbar toolbar;
@@ -55,7 +64,8 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton newBill;
     private RecyclerView recyclerView;
     private BarChart mChart;
-
+    private UserDAO userDao;
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +86,8 @@ public class MainActivity extends AppCompatActivity
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
         mChart = (BarChart) findViewById(R.id.bar_chart);
 
+        retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
+        userDao = retrofit.create(UserDAO.class);
 
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
@@ -84,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        userDao.findUserBills(1L).enqueue(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -127,11 +139,11 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Bill> bills) {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new BillRecyclerViewAdapter(Bill.getItems()));
+        recyclerView.setAdapter(new BillRecyclerViewAdapter(bills));
     }
 
     @Override
@@ -404,4 +416,18 @@ public class MainActivity extends AppCompatActivity
         return xAxis;
     }
 
+    @Override
+    public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
+        if(response.isSuccessful()) {
+            setupRecyclerView((RecyclerView) recyclerView, response.body());
+        } else {
+            Log.e("sadas", response.message());
+        }
+
+    }
+
+    @Override
+    public void onFailure(Call<List<Bill>> call, Throwable t) {
+        Log.e("sadas", t.getMessage());
+    }
 }

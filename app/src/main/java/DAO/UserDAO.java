@@ -1,12 +1,14 @@
 package DAO;
 
 import java.util.List;
+import model.Bill;
 import model.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface UserDAO {
 
@@ -14,6 +16,9 @@ public interface UserDAO {
 
     @GET("/user")
     Call<List<User>> findAll();
+
+    @GET("/user/userBills/{userId}")
+    Call<List<Bill>> findUserBills(@Path("userId") Long userId);
 
     @POST("/user")
     Call<ResponseBody> save(@Body User u);

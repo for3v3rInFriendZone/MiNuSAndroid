@@ -8,6 +8,7 @@ public class User {
     private String email;
     private String firstname;
     private String lastname;
+    private String image;
 
     public User() {
         super();
@@ -63,5 +64,13 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
