@@ -9,10 +9,12 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import util.LoginData;
+
 
 public interface UserDAO {
 
-    String BASE_URL = "http://192.168.1.54:8080";
+    String BASE_URL = "http://192.168.0.104:8080";
 
     @GET("/user")
     Call<List<User>> findAll();
@@ -22,5 +24,8 @@ public interface UserDAO {
 
     @POST("/user")
     Call<ResponseBody> save(@Body User u);
+
+    @POST("/user/login")
+    Call<User> login(@Body LoginData loginData);
 
 }
