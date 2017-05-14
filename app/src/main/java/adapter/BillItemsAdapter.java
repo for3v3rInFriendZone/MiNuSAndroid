@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Item;
 
@@ -19,9 +20,9 @@ import model.Item;
 public class BillItemsAdapter extends BaseAdapter{
 
     Activity activity;
-    public ArrayList<Item> items;
+    public List<Item> items;
 
-    public BillItemsAdapter(ArrayList<Item> items, Activity activity) {
+    public BillItemsAdapter(List<Item> items, Activity activity) {
         super();
         this.items = items;
         this.activity = activity;

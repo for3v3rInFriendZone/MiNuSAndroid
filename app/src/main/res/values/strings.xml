@@ -39,7 +39,7 @@
     <string name="title_activity_add_idem">AddIdemActivity</string>
     <string name="title_activity_add_bill">AddBillActivity</string>
     <string name="novi_racun">Novi račun</string>
-    <string name="naziv_racun">Naziv račun</string>
+    <string name="naziv_racun">Naziv računa</string>
     <string name="mesto_kupovine">Mesto kupovine</string>
     <string name="datum">Datum:</string>
     <string name="dodaj_artikal">Dodaj artikal</string>

@@ -11,8 +11,10 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import adapter.BillItemsAdapter;
 import fragments.DatePickerFragment;
@@ -23,6 +25,7 @@ public class AddBillActivity extends AppCompatActivity {
     private Calendar calendar;
     private TextView dateView;
     private int year, month, day;
+    private List<Item> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +75,13 @@ public class AddBillActivity extends AppCompatActivity {
             }
         });
 
-        //temporary data
-        ArrayList<Item> items = new ArrayList<Item>();
-        items = Item.getItems();
+        //temporary data for bill. It saves only when save is clcked.
+        items = (ArrayList<Item>) getIntent().getSerializableExtra("listOfItems");
+        if(items == null) {
+            items = new ArrayList<Item>();
+        }
         ListView listView = (ListView) findViewById(R.id.listViewItems);
-        BillItemsAdapter billItemsAdapter = new BillItemsAdapter(items,this);
+        BillItemsAdapter billItemsAdapter = new BillItemsAdapter(items, this);
         listView.setAdapter(billItemsAdapter);
 
     }
@@ -106,7 +111,8 @@ public class AddBillActivity extends AppCompatActivity {
      * @param v
      */
     public void newItemView(View v){
-        Intent i = new Intent(this,AddItemActivity.class);
+        Intent i = new Intent(this, AddItemActivity.class);
+        i.putExtra("listOfItems", (Serializable) items);
         startActivity(i);
     }
 }

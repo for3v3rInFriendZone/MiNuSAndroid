@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +31,7 @@
             android:hint="@string/naziv_artikla"
             android:layout_centerHorizontal="true"
             android:width="230dp"
-            android:paddingBottom="30dp"/>
+            android:layout_marginBottom="30dp"/>
 
         <TextView
             android:id="@+id/kolicina"
@@ -61,7 +60,7 @@
             android:hint="@string/cena_artikla"
             android:layout_centerHorizontal="true"
             android:width="230dp"
-            android:paddingBottom="30dp"
+            android:layout_marginBottom="30dp"
             android:layout_below="@+id/kolicina_broj"/>
 
         <LinearLayout
@@ -69,8 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cena_artikla"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/dodajButton"

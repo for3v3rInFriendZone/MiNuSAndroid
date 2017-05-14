@@ -12,7 +12,7 @@ public class Item implements Serializable{
     private int quantity;
     private double price;
 
-    public static ArrayList<Item> getItems(){
+    /*public static ArrayList<Item> getItems(){
         ArrayList<Item> items = new ArrayList<Item>();
 
         items.add(new Item(1L, "Kafa", 1, 120.00));
@@ -25,7 +25,7 @@ public class Item implements Serializable{
         items.add(new Item(1L,"Dezodorans", 2, 220.00));
 
         return items;
-    }
+    }*/
 
     public Long getId() {
         return id;
@@ -64,7 +64,7 @@ public class Item implements Serializable{
     public Item() {
     }
 
-    public Item(Long id, String name, int quantity, double price) {
+    public Item(String name, int quantity, double price) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
