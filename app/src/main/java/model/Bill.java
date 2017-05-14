@@ -12,6 +12,7 @@ public class Bill implements Serializable {
     private String issuer;
     private String date;
     private Double price;
+    private List<Item> items = new ArrayList<Item>();
 
     public Bill() {
 
@@ -53,6 +54,13 @@ public class Bill implements Serializable {
         return items;
     }*/
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 
     public String getName() {
         return name;

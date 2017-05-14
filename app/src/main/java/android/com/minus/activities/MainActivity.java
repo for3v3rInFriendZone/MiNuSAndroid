@@ -1,9 +1,7 @@
 package android.com.minus.activities;
 
 import android.com.minus.R;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,7 +33,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,7 +50,7 @@ import util.MonthYearPickerDialog;
 import util.RetrofitBuilder;
 import util.SharedSession;
 import util.SimpleDividerItemDecoration;
-import util.BillRecyclerViewAdapter;
+import adapter.BillRecyclerViewAdapter;
 import util.YearPickerDialog;
 
 public class MainActivity extends AppCompatActivity

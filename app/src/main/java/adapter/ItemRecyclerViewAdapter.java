@@ -1,4 +1,4 @@
-package util;
+package adapter;
 
 
 import android.com.minus.R;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import model.Item;
+import util.ItemViewHolder;
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder>{
 

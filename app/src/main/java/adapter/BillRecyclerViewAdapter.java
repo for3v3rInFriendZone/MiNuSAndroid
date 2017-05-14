@@ -1,4 +1,4 @@
-package util;
+package adapter;
 
 import android.com.minus.R;
 import android.com.minus.activities.BillDetailActivity;
@@ -14,6 +14,7 @@ import java.util.List;
 
 import fragments.BillDetailFragment;
 import model.Bill;
+import util.BillViewHolder;
 
 public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder> {
 

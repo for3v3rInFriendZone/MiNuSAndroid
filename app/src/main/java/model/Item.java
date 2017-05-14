@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Item implements Serializable{
 
+    private Long id;
     private String name;
     private int quantity;
     private double price;
@@ -14,21 +15,20 @@ public class Item implements Serializable{
     public static ArrayList<Item> getItems(){
         ArrayList<Item> items = new ArrayList<Item>();
 
-        items.add(new Item("Kafa", 1, 120.00));
-        items.add(new Item("Sok", 2, 220.00));
-        items.add(new Item("Cokolada", 2, 430.00));
-        items.add(new Item("Voda", 4, 523.00));
-        items.add(new Item("Mis", 2, 220.00));
-        items.add(new Item("Knjiga", 2, 220.00));
-        items.add(new Item("Torba", 2, 220.00));
-        items.add(new Item("Dezodorans", 2, 220.00));
-        items.add(new Item("Solja", 2, 220.00));
-        items.add(new Item("Sok od breske", 2, 220.00));
-        items.add(new Item("Mlevena plazma", 2, 220.00));
-        items.add(new Item("Orbit ekukaliptus", 2, 220.00));
-
+        items.add(new Item(1L, "Kafa", 1, 120.00));
+        items.add(new Item(1L,"Sok", 2, 220.00));
+        items.add(new Item(1L,"Cokolada", 2, 430.00));
+        items.add(new Item(1L,"Voda", 4, 523.00));
+        items.add(new Item(1L,"Mis", 2, 220.00));
+        items.add(new Item(1L,"Knjiga", 2, 220.00));
+        items.add(new Item(1L,"Torba", 2, 220.00));
+        items.add(new Item(1L,"Dezodorans", 2, 220.00));
 
         return items;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -64,7 +64,8 @@ public class Item implements Serializable{
     public Item() {
     }
 
-    public Item(String name, int quantity, double price) {
+    public Item(Long id, String name, int quantity, double price) {
+        this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
