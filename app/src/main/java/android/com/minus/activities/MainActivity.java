@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private TextView dayPicker;
     private Calendar calendar;
-    private int year, month, day;
+    private int year, month, day, selectedYear;
     private ImageButton datePicker;
     private FloatingActionButton newBill;
     private RecyclerView recyclerView;
@@ -71,6 +71,15 @@ public class MainActivity extends AppCompatActivity
     private UserDAO userDao;
     private Retrofit retrofit;
     private User logedUser;
+    private List<Bill> bills = new ArrayList<Bill>();
+    private Report report;
+
+    public enum Report {
+        ALL,
+        DAY,
+        MONTH,
+        YEAR
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
+        selectedYear = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -92,6 +102,7 @@ public class MainActivity extends AppCompatActivity
         datePicker = (ImageButton) findViewById(R.id.day_date);
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
         mChart = (BarChart) findViewById(R.id.bar_chart);
+        mChart.setVisibility(View.INVISIBLE);
 
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         userDao = retrofit.create(UserDAO.class);
@@ -171,22 +182,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.day_report) {
+            report = Report.DAY;
             dayReport();
         } else if (id == R.id.month_report) {
+            report = Report.MONTH;
             monthReport();
-
         } else if (id == R.id.year_report) {
+            report = Report.YEAR;
             yearReport();
-
         }  else if (id == R.id.nav_settings) {
             settingsOption();
-
         } else if (id == R.id.nav_logout) {
             logout_action();
-
         } else if(id == R.id.all_bills) {
+            report = Report.ALL;
             all_bills();
-
         } else if(id == R.id.cash_control){
             cashControl();
         }
@@ -196,6 +206,22 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void callReport(){
+        switch (report){
+            case ALL:
+                all_bills();
+                break;
+            case DAY:
+                dayReport();
+                break;
+            case MONTH:
+                monthReport();
+                break;
+            case YEAR:
+                yearReport();
+                break;
+        }
+    }
 
     private void cashControl() {
         Intent i = new Intent(this, CashControlActivity.class);
@@ -219,6 +245,7 @@ public class MainActivity extends AppCompatActivity
 
     private void dayReport() {
 
+        mChart.setVisibility(View.INVISIBLE);
         toolbar.setTitle("Dnevni pregled");
         dayPicker.setVisibility(View.VISIBLE);
         newBill.setVisibility(View.GONE);
@@ -265,7 +292,11 @@ public class MainActivity extends AppCompatActivity
     private void yearReport() {
         toolbar.setTitle("Godišnji pregled");
         newBill.setVisibility(View.GONE);
-        showDate(year);
+        if(year != selectedYear){
+            showDate(selectedYear);
+        } else {
+            showDate(year);
+        }
 
         ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
         params.height= 400;
@@ -282,16 +313,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        BarData bardata = new BarData(getXAxisValues(),getDataSet());
+
+        BarData bardata = new BarData(getYearXAxisValues(),getYearDataSet(selectedYear, bills));
       /*  ...............Static Data for Data ListView..............................*/
-        String[] date = new String[]{"21-May-2006",
-                "7-Jan-2016", "27-April-2016"};
-        String[] cardtype = new String[]{
-                "Debit Card",
-                "Credit Card",
-                "Debit Card"};
-        String[] trans_value = {"\u20B945777",
-                "\u20B94500","\u20B93400"};
 
         mChart.setData(bardata);
         mChart.setDescription(" ");
@@ -320,6 +344,120 @@ public class MainActivity extends AppCompatActivity
         Legend l = mChart.getLegend();
         l.setEnabled(false);
         mChart.invalidate();
+        mChart.setVisibility(View.VISIBLE);
+    }
+
+    public void setSelectedYear(int year1){
+        selectedYear = year1;
+    }
+
+    private ArrayList<IBarDataSet> getYearDataSet(int year, List<Bill> bills) {
+
+        List<Bill> yearBills = new ArrayList<Bill>();
+        int jan = 0;
+        int feb = 0;
+        int mar = 0;
+        int apr = 0;
+        int maj = 0;
+        int jun = 0;
+        int jul = 0;
+        int avg = 0;
+        int sep = 0;
+        int oct = 0;
+        int nov = 0;
+        int dec = 0;
+
+        for (int i = 0; i < bills.size(); i++){
+            calendar.setTime(bills.get(i).getDate());
+            if(year == calendar.get(Calendar.YEAR)){
+                yearBills.add(bills.get(i));
+            }
+        }
+
+        setupRecyclerView((RecyclerView) recyclerView, yearBills);
+
+        for (Bill bill : yearBills){
+            calendar.setTime(bill.getDate());
+            if(calendar.get(Calendar.MONTH) == Calendar.JANUARY){
+                jan += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.FEBRUARY){
+                feb += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.MARCH){
+                mar += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.APRIL){
+                apr += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.MAY){
+                maj += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.JUNE){
+                jun += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.JULY){
+                jul += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.AUGUST){
+                avg += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.SEPTEMBER){
+                sep += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.OCTOBER){
+                oct += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.NOVEMBER){
+                nov += bill.getPrice();
+            }else if(calendar.get(Calendar.MONTH) == Calendar.DECEMBER){
+                dec += bill.getPrice();
+            }
+        }
+
+        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
+        BarEntry v1e1 = new BarEntry(jan, 0); // Jan
+        valueSet1.add(v1e1);
+        BarEntry v1e2 = new BarEntry(feb, 1); // Feb
+        valueSet1.add(v1e2);
+        BarEntry v1e3 = new BarEntry(mar, 2); // Mar
+        valueSet1.add(v1e3);
+        BarEntry v1e4 = new BarEntry(apr, 3); // Apr
+        valueSet1.add(v1e4);
+        BarEntry v1e5 = new BarEntry(maj, 4); // Maj
+        valueSet1.add(v1e5);
+        BarEntry v1e6 = new BarEntry(jun, 5); // Jun
+        valueSet1.add(v1e6);
+        BarEntry v1e7 = new BarEntry(jul, 6); // Jul
+        valueSet1.add(v1e7);
+        BarEntry v1e8 = new BarEntry(avg, 7); // Avg
+        valueSet1.add(v1e8);
+        BarEntry v1e9 = new BarEntry(sep, 8); // Sep
+        valueSet1.add(v1e9);
+        BarEntry v1e10 = new BarEntry(oct, 9); // Okt
+        valueSet1.add(v1e10);
+        BarEntry v1e11 = new BarEntry(nov, 10); // Nov
+        valueSet1.add(v1e11);
+        BarEntry v1e12 = new BarEntry(dec, 11); // Dec
+        valueSet1.add(v1e12);
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, " ");
+        barDataSet1.setColor(Color.rgb(255,255,0));
+        barDataSet1.setValueTextColor(Color.WHITE);
+        barDataSet1.setHighLightColor(Color.WHITE);
+        barDataSet1.setValueTextColor(Color.WHITE);
+        barDataSet1.setBarSpacePercent(30f);
+        // dataSets = new ArrayList<>();
+        // dataSets.add(barDataSet1);
+        ArrayList<IBarDataSet> datas = new ArrayList<IBarDataSet>();
+        datas.add(barDataSet1);
+        return datas;
+    }
+
+    private ArrayList<String> getYearXAxisValues() {
+        ArrayList<String> xAxis = new ArrayList<>();
+        xAxis.add("JAN");
+        xAxis.add("FEB");
+        xAxis.add("MAR");
+        xAxis.add("APR");
+        xAxis.add("MAJ");
+        xAxis.add("JUN");
+        xAxis.add("JUL");
+        xAxis.add("AVG");
+        xAxis.add("SEP");
+        xAxis.add("OKT");
+        xAxis.add("NOV");
+        xAxis.add("DEC");
+        return xAxis;
     }
 
     private void all_bills() {
@@ -332,7 +470,6 @@ public class MainActivity extends AppCompatActivity
         params.height= RecyclerView.LayoutParams.WRAP_CONTENT;
         recyclerView.setLayoutParams(params);
     }
-
 
     public void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();
@@ -352,66 +489,10 @@ public class MainActivity extends AppCompatActivity
         dayPicker.setText(new StringBuilder().append(year));
     }
 
-    private ArrayList<IBarDataSet> getDataSet() {
-        //ArrayList<BarDataSet> dataSets = null;
-        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(110.000f, 0); // Jan
-        valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(40.000f, 1); // Feb
-        valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(60.000f, 2); // Mar
-        valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(30.000f, 3); // Apr
-        valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(90.000f, 4); // Maj
-        valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(100.000f, 5); // Jun
-        valueSet1.add(v1e6);
-        BarEntry v1e7 = new BarEntry(110.000f, 6); // Jul
-        valueSet1.add(v1e7);
-        BarEntry v1e8 = new BarEntry(40.000f, 7); // Avg
-        valueSet1.add(v1e8);
-        BarEntry v1e9 = new BarEntry(60.000f, 8); // Sep
-        valueSet1.add(v1e9);
-        BarEntry v1e10 = new BarEntry(30.000f, 9); // Okt
-        valueSet1.add(v1e10);
-        BarEntry v1e11 = new BarEntry(90.000f, 10); // Nov
-        valueSet1.add(v1e11);
-        BarEntry v1e12 = new BarEntry(100.000f, 11); // Dec
-        valueSet1.add(v1e12);
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, " ");
-        barDataSet1.setColor(Color.rgb(255,255,0));
-        barDataSet1.setValueTextColor(Color.WHITE);
-        barDataSet1.setHighLightColor(Color.WHITE);
-        barDataSet1.setValueTextColor(Color.WHITE);
-        barDataSet1.setBarSpacePercent(30f);
-        // dataSets = new ArrayList<>();
-        // dataSets.add(barDataSet1);
-        ArrayList<IBarDataSet> datas = new ArrayList<IBarDataSet>();
-        datas.add(barDataSet1);
-        return datas;
-    }
-
-    private ArrayList<String> getXAxisValues() {
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("JAN");
-        xAxis.add("FEB");
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAJ");
-        xAxis.add("JUN");
-        xAxis.add("JUL");
-        xAxis.add("AVG");
-        xAxis.add("SEP");
-        xAxis.add("OKT");
-        xAxis.add("NOV");
-        xAxis.add("DEC");
-        return xAxis;
-    }
-
     @Override
     public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
         if(response.isSuccessful()) {
+            bills = response.body();
             setupRecyclerView((RecyclerView) recyclerView, response.body());
         } else {
             Log.e("sadas", response.message());

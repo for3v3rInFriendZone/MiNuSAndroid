@@ -35,7 +35,7 @@ public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder
     @Override
     public void onBindViewHolder(final BillViewHolder holder, final int position) {
         holder.getName().setText(mValues.get(position).getName());
-        holder.getDate().setText(mValues.get(position).getDate());
+        holder.getDate().setText(mValues.get(position).getDate().toString());
         holder.getIssuer().setText(mValues.get(position).getIssuer());
 
         holder.getmView().setOnClickListener(new View.OnClickListener() {

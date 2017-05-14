@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Bill implements Serializable {
@@ -10,14 +11,14 @@ public class Bill implements Serializable {
     private String name;
     private String location;
     private String issuer;
-    private String date;
+    private Date date;
     private Double price;
 
     public Bill() {
 
     }
 
-    public Bill(Long id, String name, String location, String issuer, String date, Double price) {
+    public Bill(Long id, String name, String location, String issuer, Date date, Double price) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -78,11 +79,11 @@ public class Bill implements Serializable {
         this.issuer = issuer;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

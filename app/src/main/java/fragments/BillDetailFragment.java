@@ -111,7 +111,7 @@ public class BillDetailFragment extends Fragment {
                     ((TextView) rootView.findViewById(R.id.billIssuer)).setText(bill.getIssuer());
                     ((TextView) rootView.findViewById(R.id.billLocation)).setText(bill.getLocation());
                     ((TextView) rootView.findViewById(R.id.billSumPrice)).setText(bill.getPrice().toString());
-                    ((TextView) rootView.findViewById(R.id.billDate)).setText(bill.getDate());
+                    ((TextView) rootView.findViewById(R.id.billDate)).setText(bill.getDate().toString());
                 } else {
 
                 }
