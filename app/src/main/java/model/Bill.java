@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,20 +12,24 @@ public class Bill implements Serializable {
     private String name;
     private String location;
     private String issuer;
-    private Date date;
-    private Double price;
+    private String date;
+    private Date realDate;
+    private BigDecimal price;
+    private List<Item> items = new ArrayList<Item>();
+    private User user;
 
     public Bill() {
-
+        super();
     }
 
-    public Bill(Long id, String name, String location, String issuer, Date date, Double price) {
-        this.id = id;
+    public Bill(String name, String location, String issuer, String date, BigDecimal price, ArrayList<Item> items) {
+        super();
         this.name = name;
         this.location = location;
         this.issuer = issuer;
         this.date = date;
         this.price = price;
+        this.items = items;
     }
 
    /* public static List<Bill> getItems() {
@@ -79,19 +84,19 @@ public class Bill implements Serializable {
         this.issuer = issuer;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -101,6 +106,30 @@ public class Bill implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getRealDate() {
+        return realDate;
+    }
+
+    public void setRealDate(Date realDate) {
+        this.realDate = realDate;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package DAO;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.util.List;
 import model.Bill;
 import model.User;
@@ -21,6 +24,8 @@ public interface UserDAO {
 
     @GET("/user/userBills/{userId}")
     Call<List<Bill>> findUserBills(@Path("userId") Long userId);
+    /*@GET("/user/userBills/{userId}")
+    Call<JsonArray> findUserBills(@Path("userId") Long userId);*/
 
     @POST("/user")
     Call<ResponseBody> save(@Body User u);

@@ -37,8 +37,10 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.gson.Gson;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import DAO.UserDAO;
@@ -354,21 +356,21 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<IBarDataSet> getYearDataSet(int year, List<Bill> bills) {
 
         List<Bill> yearBills = new ArrayList<Bill>();
-        int jan = 0;
-        int feb = 0;
-        int mar = 0;
-        int apr = 0;
-        int maj = 0;
-        int jun = 0;
-        int jul = 0;
-        int avg = 0;
-        int sep = 0;
-        int oct = 0;
-        int nov = 0;
-        int dec = 0;
+        double jan = 0.0;
+        double feb = 0.0;
+        double mar = 0.0;
+        double apr = 0.0;
+        double maj = 0.0;
+        double jun = 0.0;
+        double jul = 0.0;
+        double avg = 0.0;
+        double sep = 0.0;
+        double oct = 0.0;
+        double nov = 0.0;
+        double dec = 0.0;
 
         for (int i = 0; i < bills.size(); i++){
-            calendar.setTime(bills.get(i).getDate());
+            calendar.setTime(bills.get(i).getRealDate());
             if(year == calendar.get(Calendar.YEAR)){
                 yearBills.add(bills.get(i));
             }
@@ -377,58 +379,58 @@ public class MainActivity extends AppCompatActivity
         setupRecyclerView((RecyclerView) recyclerView, yearBills);
 
         for (Bill bill : yearBills){
-            calendar.setTime(bill.getDate());
+            calendar.setTime(bill.getRealDate());
             if(calendar.get(Calendar.MONTH) == Calendar.JANUARY){
-                jan += bill.getPrice();
+                jan += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.FEBRUARY){
-                feb += bill.getPrice();
+                feb += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.MARCH){
-                mar += bill.getPrice();
+                mar += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.APRIL){
-                apr += bill.getPrice();
+                apr += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.MAY){
-                maj += bill.getPrice();
+                maj += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.JUNE){
-                jun += bill.getPrice();
+                jun += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.JULY){
-                jul += bill.getPrice();
+                jul += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.AUGUST){
-                avg += bill.getPrice();
+                avg += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.SEPTEMBER){
-                sep += bill.getPrice();
+                sep += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.OCTOBER){
-                oct += bill.getPrice();
+                oct += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.NOVEMBER){
-                nov += bill.getPrice();
+                nov += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.DECEMBER){
-                dec += bill.getPrice();
+                dec += bill.getPrice().doubleValue();
             }
         }
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(jan, 0); // Jan
+        BarEntry v1e1 = new BarEntry((float) jan, 0); // Jan
         valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(feb, 1); // Feb
+        BarEntry v1e2 = new BarEntry((float) feb, 1); // Feb
         valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(mar, 2); // Mar
+        BarEntry v1e3 = new BarEntry((float) mar, 2); // Mar
         valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(apr, 3); // Apr
+        BarEntry v1e4 = new BarEntry((float) apr, 3); // Apr
         valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(maj, 4); // Maj
+        BarEntry v1e5 = new BarEntry((float) maj, 4); // Maj
         valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(jun, 5); // Jun
+        BarEntry v1e6 = new BarEntry((float) jun, 5); // Jun
         valueSet1.add(v1e6);
-        BarEntry v1e7 = new BarEntry(jul, 6); // Jul
+        BarEntry v1e7 = new BarEntry((float) jul, 6); // Jul
         valueSet1.add(v1e7);
-        BarEntry v1e8 = new BarEntry(avg, 7); // Avg
+        BarEntry v1e8 = new BarEntry((float) avg, 7); // Avg
         valueSet1.add(v1e8);
-        BarEntry v1e9 = new BarEntry(sep, 8); // Sep
+        BarEntry v1e9 = new BarEntry((float) sep, 8); // Sep
         valueSet1.add(v1e9);
-        BarEntry v1e10 = new BarEntry(oct, 9); // Okt
+        BarEntry v1e10 = new BarEntry((float) oct, 9); // Okt
         valueSet1.add(v1e10);
-        BarEntry v1e11 = new BarEntry(nov, 10); // Nov
+        BarEntry v1e11 = new BarEntry((float) nov, 10); // Nov
         valueSet1.add(v1e11);
-        BarEntry v1e12 = new BarEntry(dec, 11); // Dec
+        BarEntry v1e12 = new BarEntry((float) dec, 11); // Dec
         valueSet1.add(v1e12);
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, " ");
         barDataSet1.setColor(Color.rgb(255,255,0));
@@ -493,6 +495,9 @@ public class MainActivity extends AppCompatActivity
     public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
         if(response.isSuccessful()) {
             bills = response.body();
+            for(Bill bill : bills){
+                bill.setRealDate(new Date(Long.parseLong(bill.getDate())));
+            }
             setupRecyclerView((RecyclerView) recyclerView, response.body());
         } else {
             Log.e("sadas", response.message());
