@@ -13,18 +13,20 @@ public class Bill implements Serializable {
     private String date;
     private Double price;
     private List<Item> items = new ArrayList<Item>();
+    private User user;
 
     public Bill() {
 
     }
 
-    public Bill(Long id, String name, String location, String issuer, String date, Double price) {
-        this.id = id;
+    public Bill(String name, String location, String issuer, String date, Double price, List<Item> items, User user) {
         this.name = name;
         this.location = location;
         this.issuer = issuer;
         this.date = date;
         this.price = price;
+        this.items = items;
+        this.user = user;
     }
 
    /* public static List<Bill> getItems() {
@@ -60,6 +62,14 @@ public class Bill implements Serializable {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {

@@ -64,4 +64,5 @@
     <string name="default_background">default</string>
     <string name="change_password">Promena lozinke</string>
     <string name="save_user_info">Potvrdi promene</string>
+    <string name="izdavac_racuna">Izdavač računa</string>
 </resources>
