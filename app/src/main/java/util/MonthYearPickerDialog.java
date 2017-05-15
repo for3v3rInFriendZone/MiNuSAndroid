@@ -58,5 +58,8 @@ public class MonthYearPickerDialog extends DialogFragment implements DatePickerD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         ((MainActivity) getActivity()).showDate(month, year);
+        ((MainActivity) getActivity()).setSelectedMonth(month);
+        ((MainActivity) getActivity()).setSelectedYear(year);
+        ((MainActivity) getActivity()).callReport();
     }
 }

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private TextView dayPicker;
     private Calendar calendar;
-    private int year, month, day, selectedYear;
+    private int year, month, day, selectedYear, selectedMonth;
     private ImageButton datePicker;
     private FloatingActionButton newBill;
     private RecyclerView recyclerView;
@@ -98,12 +98,40 @@ public class MainActivity extends AppCompatActivity
         year = calendar.get(Calendar.YEAR);
         selectedYear = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
+        selectedMonth = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         dayPicker = (TextView) findViewById(R.id.day_picker_report);
         datePicker = (ImageButton) findViewById(R.id.day_date);
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
+
         mChart = (BarChart) findViewById(R.id.bar_chart);
+        mChart.setDescription(" ");
+        mChart.animateXY(2000, 3000);
+        mChart.setBackgroundColor(Color.rgb(30,144,255));
+        mChart.setGridBackgroundColor(Color.rgb(149, 27, 75));
+        mChart.setDrawBarShadow(false);
+        mChart.setDrawValueAboveBar(true);
+        mChart.setDescription("");
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(Color.WHITE);
+       /* xAxis.setTypeface(mTf);*/
+        xAxis.setDrawGridLines(false);
+        xAxis.setSpaceBetweenLabels(1);
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setEnabled(false);
+        rightAxis.setSpaceTop(15f);
+        rightAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
+        Legend l = mChart.getLegend();
+        l.setEnabled(false);
+        mChart.invalidate();
         mChart.setVisibility(View.INVISIBLE);
 
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
@@ -271,14 +299,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void monthReport() {
+
+        mChart.setVisibility(View.VISIBLE);
         toolbar.setTitle("Mesečni pregled");
         newBill.setVisibility(View.GONE);
+        if(year != selectedYear && month+1 != selectedMonth){
+            showDate(selectedMonth, selectedYear);
+        } else {
+            showDate(month+1, year);
+        }
 
         ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
         params.height= 400;
         recyclerView.setLayoutParams(params);
 
-        showDate(month+1, year);
+
 
         dayPicker.setVisibility(View.VISIBLE);
         datePicker.setVisibility(View.VISIBLE);
@@ -289,6 +324,10 @@ public class MainActivity extends AppCompatActivity
                 pd.show(getFragmentManager(), "MonthYearPickerDialog");
             }
         });
+
+        BarData bardata = new BarData(getMonthXAxisValues(),getMonthDataSet(selectedMonth, selectedYear, bills));
+      /*  ...............Static Data for Data ListView..............................*/
+        mChart.setData(bardata);
     }
 
     private void yearReport() {
@@ -320,38 +359,10 @@ public class MainActivity extends AppCompatActivity
       /*  ...............Static Data for Data ListView..............................*/
 
         mChart.setData(bardata);
-        mChart.setDescription(" ");
-        mChart.animateXY(2000, 3000);
-        mChart.setBackgroundColor(Color.rgb(30,144,255));
-        mChart.setGridBackgroundColor(Color.rgb(149, 27, 75));
-        mChart.setDrawBarShadow(false);
-        mChart.setDrawValueAboveBar(true);
-        mChart.setDescription("");
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.WHITE);
-       /* xAxis.setTypeface(mTf);*/
-        xAxis.setDrawGridLines(false);
-        xAxis.setSpaceBetweenLabels(1);
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setSpaceTop(15f);
-        leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
-        rightAxis.setEnabled(false);
-        rightAxis.setSpaceTop(15f);
-        rightAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
-        Legend l = mChart.getLegend();
-        l.setEnabled(false);
-        mChart.invalidate();
         mChart.setVisibility(View.VISIBLE);
     }
 
-    public void setSelectedYear(int year1){
-        selectedYear = year1;
-    }
+
 
     private ArrayList<IBarDataSet> getYearDataSet(int year, List<Bill> bills) {
 
@@ -462,6 +473,107 @@ public class MainActivity extends AppCompatActivity
         return xAxis;
     }
 
+    private ArrayList<String> getMonthXAxisValues(){
+        ArrayList<String> xAxis = new ArrayList<>();
+        if((selectedMonth % 2 == 1) && (selectedMonth != 2)) {
+            for(int i = 1; i <= 31; i++){
+                xAxis.add(String.valueOf(i));
+            }
+        } else if ((selectedMonth % 2 == 0) && (selectedMonth != 2)) {
+            for(int i = 1; i <= 30; i++){
+                xAxis.add(String.valueOf(i));
+            }
+        } else if (selectedMonth == 2) {
+            if (selectedYear % 4 == 0){
+                for(int i = 1; i <= 29; i++){
+                    xAxis.add(String.valueOf(i));
+                }
+            } else {
+                for (int i = 1; i <= 28; i++) {
+                    xAxis.add(String.valueOf(i));
+                }
+            }
+        }
+
+        return xAxis;
+    }
+
+    private ArrayList<IBarDataSet> getMonthDataSet(int month, int year, List<Bill> bills){
+        ArrayList<IBarDataSet> datas = new ArrayList<IBarDataSet>();
+        ArrayList<Bill> monthBills = new ArrayList<Bill>();
+
+        for(Bill bill : bills){
+            calendar.setTime(bill.getRealDate());
+            if(year == calendar.get(Calendar.YEAR) && (month - 1) == calendar.get(Calendar.MONTH)){
+                monthBills.add(bill);
+            }
+        }
+
+        setupRecyclerView((RecyclerView) recyclerView, monthBills);
+
+        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
+
+        if((selectedMonth % 2 == 1) && (selectedMonth != 2)) {
+            for(int i = 1; i <= 31; i++){
+                double cena = 0.0;
+                for (Bill bill : monthBills){
+                    calendar.setTime(bill.getRealDate());
+                    if (i == calendar.get(Calendar.DAY_OF_MONTH)){
+                        cena += bill.getPrice().doubleValue();
+                    }
+                }
+                valueSet1.add(new BarEntry((float) cena, i));
+            }
+        } else if ((selectedMonth % 2 == 0) && (selectedMonth != 2)) {
+            for(int i = 1; i <= 30; i++){
+                double cena = 0.0;
+                for (Bill bill : monthBills){
+                    calendar.setTime(bill.getRealDate());
+                    if (i == calendar.get(Calendar.DAY_OF_MONTH)){
+                        cena += bill.getPrice().doubleValue();
+                    }
+                }
+                valueSet1.add(new BarEntry((float) cena, i));
+            }
+        } else if (selectedMonth == 2) {
+            if (selectedYear % 4 == 0){
+                for(int i = 1; i <= 29; i++){
+                    double cena = 0.0;
+                    for (Bill bill : monthBills){
+                        calendar.setTime(bill.getRealDate());
+                        if (i == calendar.get(Calendar.DAY_OF_MONTH)){
+                            cena += bill.getPrice().doubleValue();
+                        }
+                    }
+                    valueSet1.add(new BarEntry((float) cena, i));
+                }
+            } else {
+                for (int i = 1; i <= 28; i++) {
+                    double cena = 0.0;
+                    for (Bill bill : monthBills){
+                        calendar.setTime(bill.getRealDate());
+                        if (i == calendar.get(Calendar.DAY_OF_MONTH)){
+                            cena += bill.getPrice().doubleValue();
+                        }
+                    }
+                    valueSet1.add(new BarEntry((float) cena, i));
+                }
+            }
+        }
+
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, " ");
+        barDataSet1.setColor(Color.rgb(255,255,0));
+        barDataSet1.setValueTextColor(Color.WHITE);
+        barDataSet1.setHighLightColor(Color.WHITE);
+        barDataSet1.setValueTextColor(Color.WHITE);
+        barDataSet1.setBarSpacePercent(30f);
+        // dataSets = new ArrayList<>();
+        // dataSets.add(barDataSet1);
+        datas.add(barDataSet1);
+        return datas;
+
+    }
+
     private void all_bills() {
         toolbar.setTitle("Lista računa");
         dayPicker.setVisibility(View.GONE);
@@ -489,6 +601,14 @@ public class MainActivity extends AppCompatActivity
 
     public void showDate(int year) {
         dayPicker.setText(new StringBuilder().append(year));
+    }
+
+    public void setSelectedYear(int year1){
+        selectedYear = year1;
+    }
+
+    public void  setSelectedMonth(int month1){
+        selectedMonth = month1;
     }
 
     @Override
