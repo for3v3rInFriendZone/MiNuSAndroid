@@ -14,8 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import DAO.BillDAO;
@@ -86,7 +89,11 @@ public class AddBillActivity extends AppCompatActivity {
         addBill.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                saveBill();
+                try {
+                    saveBill();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -136,8 +143,8 @@ public class AddBillActivity extends AppCompatActivity {
      * @param day
      */
     public void showDate(int year, int month, int day) {
-        dateView.setText(new StringBuilder().append(day).append("/")
-                .append(month).append("/").append(year));
+        dateView.setText(new StringBuilder().append(day).append(".")
+                .append(month).append(".").append(year));
     }
 
     /**
@@ -150,12 +157,11 @@ public class AddBillActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void saveBill() {
-        String date = day + "/" + month + "/" + year;
+    public void saveBill() throws ParseException {
 
         Bill b = new Bill(billName.getText().toString(),
                 locationName.getText().toString(), issuerBill.getText().toString(),
-                date, Double.parseDouble(sumPrice.getText().toString()), items, logedUser);
+                new SimpleDateFormat("dd.MM.yyyy").parse(dateView.getText().toString()).getTime(), Double.parseDouble(sumPrice.getText().toString()), items, logedUser);
         billDao.save(b)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override

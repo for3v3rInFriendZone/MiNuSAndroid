@@ -12,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import DAO.BillDAO;
 import DAO.UserDAO;
 import model.Bill;
@@ -89,7 +93,7 @@ public class BillDetailFragment extends Fragment {
                     ((TextView) rootView.findViewById(R.id.billIssuer)).setText(bill.getIssuer());
                     ((TextView) rootView.findViewById(R.id.billLocation)).setText(bill.getLocation());
                     ((TextView) rootView.findViewById(R.id.billSumPrice)).setText(bill.getPrice().toString());
-                    ((TextView) rootView.findViewById(R.id.billDate)).setText(bill.getDate());
+                    ((TextView) rootView.findViewById(R.id.billDate)).setText(new SimpleDateFormat("dd.MMM.yyyy").format(new Date(bill.getDate())));
                 } else {
 
                 }
