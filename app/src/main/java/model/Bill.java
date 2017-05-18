@@ -12,8 +12,7 @@ public class Bill implements Serializable {
     private String name;
     private String location;
     private String issuer;
-    private String date;
-    private Date realDate;
+    private Long date;
     private BigDecimal price;
     private List<Item> items = new ArrayList<Item>();
     private User user;
@@ -22,7 +21,7 @@ public class Bill implements Serializable {
         super();
     }
 
-    public Bill(String name, String location, String issuer, String date, BigDecimal price, ArrayList<Item> items) {
+    public Bill(String name, String location, String issuer, Long date, BigDecimal price, ArrayList<Item> items) {
         super();
         this.name = name;
         this.location = location;
@@ -31,34 +30,6 @@ public class Bill implements Serializable {
         this.price = price;
         this.items = items;
     }
-
-   /* public static List<Bill> getItems() {
-        List<Bill> items = new ArrayList<>();
-        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
-        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
-        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
-        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
-        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
-        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
-        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
-        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
-        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
-        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
-        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
-        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
-        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
-        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
-        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
-        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
-        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
-        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
-        items.add(new Bill("Racun 1", "Novi Sad", "IDEA", "22.03.2017", 890.90));
-        items.add(new Bill("Racun 2", "Beograd", "Roda", "21.02.2017", 1200.00));
-        items.add(new Bill("Racun 3", "Subotica", "Univerexport", "04.06.2017", 7620.43));
-
-        return items;
-    }*/
-
 
     public String getName() {
         return name;
@@ -84,11 +55,11 @@ public class Bill implements Serializable {
         this.issuer = issuer;
     }
 
-    public String getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
@@ -106,14 +77,6 @@ public class Bill implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getRealDate() {
-        return realDate;
-    }
-
-    public void setRealDate(Date realDate) {
-        this.realDate = realDate;
     }
 
     public List<Item> getItems() {

@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity
         double dec = 0.0;
 
         for (int i = 0; i < bills.size(); i++){
-            calendar.setTime(bills.get(i).getRealDate());
+            calendar.setTime(new Date(bills.get(i).getDate()));
             if(year == calendar.get(Calendar.YEAR)){
                 yearBills.add(bills.get(i));
             }
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity
         setupRecyclerView((RecyclerView) recyclerView, yearBills);
 
         for (Bill bill : yearBills){
-            calendar.setTime(bill.getRealDate());
+            calendar.setTime(new Date(bill.getDate()));
             if(calendar.get(Calendar.MONTH) == Calendar.JANUARY){
                 jan += bill.getPrice().doubleValue();
             }else if(calendar.get(Calendar.MONTH) == Calendar.FEBRUARY){
@@ -503,7 +503,7 @@ public class MainActivity extends AppCompatActivity
         ArrayList<Bill> monthBills = new ArrayList<Bill>();
 
         for(Bill bill : bills){
-            calendar.setTime(bill.getRealDate());
+            calendar.setTime(new Date(bill.getDate()));
             if(year == calendar.get(Calendar.YEAR) && (month - 1) == calendar.get(Calendar.MONTH)){
                 monthBills.add(bill);
             }
@@ -517,7 +517,7 @@ public class MainActivity extends AppCompatActivity
             for(int i = 1; i <= 31; i++){
                 double cena = 0.0;
                 for (Bill bill : monthBills){
-                    calendar.setTime(bill.getRealDate());
+                    calendar.setTime(new Date(bill.getDate()));
                     if (i == calendar.get(Calendar.DAY_OF_MONTH)){
                         cena += bill.getPrice().doubleValue();
                     }
@@ -528,7 +528,7 @@ public class MainActivity extends AppCompatActivity
             for(int i = 1; i <= 30; i++){
                 double cena = 0.0;
                 for (Bill bill : monthBills){
-                    calendar.setTime(bill.getRealDate());
+                    calendar.setTime(new Date(bill.getDate()));
                     if (i == calendar.get(Calendar.DAY_OF_MONTH)){
                         cena += bill.getPrice().doubleValue();
                     }
@@ -540,7 +540,7 @@ public class MainActivity extends AppCompatActivity
                 for(int i = 1; i <= 29; i++){
                     double cena = 0.0;
                     for (Bill bill : monthBills){
-                        calendar.setTime(bill.getRealDate());
+                        calendar.setTime(new Date(bill.getDate()));
                         if (i == calendar.get(Calendar.DAY_OF_MONTH)){
                             cena += bill.getPrice().doubleValue();
                         }
@@ -551,7 +551,7 @@ public class MainActivity extends AppCompatActivity
                 for (int i = 1; i <= 28; i++) {
                     double cena = 0.0;
                     for (Bill bill : monthBills){
-                        calendar.setTime(bill.getRealDate());
+                        calendar.setTime(new Date(bill.getDate()));
                         if (i == calendar.get(Calendar.DAY_OF_MONTH)){
                             cena += bill.getPrice().doubleValue();
                         }
@@ -615,9 +615,6 @@ public class MainActivity extends AppCompatActivity
     public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
         if(response.isSuccessful()) {
             bills = response.body();
-            for(Bill bill : bills){
-                bill.setRealDate(new Date(Long.parseLong(bill.getDate())));
-            }
             setupRecyclerView((RecyclerView) recyclerView, response.body());
         } else {
             Log.e("sadas", response.message());
