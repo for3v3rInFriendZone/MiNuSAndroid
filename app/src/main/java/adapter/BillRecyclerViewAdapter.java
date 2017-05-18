@@ -1,4 +1,4 @@
-package adapter;
+package util;
 
 import android.com.minus.R;
 import android.com.minus.activities.BillDetailActivity;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +39,7 @@ public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder
 
     @Override
     public void onBindViewHolder(final BillViewHolder holder, final int position) {
+        SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
         holder.getName().setText(mValues.get(position).getName());
         holder.getDate().setText(new SimpleDateFormat("dd.MMM.yyyy").format(new Date(mValues.get(position).getDate())));
         holder.getIssuer().setText(mValues.get(position).getIssuer());
