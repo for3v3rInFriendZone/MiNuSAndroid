@@ -13,15 +13,15 @@ public class Bill implements Serializable {
     private String location;
     private String issuer;
     private Long date;
-    private BigDecimal price;
-    private List<Item> items = new ArrayList<Item>();
+    private Double price;
+    private List<Item> items;
     private User user;
 
     public Bill() {
         super();
     }
 
-    public Bill(String name, String location, String issuer, Long date, BigDecimal price, ArrayList<Item> items) {
+    public Bill(String name, String location, String issuer, Long date, Double price, ArrayList<Item> items, User user) {
         super();
         this.name = name;
         this.location = location;
@@ -29,6 +29,7 @@ public class Bill implements Serializable {
         this.date = date;
         this.price = price;
         this.items = items;
+        this.user = user;
     }
 
     public String getName() {
@@ -63,11 +64,11 @@ public class Bill implements Serializable {
         this.date = date;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

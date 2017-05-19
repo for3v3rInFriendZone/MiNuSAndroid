@@ -41,7 +41,7 @@ public class AddBillActivity extends AppCompatActivity {
     private Calendar calendar;
     private TextView dateView, sumPrice;
     private int year, month, day;
-    private List<Item> items;
+    private ArrayList<Item> items;
     private Button addItem, addBill;
     private ImageButton locationButton, datePicker;
     private BillDAO billDao;

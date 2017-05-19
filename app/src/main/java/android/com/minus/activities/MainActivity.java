@@ -48,11 +48,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import util.BillRecyclerViewAdapter;
 import util.MonthYearPickerDialog;
 import util.RetrofitBuilder;
 import util.SharedSession;
 import util.SimpleDividerItemDecoration;
-import adapter.BillRecyclerViewAdapter;
 import util.YearPickerDialog;
 
 public class MainActivity extends AppCompatActivity
