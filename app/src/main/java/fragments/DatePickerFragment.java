@@ -40,6 +40,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             ((AddBillActivity) getActivity()).showDate(year, month+1, day);
         } else if(activity instanceof MainActivity) {
             ((MainActivity) getActivity()).showDate(year, month+1, day);
+            ((MainActivity) getActivity()).setSelectedDay(day);
+            ((MainActivity) getActivity()).setSelectedMonth(month+1);
+            ((MainActivity) getActivity()).setSelectedYear(year);
+            ((MainActivity) getActivity()).callReport();
         }
         // Do something with the date chosen by the user
 

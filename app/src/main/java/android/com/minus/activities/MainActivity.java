@@ -48,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import util.BillRecyclerViewAdapter;
+import adapter.BillRecyclerViewAdapter;
 import util.MonthYearPickerDialog;
 import util.RetrofitBuilder;
 import util.SharedSession;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private TextView dayPicker;
     private Calendar calendar;
-    private int year, month, day, selectedYear, selectedMonth;
+    private int year, month, day, selectedYear, selectedMonth, selectedDay;
     private ImageButton datePicker;
     private FloatingActionButton newBill;
     private RecyclerView recyclerView;
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity
     private User logedUser;
     private List<Bill> bills = new ArrayList<Bill>();
     private Report report;
+    private boolean dnevni, mesecni, godisnji;
 
     public enum Report {
         ALL,
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity
         month = calendar.get(Calendar.MONTH);
         selectedMonth = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
+        selectedDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         dayPicker = (TextView) findViewById(R.id.day_picker_report);
         datePicker = (ImageButton) findViewById(R.id.day_date);
@@ -280,11 +282,25 @@ public class MainActivity extends AppCompatActivity
         ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
         params.height= RecyclerView.LayoutParams.WRAP_CONTENT;
         recyclerView.setLayoutParams(params);
+        List<Bill> dayBills = new ArrayList<Bill>();
 
-        //Showing currnetly date when open window first time
-        showDate(year, month+1, day);
-       // adapter.filter("22.03.2017");
+        if(year != selectedYear || month+1 != selectedMonth || day != selectedDay){
+            showDate(selectedYear, selectedMonth, selectedDay);
+        } else {
+            showDate(year, month+1, day);
+        }
 
+        for(Bill bill : bills){
+            calendar.setTime(new Date(bill.getDate()));
+            int dan = calendar.get(Calendar.DAY_OF_MONTH);
+            int mesec = calendar.get(Calendar.MONTH);
+            int godina = calendar.get(Calendar.YEAR);
+            if(selectedDay == dan && (selectedMonth-1) == mesec && selectedYear == godina){
+                dayBills.add(bill);
+            }
+        }
+
+        setupRecyclerView((RecyclerView) recyclerView, dayBills);
 
         datePicker.setVisibility(View.VISIBLE);
         datePicker.setOnClickListener(new View.OnClickListener() {
@@ -297,10 +313,10 @@ public class MainActivity extends AppCompatActivity
 
     private void monthReport() {
 
-        mChart.setVisibility(View.VISIBLE);
+
         toolbar.setTitle("Mesečni pregled");
         newBill.setVisibility(View.GONE);
-        if(year != selectedYear && month+1 != selectedMonth){
+        if(year != selectedYear || month+1 != selectedMonth){
             showDate(selectedMonth, selectedYear);
         } else {
             showDate(month+1, year);
@@ -325,6 +341,8 @@ public class MainActivity extends AppCompatActivity
         BarData bardata = new BarData(getMonthXAxisValues(),getMonthDataSet(selectedMonth, selectedYear, bills));
       /*  ...............Static Data for Data ListView..............................*/
         mChart.setData(bardata);
+        mChart.notifyDataSetChanged();
+        mChart.setVisibility(View.VISIBLE);
     }
 
     private void yearReport() {
@@ -356,6 +374,7 @@ public class MainActivity extends AppCompatActivity
       /*  ...............Static Data for Data ListView..............................*/
 
         mChart.setData(bardata);
+        mChart.notifyDataSetChanged();
         mChart.setVisibility(View.VISIBLE);
     }
 
@@ -499,9 +518,11 @@ public class MainActivity extends AppCompatActivity
         ArrayList<IBarDataSet> datas = new ArrayList<IBarDataSet>();
         ArrayList<Bill> monthBills = new ArrayList<Bill>();
 
+
         for(Bill bill : bills){
             calendar.setTime(new Date(bill.getDate()));
-            if(year == calendar.get(Calendar.YEAR) && (month - 1) == calendar.get(Calendar.MONTH)){
+            int mesec = calendar.get(Calendar.MONTH);
+            if(year == calendar.get(Calendar.YEAR) && (month - 1) == mesec){
                 monthBills.add(bill);
             }
         }
@@ -576,6 +597,8 @@ public class MainActivity extends AppCompatActivity
         dayPicker.setVisibility(View.GONE);
         datePicker.setVisibility(View.GONE);
         newBill.setVisibility(View.VISIBLE);
+        mChart.setVisibility(View.INVISIBLE);
+        setupRecyclerView((RecyclerView) recyclerView, bills);
 
         ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
         params.height= RecyclerView.LayoutParams.WRAP_CONTENT;
@@ -604,8 +627,12 @@ public class MainActivity extends AppCompatActivity
         selectedYear = year1;
     }
 
-    public void  setSelectedMonth(int month1){
+    public void setSelectedMonth(int month1){
         selectedMonth = month1;
+    }
+
+    public void setSelectedDay(int day1){
+        selectedDay = day1;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package util;
+package adapter;
 
 import android.com.minus.R;
 import android.com.minus.activities.BillDetailActivity;

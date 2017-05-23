@@ -14,12 +14,16 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.concurrent.TimeUnit;
+
 import DAO.UserDAO;
 import model.User;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import util.LoginData;
 import util.RetrofitBuilder;
 import util.SharedSession;
@@ -30,6 +34,7 @@ public class LoginActivity extends AppCompatActivity{
     private Retrofit retrofit;
     private Button login, regButton;
     private EditText username, password;
+    private OkHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,10 @@ public class LoginActivity extends AppCompatActivity{
         username = (EditText) findViewById(R.id.usernameInput);
         password = (EditText) findViewById(R.id.passwordInput);
 
-        retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
+        client = new OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES).build();
+        retrofit = new Retrofit.Builder().baseUrl(UserDAO.BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(client).build();
+
+        //retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         userDao = retrofit.create(UserDAO.class);
 
         login.setOnClickListener(new View.OnClickListener() {

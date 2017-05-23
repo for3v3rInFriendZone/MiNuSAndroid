@@ -13,9 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import DAO.UserDAO;
 import model.User;
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
     private UserDAO userDao;
     private Retrofit retrofit;
     private EditText firstname, lastname, username, password, email;
+    private OkHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,12 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         username = (EditText) findViewById(R.id.usernameRegInput);
         password = (EditText) findViewById(R.id.passwordRegInput);
         email = (EditText) findViewById(R.id.emailRegInput);
+        //client = new OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES).build();
+        //retrofit = new Retrofit.Builder().baseUrl(UserDAO.BASE_URL).client(client).build();
 
         Button regButton = (Button)findViewById(R.id.regButton);
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
+
         userDao = retrofit.create(UserDAO.class);
 
         regButton.setOnClickListener(new View.OnClickListener() {

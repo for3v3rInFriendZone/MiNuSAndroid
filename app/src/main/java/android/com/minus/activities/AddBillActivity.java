@@ -161,7 +161,8 @@ public class AddBillActivity extends AppCompatActivity {
 
         Bill b = new Bill(billName.getText().toString(),
                 locationName.getText().toString(), issuerBill.getText().toString(),
-                new SimpleDateFormat("dd.MM.yyyy").parse(dateView.getText().toString()).getTime(), Double.parseDouble(sumPrice.getText().toString()), items, logedUser);
+                new SimpleDateFormat("dd.MM.yyyy").parse(dateView.getText().toString()).getTime(),
+                Double.parseDouble(sumPrice.getText().toString()), items, logedUser);
         billDao.save(b)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override

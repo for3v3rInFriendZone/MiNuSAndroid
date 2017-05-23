@@ -17,15 +17,13 @@ import util.LoginData;
 
 public interface UserDAO {
 
-    String BASE_URL = "http://192.168.1.54:8080";
+    String BASE_URL = "http://c6697cd4.ngrok.io";
 
     @GET("/user")
     Call<List<User>> findAll();
 
     @GET("/user/userBills/{userId}")
     Call<List<Bill>> findUserBills(@Path("userId") Long userId);
-    /*@GET("/user/userBills/{userId}")
-    Call<JsonArray> findUserBills(@Path("userId") Long userId);*/
 
     @POST("/user")
     Call<ResponseBody> save(@Body User u);
