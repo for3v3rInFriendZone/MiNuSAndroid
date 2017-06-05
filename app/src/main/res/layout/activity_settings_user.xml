@@ -29,36 +29,67 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <EditText
-        android:id="@+id/name_info"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp" />
+        android:layout_margin="10dp"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/ime"/>
+
+    <EditText
+        android:id="@+id/name_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/prezime"/>
 
     <EditText
         android:id="@+id/surname_info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"/>
+        android:layout_margin="10dp"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/korisnicko_ime"/>
 
     <EditText
         android:id="@+id/username_info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:focusable="false"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp" />
+        android:layout_margin="10dp"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/e_mail"/>
 
     <EditText
         android:id="@+id/email_info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:focusable="false"
-        android:hint="mickeyJordan63@gmail.com"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"/>
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:id="@+id/password_info"
@@ -75,7 +106,6 @@
         android:text="@string/change_password"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal" />
-
 
     <Button
         android:id="@+id/submit_changes"
