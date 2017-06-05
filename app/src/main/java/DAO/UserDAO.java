@@ -1,8 +1,5 @@
 package DAO;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import java.util.List;
 import model.Bill;
 import model.User;
@@ -17,7 +14,7 @@ import util.LoginData;
 
 public interface UserDAO {
 
-    String BASE_URL = "http://c6697cd4.ngrok.io";
+    String BASE_URL = "http://192.168.1.54:8080";
 
     @GET("/user")
     Call<List<User>> findAll();

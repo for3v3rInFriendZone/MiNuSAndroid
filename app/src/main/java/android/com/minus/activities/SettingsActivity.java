@@ -3,6 +3,7 @@ package android.com.minus.activities;
 import android.com.minus.R;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
