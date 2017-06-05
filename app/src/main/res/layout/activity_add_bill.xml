@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/newBillLayout"
         android:fitsSystemWindows="true"
         android:background="@drawable/main_background"
         tools:context="android.com.minus.activities.AddBillActivity">

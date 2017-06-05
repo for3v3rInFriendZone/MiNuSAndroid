@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import util.LoginData;
 
@@ -27,5 +28,8 @@ public interface UserDAO {
 
     @POST("/user/login")
     Call<User> login(@Body LoginData loginData);
+
+    @PUT("/user/{userId}")
+    Call<User> editUser(@Path("userId") Long userId, @Body User editUser);
 
 }
