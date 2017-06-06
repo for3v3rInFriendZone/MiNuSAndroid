@@ -79,7 +79,7 @@ public class SettingsUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userDao.editUser(logedUser.getId(), new User(logedUser.getUsername(), password.getText().toString(),
-                        email.getText().toString(), firstname.getText().toString(), lastname.getText().toString())).enqueue(new Callback<User>() {
+                        email.getText().toString(), firstname.getText().toString(), lastname.getText().toString(), "")).enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()) {

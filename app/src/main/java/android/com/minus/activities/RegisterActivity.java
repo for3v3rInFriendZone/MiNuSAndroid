@@ -2,11 +2,14 @@ package android.com.minus.activities;
 
 import android.com.minus.R;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
     private Retrofit retrofit;
     private EditText firstname, lastname, username, password, email;
     private ImageView logoIcon;
+    private Bitmap iconBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +66,8 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         logoIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, 0);
             }
         });
     }
@@ -73,18 +77,26 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         switch(requestCode) {
             case 0:
                 if(resultCode == RESULT_OK){
-                    Uri selectedImage = imageReturnedIntent.getData();
-                    logoIcon.setImageURI(selectedImage);
+                    iconBitmap = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    logoIcon.setImageBitmap(iconBitmap);
                 }
-
                 break;
             case 1:
                 if(resultCode == RESULT_OK){
-                    Uri selectedImage = imageReturnedIntent.getData();
-                    logoIcon.setImageURI(selectedImage);
+                    iconBitmap = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    logoIcon.setImageBitmap(iconBitmap);
                 }
                 break;
         }
+    }
+
+    public String toBase64(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+        byte[] image = stream.toByteArray();
+        String img_str = Base64.encodeToString(image, 0);
+
+        return img_str;
     }
 
     public void toLOginPage(View v){
@@ -92,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         if(isValid()) {
             User user = new User(username.getText().toString(), password.getText().toString(),
                     email.getText().toString(), firstname.getText().toString(),
-                    lastname.getText().toString());
+                    lastname.getText().toString(), toBase64(iconBitmap));
 
             userDao.save(user).enqueue(this);
 

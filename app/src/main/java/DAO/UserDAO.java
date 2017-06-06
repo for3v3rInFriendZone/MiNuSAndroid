@@ -15,7 +15,7 @@ import util.LoginData;
 
 public interface UserDAO {
 
-    String BASE_URL = "http://192.168.1.54:8080";
+    String BASE_URL = "https://minus-server.herokuapp.com";
 
     @GET("/user")
     Call<List<User>> findAll();
