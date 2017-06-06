@@ -53,7 +53,7 @@ import util.SimpleDividerItemDecoration;
 import util.YearPickerDialog;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Callback<List<Bill>> {
+        implements NavigationView.OnNavigationItemSelectedListener, Callback<List<Bill>>, SearchView.OnQueryTextListener {
 
     private SearchView searchInput;
     private Toolbar toolbar;
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     private TextView navName;
     private TextView navEmail;
     private ImageView navImage;
+    private BillRecyclerViewAdapter adapter;
 
     public enum Report {
         ALL,
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity
 
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
+        searchInput.setOnQueryTextListener(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.item_list);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
@@ -180,11 +182,24 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        adapter.filter(query);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.filter(newText);
+        return true;
+    }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Bill> bills) {
+        adapter = new BillRecyclerViewAdapter(bills);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new BillRecyclerViewAdapter(bills));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

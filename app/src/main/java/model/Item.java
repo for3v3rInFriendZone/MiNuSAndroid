@@ -12,21 +12,6 @@ public class Item implements Serializable{
     private int quantity;
     private double price;
 
-    /*public static ArrayList<Item> getItems(){
-        ArrayList<Item> items = new ArrayList<Item>();
-
-        items.add(new Item(1L, "Kafa", 1, 120.00));
-        items.add(new Item(1L,"Sok", 2, 220.00));
-        items.add(new Item(1L,"Cokolada", 2, 430.00));
-        items.add(new Item(1L,"Voda", 4, 523.00));
-        items.add(new Item(1L,"Mis", 2, 220.00));
-        items.add(new Item(1L,"Knjiga", 2, 220.00));
-        items.add(new Item(1L,"Torba", 2, 220.00));
-        items.add(new Item(1L,"Dezodorans", 2, 220.00));
-
-        return items;
-    }*/
-
     public Long getId() {
         return id;
     }
