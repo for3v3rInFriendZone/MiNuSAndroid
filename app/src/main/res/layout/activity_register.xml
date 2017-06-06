@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/minus_logo" />
 
@@ -33,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/vase_ime"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="15dp"
         android:width="230dp"
         android:layout_below="@+id/registrujSe"
         android:layout_alignLeft="@+id/surnameRegInput"
@@ -75,13 +76,22 @@
         android:layout_below="@+id/passwordRegInput"
         android:width="230dp"/>
 
+    <ImageView
+        android:id="@+id/imageIconReg"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/emailRegInput"
+        app:srcCompat="@drawable/logo_user"/>
+
     <Button
         android:id="@+id/regButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/registruj_se"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/emailRegInput" />
+        android:layout_below="@+id/imageIconReg" />
 
 
 </RelativeLayout>

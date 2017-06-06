@@ -2,6 +2,7 @@ package android.com.minus.activities;
 
 import android.com.minus.R;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -30,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
     private UserDAO userDao;
     private Retrofit retrofit;
     private EditText firstname, lastname, username, password, email;
-    private OkHttpClient client;
+    private ImageView logoIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,7 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         username = (EditText) findViewById(R.id.usernameRegInput);
         password = (EditText) findViewById(R.id.passwordRegInput);
         email = (EditText) findViewById(R.id.emailRegInput);
-        //client = new OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES).build();
-        //retrofit = new Retrofit.Builder().baseUrl(UserDAO.BASE_URL).client(client).build();
+        logoIcon = (ImageView) findViewById(R.id.imageIconReg);
 
         Button regButton = (Button)findViewById(R.id.regButton);
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
@@ -56,6 +57,34 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
                 toLOginPage(v);
             }
         });
+
+        logoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto , 1);
+            }
+        });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch(requestCode) {
+            case 0:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    logoIcon.setImageURI(selectedImage);
+                }
+
+                break;
+            case 1:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    logoIcon.setImageURI(selectedImage);
+                }
+                break;
+        }
     }
 
     public void toLOginPage(View v){
@@ -66,10 +95,10 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
                     lastname.getText().toString());
 
             userDao.save(user).enqueue(this);
-        }
 
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        }
     }
 
     public boolean isValid() {

@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -69,6 +70,9 @@ public class MainActivity extends AppCompatActivity
     private List<Bill> bills = new ArrayList<Bill>();
     private Report report;
     private boolean dnevni, mesecni, godisnji;
+    private TextView navName;
+    private TextView navEmail;
+    private ImageView navImage;
 
     public enum Report {
         ALL,
@@ -131,6 +135,14 @@ public class MainActivity extends AppCompatActivity
 
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         userDao = retrofit.create(UserDAO.class);
+
+        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
+        View header = nv.getHeaderView(0);
+        navName = (TextView) header.findViewById(R.id.textViewNameNav);
+        navEmail = (TextView) header.findViewById(R.id.textViewEmailNav);
+        navImage = (ImageView) header.findViewById(R.id.imageViewNav);
+        navName.setText(logedUser.getFirstname() + " " + logedUser.getLastname());
+        navEmail.setText(logedUser.getEmail());
 
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
