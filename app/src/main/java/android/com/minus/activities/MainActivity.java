@@ -3,7 +3,15 @@ package android.com.minus.activities;
 import android.com.minus.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +22,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -154,6 +163,7 @@ public class MainActivity extends AppCompatActivity
         navImage = (ImageView) header.findViewById(R.id.imageViewNav);
         navName.setText(logedUser.getFirstname() + " " + logedUser.getLastname());
         navEmail.setText(logedUser.getEmail());
+        navImage.setImageBitmap(returnRoundedBitmap(logedUser.getImage()));
 
         searchInput = (SearchView) findViewById(R.id.search_input);
         searchInput.setQueryHint("Pretraga računa...");
@@ -190,6 +200,13 @@ public class MainActivity extends AppCompatActivity
                 newBillView(v);
             }
         });
+    }
+
+    private Bitmap returnRoundedBitmap(String encodedBitmap) {
+        byte[] decodedString = Base64.decode(encodedBitmap, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        return decodedByte;
     }
 
     private void setColor(String colorRGB) {
