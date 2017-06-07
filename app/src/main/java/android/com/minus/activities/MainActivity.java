@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Bill> bills) {
-        adapter = new BillRecyclerViewAdapter(bills);
+        adapter = new BillRecyclerViewAdapter(bills, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -97,11 +97,11 @@
         android:id="@+id/billSumPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         android:text="676"
         android:textColor="@color/colorPrimaryDark"
-        android:paddingLeft="140dp"
+        android:paddingLeft="160dp"
         android:layout_below="@+id/tabela_artikala"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp" />

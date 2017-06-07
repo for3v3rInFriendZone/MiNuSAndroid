@@ -2,6 +2,8 @@ package adapter;
 
 import android.app.Activity;
 import android.com.minus.R;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +15,30 @@ import java.util.List;
 
 import model.Item;
 
-/**
- * Created by Dejan on 4/18/2017.
- */
-
 public class BillItemsAdapter extends BaseAdapter{
 
-    Activity activity;
+    private Activity activity;
     public List<Item> items;
+    private SharedPreferences shared_font;
+    private Typeface font;
 
     public BillItemsAdapter(List<Item> items, Activity activity) {
         super();
         this.items = items;
         this.activity = activity;
+
+        shared_font = activity.getApplicationContext().getSharedPreferences("font", 0);
+        String app_font = shared_font.getString("app_font", "");
+
+        if(app_font.equals("serif")) {
+            font = Typeface.SERIF;
+        } else if(app_font.equals("sans")) {
+            font = Typeface.SANS_SERIF;
+        } else if(app_font.equals("monospace")) {
+            font = Typeface.MONOSPACE;
+        } else {
+            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + app_font + ".ttf");
+        }
     }
 
     @Override
@@ -68,6 +81,11 @@ public class BillItemsAdapter extends BaseAdapter{
         }
 
         Item item = items.get(position);
+
+        holder.name.setTypeface(font);
+        holder.quantity.setTypeface(font);
+        holder.price.setTypeface(font);
+
         holder.name.setText(item.getName().toString());
         holder.quantity.setText(new Integer(item.getQuantity()).toString());
         holder.price.setText(new Double(item.getPrice()).toString());

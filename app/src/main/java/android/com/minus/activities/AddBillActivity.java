@@ -1,6 +1,8 @@
 package android.com.minus.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
@@ -39,15 +41,16 @@ import util.SharedSession;
 public class AddBillActivity extends AppCompatActivity {
 
     private Calendar calendar;
-    private TextView dateView, sumPrice;
+    private TextView dateView, sumPrice, novi_racun, datum, artikal, kolicina, cena, ukupno, ukupnaCena, valuta;
     private int year, month, day;
     private ArrayList<Item> items;
-    private Button addItem, addBill;
+    private Button addItem, addBill, returnBill;
     private ImageButton locationButton, datePicker;
     private BillDAO billDao;
     private Retrofit retrofit;
     private EditText billName, locationName, issuerBill;
     private User logedUser;
+    private SharedPreferences shared_font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,17 @@ public class AddBillActivity extends AppCompatActivity {
         billDao = retrofit.create(BillDAO.class);
 
         logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
+        shared_font = getApplicationContext().getSharedPreferences("font", 0);
+        String app_font = shared_font.getString("app_font", "");
 
+        novi_racun = (TextView) findViewById(R.id.novi_racun);
+        artikal = (TextView) findViewById(R.id.textView9);
+        kolicina = (TextView) findViewById(R.id.textView1);
+        cena = (TextView) findViewById(R.id.textView2);
+        datum = (TextView) findViewById(R.id.datum);
+        ukupno = (TextView) findViewById(R.id.ukupno);
+        ukupnaCena = (TextView) findViewById(R.id.ukupnaCena);
+        valuta = (TextView) findViewById(R.id.valuta);
         dateView = (TextView) findViewById(R.id.odabraniDatum);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -66,11 +79,12 @@ public class AddBillActivity extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        //Showing currnetly date when open window first time
+        //Showing current date when window is opened first time
         showDate(year, month+1, day);
 
         addItem = (Button) findViewById(R.id.dodajArtikal);
         addBill = (Button) findViewById(R.id.dodajRacun);
+        returnBill = (Button) findViewById(R.id.ponistiRacun);
         locationButton = (ImageButton)findViewById(R.id.locationButton);
         datePicker = (ImageButton) findViewById(R.id.postaviDatum);
         billName = (EditText) findViewById(R.id.naziv_racun);
@@ -125,6 +139,10 @@ public class AddBillActivity extends AppCompatActivity {
             sumPrice.setText(price.toString());
         }
 
+        if(!app_font.equals("")) {
+            setFont(app_font);
+        }
+
     }
 
     /**
@@ -155,6 +173,76 @@ public class AddBillActivity extends AppCompatActivity {
         Intent i = new Intent(this, AddItemActivity.class);
         i.putExtra("listOfItems", (Serializable) items);
         startActivity(i);
+    }
+
+    private void setFont(String nameOfFont) {
+
+        if(nameOfFont.equals("serif")) {
+            novi_racun.setTypeface(Typeface.SERIF);
+            billName.setTypeface(Typeface.SERIF);
+            locationName.setTypeface(Typeface.SERIF);
+            issuerBill.setTypeface(Typeface.SERIF);
+            datum.setTypeface(Typeface.SERIF);
+            dateView.setTypeface(Typeface.SERIF);
+            addItem.setTypeface(Typeface.SERIF);
+            artikal.setTypeface(Typeface.SERIF);
+            kolicina.setTypeface(Typeface.SERIF);
+            cena.setTypeface(Typeface.SERIF);
+            ukupno.setTypeface(Typeface.SERIF);
+            ukupnaCena.setTypeface(Typeface.SERIF);
+            valuta.setTypeface(Typeface.SERIF);
+            addBill.setTypeface(Typeface.SERIF);
+            returnBill.setTypeface(Typeface.SERIF);
+        } else if(nameOfFont.equals("sans")) {
+            novi_racun.setTypeface(Typeface.SANS_SERIF);
+            billName.setTypeface(Typeface.SANS_SERIF);
+            locationName.setTypeface(Typeface.SANS_SERIF);
+            issuerBill.setTypeface(Typeface.SANS_SERIF);
+            datum.setTypeface(Typeface.SANS_SERIF);
+            dateView.setTypeface(Typeface.SANS_SERIF);
+            addItem.setTypeface(Typeface.SANS_SERIF);
+            artikal.setTypeface(Typeface.SANS_SERIF);
+            kolicina.setTypeface(Typeface.SANS_SERIF);
+            cena.setTypeface(Typeface.SANS_SERIF);
+            ukupno.setTypeface(Typeface.SANS_SERIF);
+            ukupnaCena.setTypeface(Typeface.SANS_SERIF);
+            valuta.setTypeface(Typeface.SANS_SERIF);
+            addBill.setTypeface(Typeface.SANS_SERIF);
+            returnBill.setTypeface(Typeface.SANS_SERIF);
+        } else if(nameOfFont.equals("monospace")) {
+            novi_racun.setTypeface(Typeface.MONOSPACE);
+            billName.setTypeface(Typeface.MONOSPACE);
+            locationName.setTypeface(Typeface.MONOSPACE);
+            issuerBill.setTypeface(Typeface.MONOSPACE);
+            datum.setTypeface(Typeface.MONOSPACE);
+            dateView.setTypeface(Typeface.MONOSPACE);
+            addItem.setTypeface(Typeface.MONOSPACE);
+            artikal.setTypeface(Typeface.MONOSPACE);
+            kolicina.setTypeface(Typeface.MONOSPACE);
+            cena.setTypeface(Typeface.MONOSPACE);
+            ukupno.setTypeface(Typeface.MONOSPACE);
+            ukupnaCena.setTypeface(Typeface.MONOSPACE);
+            valuta.setTypeface(Typeface.MONOSPACE);
+            addBill.setTypeface(Typeface.MONOSPACE);
+            returnBill.setTypeface(Typeface.MONOSPACE);
+        } else {
+            Typeface font = Typeface.createFromAsset(getAssets(), "fonts/" + nameOfFont + ".ttf");
+            novi_racun.setTypeface(font);
+            billName.setTypeface(font);
+            locationName.setTypeface(font);
+            issuerBill.setTypeface(font);
+            datum.setTypeface(font);
+            dateView.setTypeface(font);
+            addItem.setTypeface(font);
+            artikal.setTypeface(font);
+            kolicina.setTypeface(font);
+            cena.setTypeface(font);
+            ukupno.setTypeface(font);
+            ukupnaCena.setTypeface(font);
+            valuta.setTypeface(font);
+            addBill.setTypeface(font);
+            returnBill.setTypeface(font);
+        }
     }
 
     public void saveBill() throws ParseException {

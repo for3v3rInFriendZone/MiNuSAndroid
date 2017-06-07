@@ -1,9 +1,12 @@
 package adapter;
 
+import android.app.Activity;
 import android.com.minus.R;
 import android.com.minus.activities.BillDetailActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,26 +27,43 @@ public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder
 
     private List<Bill> mValues;
     private List<Bill> mValuesCopy;
+    private SharedPreferences shared_font;
+    private Typeface font;
 
-    public BillRecyclerViewAdapter(List<Bill> items) {
+    public BillRecyclerViewAdapter(List<Bill> items, Activity activity) {
         this.mValues = items;
         this.mValuesCopy = new ArrayList<Bill>(mValues);
+        shared_font = activity.getApplicationContext().getSharedPreferences("font", 0);
+        String app_font = shared_font.getString("app_font", "");
+
+        if(app_font.equals("serif")) {
+            font = Typeface.SERIF;
+        } else if(app_font.equals("sans")) {
+            font = Typeface.SANS_SERIF;
+        } else if(app_font.equals("monospace")) {
+            font = Typeface.MONOSPACE;
+        } else {
+            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + app_font + ".ttf");
+        }
     }
 
     @Override
     public BillViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_content, parent, false);
+
         return new BillViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final BillViewHolder holder, final int position) {
-        SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
+        holder.getName().setTypeface(font);
+        holder.getIssuer().setTypeface(font);
+        holder.getDate().setTypeface(font);
+
         holder.getName().setText(mValues.get(position).getName());
         holder.getDate().setText(new SimpleDateFormat("dd.MMM.yyyy").format(new Date(mValues.get(position).getDate())));
         holder.getIssuer().setText(mValues.get(position).getIssuer());
-
         holder.getmView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +99,8 @@ public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder
 
         notifyDataSetChanged();
     }
+
+
 
 
 }

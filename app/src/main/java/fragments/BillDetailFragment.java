@@ -85,7 +85,7 @@ public class BillDetailFragment extends Fragment {
                 if(response.isSuccessful()){
                     bill = response.body();
                     activity.setTitle(bill.getName());
-                    itemAdapter = new ItemRecyclerViewAdapter(bill.getItems());
+                    itemAdapter = new ItemRecyclerViewAdapter(bill.getItems(), activity);
                     setupRecyclerView((RecyclerView) itemRecycler, itemAdapter);
 
                      billIssuer.setText(bill.getIssuer());
