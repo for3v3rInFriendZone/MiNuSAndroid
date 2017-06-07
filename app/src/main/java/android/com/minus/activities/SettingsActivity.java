@@ -1,7 +1,9 @@
 package android.com.minus.activities;
 
 import android.com.minus.R;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.support.v4.app.NavUtils;
@@ -32,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction().replace(R.id.settings_container,
                     new SettingsFragment()).commit();
         }
-
     }
 
     @Override

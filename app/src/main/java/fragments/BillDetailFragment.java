@@ -2,6 +2,8 @@ package fragments;
 
 import android.app.Activity;
 import android.com.minus.R;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,10 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import DAO.BillDAO;
 import DAO.UserDAO;
 import model.Bill;
@@ -36,6 +36,8 @@ public class BillDetailFragment extends Fragment {
     private RecyclerView itemRecycler;
     private Retrofit retrofit;
     private BillDAO billDao;
+    private TextView billIssuer, billLocation, billSumPrice, billDate, artikal, kolicina, cena, ukupna_cena, datum_kupovine;
+    private SharedPreferences shared_font;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -50,25 +52,7 @@ public class BillDetailFragment extends Fragment {
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         billDao = retrofit.create(BillDAO.class);
         activity = this.getActivity();
-
-       /* bill = (Bill) getArguments().getSerializable("item");
-
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            for(int i=0; i<Bill.getItems().size(); i++) {
-                if(Bill.getItems().get(i).getName().equals(getArguments().getString(ARG_ITEM_ID))) {
-                    bill = Bill.getItems().get(i);
-                    break;
-                }
-            }
-
-            activity = this.getActivity();
-            activity.setTitle(bill.getName());
-
-        }*/
-
+        shared_font = activity.getApplicationContext().getSharedPreferences("font", 0);
     }
 
     @Override
@@ -79,7 +63,21 @@ public class BillDetailFragment extends Fragment {
         itemRecycler = (RecyclerView) rootView.findViewById(R.id.listViewItemsDetail);
         itemRecycler.addItemDecoration(new SimpleDividerItemDecoration(activity));
         assert itemRecycler != null;
+        billIssuer = (TextView) rootView.findViewById(R.id.billIssuer);
+        billLocation = (TextView) rootView.findViewById(R.id.billLocation);
+        billSumPrice = (TextView) rootView.findViewById(R.id.billSumPrice);
+        billDate = (TextView) rootView.findViewById(R.id.billDate);
+        artikal = (TextView) rootView.findViewById(R.id.textView9);
+        kolicina = (TextView) rootView.findViewById(R.id.textView1);
+        cena = (TextView) rootView.findViewById(R.id.textView2);
+        ukupna_cena = (TextView) rootView.findViewById(R.id.ukupna_cena_bill);
+        datum_kupovine = (TextView) rootView.findViewById(R.id.datum_kupovine);
 
+        String appFont = shared_font.getString("app_font", "");
+
+        if(!appFont.equals("")) {
+            setFont(appFont);
+        }
 
         billDao.findOne(getArguments().getLong(ARG_ITEM_ID)).enqueue(new Callback<Bill>() {
             @Override
@@ -90,14 +88,14 @@ public class BillDetailFragment extends Fragment {
                     itemAdapter = new ItemRecyclerViewAdapter(bill.getItems());
                     setupRecyclerView((RecyclerView) itemRecycler, itemAdapter);
 
-                    ((TextView) rootView.findViewById(R.id.billIssuer)).setText(bill.getIssuer());
-                    ((TextView) rootView.findViewById(R.id.billLocation)).setText(bill.getLocation());
-                    ((TextView) rootView.findViewById(R.id.billSumPrice)).setText(bill.getPrice().toString());
-                    ((TextView) rootView.findViewById(R.id.billDate)).setText(new SimpleDateFormat("dd.MMM.yyyy").format(new Date(bill.getDate())));
+                     billIssuer.setText(bill.getIssuer());
+                     billLocation.setText(bill.getLocation());
+                     billSumPrice.setText(bill.getPrice().toString());
+                     billDate.setText(new SimpleDateFormat("dd.MMM.yyyy").format(new Date(bill.getDate())));
+
                 } else {
 
                 }
-
             }
 
             @Override
@@ -114,6 +112,52 @@ public class BillDetailFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setFont(String nameOfFont) {
+
+        if(nameOfFont.equals("serif")) {
+            billIssuer.setTypeface(Typeface.SERIF);
+            billLocation.setTypeface(Typeface.SERIF);
+            billSumPrice.setTypeface(Typeface.SERIF);
+            billDate.setTypeface(Typeface.SERIF);
+            artikal.setTypeface(Typeface.SERIF);
+            kolicina.setTypeface(Typeface.SERIF);
+            cena.setTypeface(Typeface.SERIF);
+            ukupna_cena.setTypeface(Typeface.SERIF);
+            datum_kupovine.setTypeface(Typeface.SERIF);
+        } else if(nameOfFont.equals("sans")) {
+            billIssuer.setTypeface(Typeface.SANS_SERIF);
+            billLocation.setTypeface(Typeface.SANS_SERIF);
+            billSumPrice.setTypeface(Typeface.SANS_SERIF);
+            billDate.setTypeface(Typeface.SANS_SERIF);
+            artikal.setTypeface(Typeface.SANS_SERIF);
+            kolicina.setTypeface(Typeface.SANS_SERIF);
+            cena.setTypeface(Typeface.SANS_SERIF);
+            ukupna_cena.setTypeface(Typeface.SANS_SERIF);
+            datum_kupovine.setTypeface(Typeface.SANS_SERIF);
+        } else if(nameOfFont.equals("monospace")) {
+            billIssuer.setTypeface(Typeface.MONOSPACE);
+            billLocation.setTypeface(Typeface.MONOSPACE);
+            billSumPrice.setTypeface(Typeface.MONOSPACE);
+            billDate.setTypeface(Typeface.MONOSPACE);
+            artikal.setTypeface(Typeface.MONOSPACE);
+            kolicina.setTypeface(Typeface.MONOSPACE);
+            cena.setTypeface(Typeface.MONOSPACE);
+            ukupna_cena.setTypeface(Typeface.MONOSPACE);
+            datum_kupovine.setTypeface(Typeface.MONOSPACE);
+        } else {
+            Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + nameOfFont + ".ttf");
+            billIssuer.setTypeface(font);
+            billLocation.setTypeface(font);
+            billSumPrice.setTypeface(font);
+            billDate.setTypeface(font);
+            artikal.setTypeface(font);
+            kolicina.setTypeface(font);
+            cena.setTypeface(font);
+            ukupna_cena.setTypeface(font);
+            datum_kupovine.setTypeface(font);
+        }
     }
 
 }

@@ -2,11 +2,10 @@
 <resources>
     <string-array name="font_types">
         <item>Serif</item>
-        <item>Tahoma</item>
-        <item>Times New Roman</item>
-        <item>Georgia</item>
+        <item>Sans</item>
         <item>Monospace</item>
-        <item>Consolas</item>
+        <item>Arbutus</item>
+        <item>Catamaran</item>
     </string-array>
 
     <string-array name="color_names">

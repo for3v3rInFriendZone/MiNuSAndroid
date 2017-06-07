@@ -83,6 +83,7 @@
 
 
     <TextView
+        android:id="@+id/ukupna_cena_bill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -99,7 +100,7 @@
         android:textSize="14dp"
         android:textStyle="bold"
         android:text="676"
-        android:textColor="@color/primary_text"
+        android:textColor="@color/colorPrimaryDark"
         android:paddingLeft="140dp"
         android:layout_below="@+id/tabela_artikala"
         android:layout_centerHorizontal="true"
@@ -122,6 +123,7 @@
         android:layout_below="@+id/hr2">
 
         <TextView
+            android:id="@+id/datum_kupovine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"
