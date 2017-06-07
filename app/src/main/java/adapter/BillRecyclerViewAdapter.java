@@ -43,7 +43,7 @@ public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder
         } else if(app_font.equals("monospace")) {
             font = Typeface.MONOSPACE;
         } else {
-            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + app_font + ".ttf");
+            font = Typeface.createFromAsset(activity.getAssets(), "fonts/arbutus.ttf");
         }
     }
 

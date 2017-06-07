@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fragments.Day">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/dnevniBudzet"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dnevni budžet"
+        android:gravity="center_horizontal"
+        android:textSize="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/datum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp"
+        android:layout_below="@id/dnevniBudzet"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/datumText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/datum"
+            android:textColor="@color/primary_text"
+            android:textSize="17dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"/>
+
+        <TextView
+            android:id="@+id/datumZaBudzet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_selected"
+            android:paddingBottom="10dp"
+            android:layout_marginRight="5dp"/>
+
+        <ImageButton
+            android:id="@+id/kalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/dayBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="@string/dnevniBudzet"
+        android:textSize="17dp"
+        android:layout_centerHorizontal="true"
+        android:width="230dp"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@+id/datum"/>
+
+    <Button
+        android:id="@+id/primeniBudzet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Primeni"
+        android:layout_below="@id/dayBudget"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
