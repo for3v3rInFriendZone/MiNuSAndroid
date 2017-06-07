@@ -2,12 +2,14 @@ package android.com.minus.activities;
 
 import android.com.minus.R;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity
     private TextView navEmail;
     private ImageView navImage;
     private BillRecyclerViewAdapter adapter;
+    private SharedPreferences shared_color;
 
     public enum Report {
         ALL,
@@ -87,11 +90,18 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Lista računa");
         setSupportActionBar(toolbar);
 
         logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
+
+        shared_color = getApplicationContext().getSharedPreferences("color", 0);
+        String colorRGB = shared_color.getString("bgColor", "");
+        if(!colorRGB.equals("")) {
+            setColor(colorRGB);
+        }
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -180,6 +190,24 @@ public class MainActivity extends AppCompatActivity
                 newBillView(v);
             }
         });
+    }
+
+    private void setColor(String colorRGB) {
+        if(colorRGB.equals("#ff3333")) {
+            getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.crvena));
+        } else if(colorRGB.equals("#3333ff")) {
+            getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.plava));
+        } else if(colorRGB.equals("#006622")) {
+            getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.zelena));
+        } else if(colorRGB.equals("#4d2600")) {
+            getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.braon));
+        } else if(colorRGB.equals("#e6e600")) {
+            getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.zuta));
+        } else if(colorRGB.equals("#b30086")) {
+            getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.ljubicasta));
+        } else {
+            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        }
     }
 
     @Override

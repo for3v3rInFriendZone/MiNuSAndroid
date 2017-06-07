@@ -14,4 +14,11 @@
     <color name="year">#999999</color>
     <color name="title">#222222</color>
     <color name="end_color">#8C8C8C </color>
+
+    <color name="crvena">#ff3333 </color>
+    <color name="plava">#3333ff </color>
+    <color name="zelena">#006622 </color>
+    <color name="braon">#4d2600 </color>
+    <color name="zuta">#e6e600 </color>
+    <color name="ljubicasta">#b30086 </color>
 </resources>

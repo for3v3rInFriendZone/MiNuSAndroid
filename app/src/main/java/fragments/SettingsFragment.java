@@ -20,7 +20,9 @@ import util.FontHelper;
 public class SettingsFragment extends PreferenceFragment {
 
     private SharedPreferences shared_font;
+    private SharedPreferences shared_color;
     private SharedPreferences.Editor sharedPreferencesEditor;
+    private SharedPreferences.Editor sharedPreferencesEditorColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,10 @@ public class SettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.settings);
 
         shared_font = getActivity().getApplicationContext().getSharedPreferences("font", 0);
+        shared_color = getActivity().getApplicationContext().getSharedPreferences("color", 0);
+
         sharedPreferencesEditor = shared_font.edit();
+        sharedPreferencesEditorColor = shared_color.edit();
     }
 
     @Override
@@ -62,8 +67,22 @@ public class SettingsFragment extends PreferenceFragment {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if(newValue.equals("#ff3333")) {
-                        FontHelper.changeBackground(new AddBillActivity(), R.id.newBillLayout, Color.RED);
+                        sharedPreferencesEditorColor.putString("bgColor", "#ff3333");
+                    } else if(newValue.equals("#3333ff")) {
+                        sharedPreferencesEditorColor.putString("bgColor", "#3333ff");
+                    } else if(newValue.equals("#006622")) {
+                        sharedPreferencesEditorColor.putString("bgColor", "#006622");
+                    } else if(newValue.equals("#4d2600")) {
+                        sharedPreferencesEditorColor.putString("bgColor", "#4d2600");
+                    } else if(newValue.equals("#e6e600")) {
+                        sharedPreferencesEditorColor.putString("bgColor", "#e6e600");
+                    } else if(newValue.equals("#b30086")) {
+                        sharedPreferencesEditorColor.putString("bgColor", "#b30086");
+                    } else {
+                        sharedPreferencesEditorColor.putString("bgColor", "default");
                     }
+
+                    sharedPreferencesEditorColor.apply();
                     return true;
                 }
             });
