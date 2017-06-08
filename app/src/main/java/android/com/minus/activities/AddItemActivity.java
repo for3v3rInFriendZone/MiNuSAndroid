@@ -19,6 +19,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import model.Item;
+import model.User;
+import util.SharedSession;
 
 public class AddItemActivity extends AppCompatActivity {
 
@@ -27,7 +29,7 @@ public class AddItemActivity extends AppCompatActivity {
     private EditText itemName, itemPrice;
     private List<Item> items;
     private TextView novi_artikal, kolicina;
-    private SharedPreferences shared_font;
+    private User logedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,7 @@ public class AddItemActivity extends AppCompatActivity {
         np.setMaxValue(999);
         np.setWrapSelectorWheel(true);
 
-        shared_font = getApplicationContext().getSharedPreferences("font", 0);
-        String app_font = shared_font.getString("app_font", "");
+        logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
 
         novi_artikal = (TextView) findViewById(R.id.novi_artikal);
         kolicina = (TextView) findViewById(R.id.kolicina);
@@ -67,9 +68,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        if(!app_font.equals("")) {
-            setFont(app_font);
-        }
+        setFont(logedUser.getFont());
     }
 
     public void addItemAndBackToBill() {

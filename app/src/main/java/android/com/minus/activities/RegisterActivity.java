@@ -104,12 +104,9 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         if(isValid()) {
             User user = new User(username.getText().toString(), password.getText().toString(),
                     email.getText().toString(), firstname.getText().toString(),
-                    lastname.getText().toString(), toBase64(iconBitmap));
+                    lastname.getText().toString(), toBase64(iconBitmap), "sans", "default");
 
             userDao.save(user).enqueue(this);
-
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
         }
     }
 
@@ -139,6 +136,8 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         if(response.isSuccessful()) {
             Toast.makeText(getApplicationContext(), "Uspesno je dodan korisnik.",
                     Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
         } else {
             Toast.makeText(getApplicationContext(), response.message(),
                     Toast.LENGTH_SHORT).show();

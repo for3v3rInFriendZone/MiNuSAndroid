@@ -50,7 +50,6 @@ public class AddBillActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private EditText billName, locationName, issuerBill;
     private User logedUser;
-    private SharedPreferences shared_font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,6 @@ public class AddBillActivity extends AppCompatActivity {
         billDao = retrofit.create(BillDAO.class);
 
         logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
-        shared_font = getApplicationContext().getSharedPreferences("font", 0);
-        String app_font = shared_font.getString("app_font", "");
 
         novi_racun = (TextView) findViewById(R.id.novi_racun);
         artikal = (TextView) findViewById(R.id.textView9);
@@ -139,10 +136,7 @@ public class AddBillActivity extends AppCompatActivity {
             sumPrice.setText(price.toString());
         }
 
-        if(!app_font.equals("")) {
-            setFont(app_font);
-        }
-
+        setFont(logedUser.getFont());
     }
 
     /**
