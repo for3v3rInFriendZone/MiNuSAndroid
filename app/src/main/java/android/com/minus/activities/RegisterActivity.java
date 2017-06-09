@@ -1,8 +1,10 @@
 package android.com.minus.activities;
 
+import android.com.minus.BuildConfig;
 import android.com.minus.R;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -91,6 +93,9 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
     }
 
     public String toBase64(Bitmap bitmap) {
+        if(bitmap == null) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_user);
+        }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
         byte[] image = stream.toByteArray();

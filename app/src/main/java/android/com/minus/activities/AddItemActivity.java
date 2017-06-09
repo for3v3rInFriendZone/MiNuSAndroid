@@ -72,11 +72,13 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     public void addItemAndBackToBill() {
-        Intent i = new Intent(this, AddBillActivity.class);
+        if(isValid()) {
+            Intent i = new Intent(this, AddBillActivity.class);
 
-        items.add(new Item(itemName.getText().toString(), np.getValue(), Double.parseDouble(itemPrice.getText().toString())));
-        i.putExtra("listOfItems", (Serializable) items);
-        startActivity(i);
+            items.add(new Item(itemName.getText().toString(), np.getValue(), Double.parseDouble(itemPrice.getText().toString())));
+            i.putExtra("listOfItems", (Serializable) items);
+            startActivity(i);
+        }
     }
 
     private void setFont(String nameOfFont) {
@@ -111,6 +113,18 @@ public class AddItemActivity extends AppCompatActivity {
             itemName.setTypeface(font);
             itemPrice.setTypeface(font);
         }
+    }
+
+    private boolean isValid() {
+        if(itemName.getText().toString().length() == 0) {
+            itemName.setError("Morate uneti naziv.");
+            return false;
+        } else if(itemPrice.getText().toString().length() == 0) {
+            itemPrice.setError("Morate uneti cenu.");
+            return false;
+        }
+
+        return true;
     }
 
 
