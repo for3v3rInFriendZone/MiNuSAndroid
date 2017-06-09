@@ -65,7 +65,7 @@ public class SettingsFragment extends PreferenceFragment {
                     }
 
                     SharedSession.saveObjectToSharedPreference(getActivity().getApplicationContext(), "userSession", "user", logedUser);
-                    userDao.editUser(logedUser.getId(), logedUser).enqueue(new Callback<User>() {
+                    userDao.editUser(logedUser).enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
 
@@ -101,7 +101,7 @@ public class SettingsFragment extends PreferenceFragment {
                     }
 
                     SharedSession.saveObjectToSharedPreference(getActivity().getApplicationContext(), "userSession", "user", logedUser);
-                    userDao.editUser(logedUser.getId(), logedUser).enqueue(new Callback<User>() {
+                    userDao.editUser(logedUser).enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
 

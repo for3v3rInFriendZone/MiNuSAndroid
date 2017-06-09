@@ -65,8 +65,9 @@ public class SettingsUserActivity extends AppCompatActivity {
         submit_changes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userDao.editUser(logedUser.getId(), new User(logedUser.getUsername(), logedUser.getPassword(),
-                        email.getText().toString(), firstname.getText().toString(), lastname.getText().toString(), logedUser.getImage(), logedUser.getFont(), logedUser.getColor())).enqueue(new Callback<User>() {
+                logedUser.setFirstname(firstname.getText().toString());
+                logedUser.setLastname(lastname.getText().toString());
+                userDao.editUser(logedUser).enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()) {

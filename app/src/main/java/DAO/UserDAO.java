@@ -15,8 +15,8 @@ import util.LoginData;
 
 public interface UserDAO {
 
-   // String BASE_URL = "https://minus-server.herokuapp.com";
-    String BASE_URL = "http://192.168.1.54:8080";
+    String BASE_URL = "https://minus-server.herokuapp.com";
+   // String BASE_URL = "http://192.168.1.54:8080";
 
     @GET("/user")
     Call<List<User>> findAll();
@@ -30,7 +30,7 @@ public interface UserDAO {
     @POST("/user/login")
     Call<User> login(@Body LoginData loginData);
 
-    @PUT("/user/{userId}")
-    Call<User> editUser(@Path("userId") Long userId, @Body User editUser);
+    @PUT("/user")
+    Call<User> editUser(@Body User editUser);
 
 }
