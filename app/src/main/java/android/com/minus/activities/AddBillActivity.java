@@ -1,5 +1,6 @@
 package android.com.minus.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -14,6 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -50,11 +57,15 @@ public class AddBillActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private EditText billName, locationName, issuerBill;
     private User logedUser;
+    private PlacePicker.IntentBuilder pl;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bill);
+
+        activity = this;
 
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         billDao = retrofit.create(BillDAO.class);
@@ -75,6 +86,8 @@ public class AddBillActivity extends AppCompatActivity {
         sumPrice = (TextView) findViewById(R.id.ukupnaCena);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        pl = new PlacePicker.IntentBuilder();
 
         //Showing current date when window is opened first time
         showDate(year, month+1, day);
@@ -110,6 +123,18 @@ public class AddBillActivity extends AppCompatActivity {
 
         //location button
         locationButton.setImageResource(R.mipmap.ic_map_marker);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivityForResult(pl.build(activity), 1);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         //select date button
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
@@ -137,6 +162,15 @@ public class AddBillActivity extends AppCompatActivity {
         }
 
         setFont(logedUser.getFont());
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                locationName.setText(place.getName());
+            }
+        }
     }
 
     /**
