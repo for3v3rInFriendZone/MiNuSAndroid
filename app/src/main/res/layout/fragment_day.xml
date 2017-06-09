@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="fragments.Day">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/dnevniBudzet"
         android:layout_marginTop="30dp"

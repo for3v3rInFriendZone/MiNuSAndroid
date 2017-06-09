@@ -45,7 +45,7 @@ public class Day extends Fragment{
 
     TextView datum;
     ImageButton datePicker;
-    private Calendar calendar, selectedDate;
+    private Calendar calendar;
     EditText budzet;
     Button primeni;
     BudgetDAO budgetDAO;
@@ -73,23 +73,8 @@ public class Day extends Fragment{
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         budgetDAO = retrofit.create(BudgetDAO.class);
         logedUser = SharedSession.getSavedObjectFromPreference(getActivity().getApplicationContext(), "userSession", "user", User.class);
-        budgetDAO.findUserBudgets(logedUser.getId()).enqueue(new Callback<List<Budget>>() {
-            @Override
-            public void onResponse(Call<List<Budget>> call, Response<List<Budget>> response) {
-                if(response.isSuccessful()){
-                    budgets = response.body();
+        checkIfBudgetExist(day, month, year);
 
-                    checkIfBudgetExist(day, month, year);
-                }else{
-                    Log.e("Poruka : ", response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Budget>> call, Throwable t) {
-                Log.e("Poruka : ", t.getMessage());
-            }
-        });
     }
 
     @Override
@@ -160,7 +145,7 @@ public class Day extends Fragment{
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(response.isSuccessful()) {
-                        Toast.makeText(activity.getApplicationContext(), "Dnevni budzet uspesno podesen.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity.getApplicationContext(), "Dnevni budžet uspešno postavljen.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -172,34 +157,52 @@ public class Day extends Fragment{
         }
     }
 
-    public void checkIfBudgetExist(int checkDay, int checkMonth, int checkYear){
-        boolean postoji = false;
-        Calendar dateFromCalendar = Calendar.getInstance();
-        Calendar dateToCalendar = Calendar.getInstance();
+    public void checkIfBudgetExist(final int checkDay, final int checkMonth, final int checkYear){
+        budgetDAO.findUserBudgets(logedUser.getId()).enqueue(new Callback<List<Budget>>() {
+            @Override
+            public void onResponse(Call<List<Budget>> call, Response<List<Budget>> response) {
+                if(response.isSuccessful()){
+                    budgets = response.body();
 
-        for(Budget b : budgets) {
-            dateFromCalendar.setTime(new Date(b.getDateFrom()));
-            dateToCalendar.setTime(new Date(b.getDateTo()));
-            if ((dateToCalendar.get(Calendar.DAY_OF_MONTH) == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
-                    (dateToCalendar.get(Calendar.MONTH) == dateFromCalendar.get(Calendar.MONTH)) &&
-                    (dateToCalendar.get(Calendar.YEAR) == dateFromCalendar.get(Calendar.YEAR))){
-                if ((checkDay == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
-                        (checkMonth == dateFromCalendar.get(Calendar.MONTH)) &&
-                        (checkYear == dateFromCalendar.get(Calendar.YEAR))) {
-                    postoji = true;
-                    budget = b;
-                    budzet.setText(String.valueOf(budget.getValue()));
-                    break;
+                    boolean postoji = false;
+                    Calendar dateFromCalendar = Calendar.getInstance();
+                    Calendar dateToCalendar = Calendar.getInstance();
+
+                    for(Budget b : budgets) {
+                        dateFromCalendar.setTime(new Date(b.getDateFrom()));
+                        dateToCalendar.setTime(new Date(b.getDateTo()));
+                        if ((dateToCalendar.get(Calendar.DAY_OF_MONTH) == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
+                                (dateToCalendar.get(Calendar.MONTH) == dateFromCalendar.get(Calendar.MONTH)) &&
+                                (dateToCalendar.get(Calendar.YEAR) == dateFromCalendar.get(Calendar.YEAR))){
+                            if ((checkDay == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
+                                    (checkMonth == dateFromCalendar.get(Calendar.MONTH)) &&
+                                    (checkYear == dateFromCalendar.get(Calendar.YEAR))) {
+                                postoji = true;
+                                budget = b;
+                                budzet.setText(String.valueOf(budget.getValue()));
+                                break;
+                            }else{
+                                postoji = false;
+                            }
+                        }
+                    }
+
+                    if(!postoji){
+                        budget = null;
+                        budzet.setText("");
+                    }
                 }else{
-                    postoji = false;
+                    Log.e("Poruka : ", response.message());
                 }
             }
-        }
 
-        if(!postoji){
-            budget = null;
-            budzet.setText("");
-        }
+            @Override
+            public void onFailure(Call<List<Budget>> call, Throwable t) {
+                Log.e("Poruka : ", t.getMessage());
+            }
+        });
+
+
 
     }
 }

@@ -55,8 +55,6 @@ public class CashControlActivity extends FragmentActivity {
 
             }
         });
-
-
     }
 
 }

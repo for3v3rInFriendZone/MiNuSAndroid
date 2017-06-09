@@ -3,24 +3,24 @@ package util;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.com.minus.R;
 import android.com.minus.activities.CashControlActivity;
 import android.com.minus.activities.MainActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
+
 import java.util.Calendar;
 import java.util.List;
 
 import fragments.Month;
 
-public class MonthYearPickerDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
+public class MonthBudgetDataPicker extends DialogFragment implements DatePickerDialog.OnDateSetListener{
     private static final int MAX_YEAR = 2099;
 
     @Override
@@ -54,7 +54,7 @@ public class MonthYearPickerDialog extends DialogFragment implements DatePickerD
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MonthYearPickerDialog.this.getDialog().cancel();
+                        MonthBudgetDataPicker.this.getDialog().cancel();
                     }
                 });
         return builder.create();
@@ -62,17 +62,14 @@ public class MonthYearPickerDialog extends DialogFragment implements DatePickerD
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        if(getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).showDate(month, year);
-            ((MainActivity) getActivity()).setSelectedMonth(month);
-            ((MainActivity) getActivity()).setSelectedYear(year);
-            ((MainActivity) getActivity()).callReport();
-        }else if(getActivity() instanceof CashControlActivity){
+        if(getActivity() instanceof CashControlActivity){
             List<Fragment> fragments = ((CashControlActivity) getActivity()).getSupportFragmentManager().getFragments();
             for(Fragment f : fragments){
                 if (f instanceof Month){
-                    ((Month) f).showDate(month+1, year);
-                    ((Month) f).checkIfBudgetExist(month, year);
+                    ((Month) f).showDate(month, year);
+                    ((Month) f).checkIfBudgetExist(month-1, year);
+                    ((Month) f).setSelectedMonth(month - 1);
+                    ((Month) f).setSelectedYear(year);
                 }
             }
         }

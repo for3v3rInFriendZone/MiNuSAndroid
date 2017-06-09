@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import fragments.Day;
+import fragments.Month;
 
 public class PagerAdapter extends FragmentPagerAdapter{
 
@@ -30,7 +31,7 @@ public class PagerAdapter extends FragmentPagerAdapter{
                 Day day = new Day();
                 return day;
             case 1:
-                Day month = new Day();
+                Month month = new Month();
                 return month;
             default:
                 return  null;

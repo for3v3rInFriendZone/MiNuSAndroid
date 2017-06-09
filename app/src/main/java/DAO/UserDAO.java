@@ -15,7 +15,7 @@ import util.LoginData;
 
 public interface UserDAO {
 
-    String BASE_URL = "http://4e1f8313.ngrok.io";
+    String BASE_URL = "http://98c0fb4d.ngrok.io";
 
     @GET("/user")
     Call<List<User>> findAll();
