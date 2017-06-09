@@ -15,7 +15,7 @@ import util.LoginData;
 
 public interface UserDAO {
 
-    String BASE_URL = "https://minus-server.herokuapp.com";
+    String BASE_URL = "http://4e1f8313.ngrok.io";
 
     @GET("/user")
     Call<List<User>> findAll();

@@ -41,7 +41,7 @@ import util.RetrofitBuilder;
 import util.SharedSession;
 
 
-public class Day extends Fragment implements Callback<List<Budget>>{
+public class Day extends Fragment{
 
     TextView datum;
     ImageButton datePicker;
@@ -73,7 +73,23 @@ public class Day extends Fragment implements Callback<List<Budget>>{
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         budgetDAO = retrofit.create(BudgetDAO.class);
         logedUser = SharedSession.getSavedObjectFromPreference(getActivity().getApplicationContext(), "userSession", "user", User.class);
-        budgetDAO.findUserBudgets(logedUser.getId());
+        budgetDAO.findUserBudgets(logedUser.getId()).enqueue(new Callback<List<Budget>>() {
+            @Override
+            public void onResponse(Call<List<Budget>> call, Response<List<Budget>> response) {
+                if(response.isSuccessful()){
+                    budgets = response.body();
+
+                    checkIfBudgetExist(day, month, year);
+                }else{
+                    Log.e("Poruka : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Budget>> call, Throwable t) {
+                Log.e("Poruka : ", t.getMessage());
+            }
+        });
     }
 
     @Override
@@ -96,39 +112,22 @@ public class Day extends Fragment implements Callback<List<Budget>>{
         year = calendar.get(Calendar.YEAR);
         setDate(day, month, year);
 
-        Calendar dateFromCalendar = Calendar.getInstance();
-        Calendar dateToCalendar = Calendar.getInstance();
-
-        for(Budget b : budgets) {
-            dateFromCalendar.setTime(new Date(b.getDateFrom()));
-            dateToCalendar.setTime(new Date(b.getDateTo()));
-            if ((dateToCalendar.get(Calendar.DAY_OF_MONTH) == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
-                    (dateToCalendar.get(Calendar.MONTH) == dateFromCalendar.get(Calendar.MONTH)) &&
-                    (dateToCalendar.get(Calendar.YEAR) == dateFromCalendar.get(Calendar.YEAR))){
-                if ((day == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
-                        (month == dateFromCalendar.get(Calendar.MONTH)) &&
-                        (year == dateFromCalendar.get(Calendar.YEAR))) {
-                    budget = b;
-                    budzet.setText(String.valueOf(budget.getValue()));
-                }
-            }
-        }
-
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
         datePicker.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
+                /*final Calendar calendar = Calendar.getInstance();
                 int yy = calendar.get(Calendar.YEAR);
                 int mm = calendar.get(Calendar.MONTH);
-                int dd = calendar.get(Calendar.DAY_OF_MONTH);
+                int dd = calendar.get(Calendar.DAY_OF_MONTH);*/
                 DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth) {
                         calendar.set(yearSelected, monthOfYear, dayOfMonth);
                         setDate(dayOfMonth, monthOfYear, yearSelected);
+                        checkIfBudgetExist(dayOfMonth, monthOfYear, yearSelected);
                     }
-                }, yy, mm, dd);
+                }, year, month, day);
                 datePicker.show();
             }
         });
@@ -143,7 +142,17 @@ public class Day extends Fragment implements Callback<List<Budget>>{
     public void primeniBudzet(){
         if(budget != null){
             budget.setValue(Double.parseDouble(budzet.getText().toString()));
-            budgetDAO.update(budget);
+            budgetDAO.update(budget).enqueue(new Callback<Budget>() {
+                @Override
+                public void onResponse(Call<Budget> call, Response<Budget> response) {
+                    Toast.makeText(activity.getApplicationContext(), "Uspesno ste promenili budžet.", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Budget> call, Throwable t) {
+
+                }
+            });
         }else{
             budget = new Budget(calendar.getTimeInMillis(), calendar.getTimeInMillis(),
                     Double.parseDouble(budzet.getText().toString()), logedUser);
@@ -163,17 +172,34 @@ public class Day extends Fragment implements Callback<List<Budget>>{
         }
     }
 
-    @Override
-    public void onResponse(Call<List<Budget>> call, Response<List<Budget>> response) {
-        if(response.isSuccessful()){
-            budgets = response.body();
-        }else{
-            Log.e("Poruka : ", response.message());
-        }
-    }
+    public void checkIfBudgetExist(int checkDay, int checkMonth, int checkYear){
+        boolean postoji = false;
+        Calendar dateFromCalendar = Calendar.getInstance();
+        Calendar dateToCalendar = Calendar.getInstance();
 
-    @Override
-    public void onFailure(Call<List<Budget>> call, Throwable t) {
-        Log.e("Poruka : ", t.getMessage());
+        for(Budget b : budgets) {
+            dateFromCalendar.setTime(new Date(b.getDateFrom()));
+            dateToCalendar.setTime(new Date(b.getDateTo()));
+            if ((dateToCalendar.get(Calendar.DAY_OF_MONTH) == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
+                    (dateToCalendar.get(Calendar.MONTH) == dateFromCalendar.get(Calendar.MONTH)) &&
+                    (dateToCalendar.get(Calendar.YEAR) == dateFromCalendar.get(Calendar.YEAR))){
+                if ((checkDay == dateFromCalendar.get(Calendar.DAY_OF_MONTH)) &&
+                        (checkMonth == dateFromCalendar.get(Calendar.MONTH)) &&
+                        (checkYear == dateFromCalendar.get(Calendar.YEAR))) {
+                    postoji = true;
+                    budget = b;
+                    budzet.setText(String.valueOf(budget.getValue()));
+                    break;
+                }else{
+                    postoji = false;
+                }
+            }
+        }
+
+        if(!postoji){
+            budget = null;
+            budzet.setText("");
+        }
+
     }
 }

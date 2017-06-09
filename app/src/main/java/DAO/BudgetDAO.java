@@ -27,6 +27,6 @@ public interface BudgetDAO {
     @GET("/budget/user/{id}")
     Call<List<Budget>> findUserBudgets(@Path("id") Long id);
 
-    @PUT("/budget/update}")
+    @PUT("/budget/update")
     Call<Budget> update(@Body Budget budget);
 }
