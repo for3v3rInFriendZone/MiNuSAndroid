@@ -38,6 +38,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         Activity activity = getActivity();
         if(activity instanceof AddBillActivity) {
             ((AddBillActivity) getActivity()).showDate(year, month+1, day);
+            ((AddBillActivity) getActivity()).setSelectedDate(day, month, year);
         } else if(activity instanceof MainActivity) {
             ((MainActivity) getActivity()).showDate(year, month+1, day);
             ((MainActivity) getActivity()).setSelectedDay(day);

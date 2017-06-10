@@ -50,24 +50,66 @@
             android:background="@android:color/transparent"/>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/dayBudget"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/dayBudgetLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="@string/dnevniBudzet"
-        android:textSize="17dp"
-        android:layout_centerHorizontal="true"
-        android:width="230dp"
-        android:layout_marginBottom="30dp"
-        android:layout_below="@+id/datum"/>
+        android:layout_below="@id/datum"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/dnevniBudzet"
+            android:textSize="17dp"/>
+
+        <EditText
+            android:id="@+id/dayBudget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:layout_centerHorizontal="true"
+            android:width="100dp"
+            android:layout_marginBottom="30dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dayCurrentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dayBudgetLayout"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Vaš trenutni budžet "
+            android:textSize="17dp"/>
+
+        <TextView
+            android:id="@+id/currentBudget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:width="100dp"
+            android:layout_marginBottom="30dp"/>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/primeniBudzet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Primeni"
-        android:layout_below="@id/dayBudget"
+        android:layout_below="@id/dayCurrentLayout"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

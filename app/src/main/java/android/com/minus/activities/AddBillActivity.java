@@ -1,11 +1,14 @@
 package android.com.minus.activities;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.com.minus.R;
@@ -14,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -24,10 +28,12 @@ import java.util.Date;
 import java.util.List;
 
 import DAO.BillDAO;
+import DAO.BudgetDAO;
 import DAO.UserDAO;
 import adapter.BillItemsAdapter;
 import fragments.DatePickerFragment;
 import model.Bill;
+import model.Budget;
 import model.Item;
 import model.User;
 import okhttp3.ResponseBody;
@@ -42,7 +48,7 @@ public class AddBillActivity extends AppCompatActivity {
 
     private Calendar calendar;
     private TextView dateView, sumPrice, novi_racun, datum, artikal, kolicina, cena, ukupno, ukupnaCena, valuta;
-    private int year, month, day;
+    private int year, month, day, budgetYear, budgetMonth, budgetDay;
     private ArrayList<Item> items;
     private Button addItem, addBill, returnBill;
     private ImageButton locationButton, datePicker;
@@ -50,6 +56,7 @@ public class AddBillActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private EditText billName, locationName, issuerBill;
     private User logedUser;
+    private BudgetDAO budgetDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,7 @@ public class AddBillActivity extends AppCompatActivity {
 
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         billDao = retrofit.create(BillDAO.class);
+        budgetDAO = retrofit.create(BudgetDAO.class);
 
         logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
 
@@ -75,6 +83,9 @@ public class AddBillActivity extends AppCompatActivity {
         sumPrice = (TextView) findViewById(R.id.ukupnaCena);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
+        budgetDay = day;
+        budgetMonth = month;
+        budgetYear = year;
 
         //Showing current date when window is opened first time
         showDate(year, month+1, day);
@@ -241,15 +252,62 @@ public class AddBillActivity extends AppCompatActivity {
 
     public void saveBill() throws ParseException {
         if(isValid()) {
-            Bill b = new Bill(billName.getText().toString(),
+            final Bill b = new Bill(billName.getText().toString(),
                     locationName.getText().toString(), issuerBill.getText().toString(),
                     new SimpleDateFormat("dd.MM.yyyy").parse(dateView.getText().toString()).getTime(),
                     Double.parseDouble(sumPrice.getText().toString()), items, logedUser);
-            billDao.save(b)
-                    .enqueue(new Callback<ResponseBody>() {
+
+
+            billDao.save(b).enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if(response.isSuccessful()) {
+                                budgetDAO.findUserBudgets(logedUser.getId()).enqueue(new Callback<List<Budget>>() {
+                                    @Override
+                                    public void onResponse(Call<List<Budget>> call, Response<List<Budget>> response) {
+                                        Calendar dateFrom = Calendar.getInstance();
+                                        Calendar dateTo = Calendar.getInstance();
+
+                                        for(Budget budget : response.body()){
+                                            dateFrom.setTime(new Date(budget.getDateFrom()));
+                                            dateTo.setTime(new Date(budget.getDateTo()));
+                                            //dnevni budzet
+                                            if(budget.getDateFrom().equals(budget.getDateTo())){
+                                                //poklapanje datuma budzeta i datuma racuna
+                                                if((dateFrom.get(Calendar.DAY_OF_MONTH) == budgetDay) &&
+                                                        (dateFrom.get(Calendar.MONTH) == budgetMonth) &&
+                                                        (dateFrom.get(Calendar.YEAR) == budgetYear)){
+                                                    double budzet = budget.getCurrentValue();
+                                                    budget.setCurrentValue(budzet - b.getPrice());
+                                                    budgetDAO.update(budget).enqueue(new Callback<Budget>() {
+                                                        @Override
+                                                        public void onResponse(Call<Budget> call, Response<Budget> response) {
+                                                            Toast.makeText(getApplicationContext(), "Vaš dnevni budžet se promenio.", Toast.LENGTH_SHORT).show();
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<Budget> call, Throwable t) {
+
+                                                        }
+                                                    });
+
+                                                    if((budget.getStartValue()/0.2) > (budzet - b.getPrice())){
+                                                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                                                        mBuilder.setSmallIcon(R.drawable.m);
+                                                        mBuilder.setContentTitle("Oprez!!!");
+                                                        mBuilder.setContentText("Ostalo vam je još " + String.valueOf(budzet - b.getPrice()) + " od predviđenog dnevnog budžeta.");
+                                                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                        mNotificationManager.notify(0, mBuilder.build());
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<List<Budget>> call, Throwable t) {
+
+                                    }
+                                });
                                 NavUtils.navigateUpTo(AddBillActivity.this, new Intent(AddBillActivity.this, MainActivity.class));
                             }
                         }
@@ -260,7 +318,6 @@ public class AddBillActivity extends AppCompatActivity {
                         }
                     });
         }
-
     }
 
     private boolean isValid() {
@@ -273,5 +330,11 @@ public class AddBillActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void setSelectedDate(int day, int month, int year){
+        budgetDay = day;
+        budgetMonth = month;
+        budgetYear = year;
     }
 }

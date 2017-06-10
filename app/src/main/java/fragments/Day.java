@@ -43,7 +43,7 @@ import util.SharedSession;
 
 public class Day extends Fragment{
 
-    TextView datum;
+    TextView datum, trenutniBudzet;
     ImageButton datePicker;
     private Calendar calendar;
     EditText budzet;
@@ -73,7 +73,7 @@ public class Day extends Fragment{
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         budgetDAO = retrofit.create(BudgetDAO.class);
         logedUser = SharedSession.getSavedObjectFromPreference(getActivity().getApplicationContext(), "userSession", "user", User.class);
-        checkIfBudgetExist(day, month, year);
+        checkIfBudgetExist(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
 
     }
 
@@ -82,6 +82,7 @@ public class Day extends Fragment{
         final View rootView = inflater.inflate(R.layout.fragment_day, container, false);
 
         datum = (TextView) rootView.findViewById(R.id.datumZaBudzet);
+        trenutniBudzet = (TextView) rootView.findViewById(R.id.currentBudget);
         datePicker = (ImageButton) rootView.findViewById(R.id.kalendar);
         budzet = (EditText) rootView.findViewById(R.id.dayBudget);
         primeni = (Button) rootView.findViewById(R.id.primeniBudzet);
@@ -126,11 +127,16 @@ public class Day extends Fragment{
 
     public void primeniBudzet(){
         if(budget != null){
-            budget.setValue(Double.parseDouble(budzet.getText().toString()));
+            double currentBudget = budget.getCurrentValue() + (Double.parseDouble(budzet.getText().toString()) - budget.getStartValue());
+            budget.setStartValue(Double.parseDouble(budzet.getText().toString()));
+            budget.setCurrentValue(currentBudget);
             budgetDAO.update(budget).enqueue(new Callback<Budget>() {
                 @Override
                 public void onResponse(Call<Budget> call, Response<Budget> response) {
                     Toast.makeText(activity.getApplicationContext(), "Uspesno ste promenili budžet.", Toast.LENGTH_SHORT).show();
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(new Date(budget.getDateFrom()));
+                    checkIfBudgetExist(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
                 }
 
                 @Override
@@ -140,12 +146,15 @@ public class Day extends Fragment{
             });
         }else{
             budget = new Budget(calendar.getTimeInMillis(), calendar.getTimeInMillis(),
-                    Double.parseDouble(budzet.getText().toString()), logedUser);
+                    Double.parseDouble(budzet.getText().toString()),Double.parseDouble(budzet.getText().toString()), logedUser);
             budgetDAO.save(budget).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(response.isSuccessful()) {
                         Toast.makeText(activity.getApplicationContext(), "Dnevni budžet uspešno postavljen.", Toast.LENGTH_SHORT).show();
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(new Date(budget.getDateFrom()));
+                        checkIfBudgetExist(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
                     }
                 }
 
@@ -179,7 +188,8 @@ public class Day extends Fragment{
                                     (checkYear == dateFromCalendar.get(Calendar.YEAR))) {
                                 postoji = true;
                                 budget = b;
-                                budzet.setText(String.valueOf(budget.getValue()));
+                                budzet.setText(String.valueOf(budget.getStartValue()));
+                                trenutniBudzet.setText(String.valueOf(budget.getCurrentValue()));
                                 break;
                             }else{
                                 postoji = false;
@@ -190,6 +200,7 @@ public class Day extends Fragment{
                     if(!postoji){
                         budget = null;
                         budzet.setText("");
+                        trenutniBudzet.setText("");
                     }
                 }else{
                     Log.e("Poruka : ", response.message());

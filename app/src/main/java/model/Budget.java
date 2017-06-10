@@ -9,17 +9,20 @@ public class Budget {
     private Long id;
     private Long dateFrom;
     private Long dateTo;
-    private double value;
+    private double startValue;
+    private double currentValue;
     private User user;
 
     public Budget(){
 
     }
 
-    public Budget(Long dateFrom, Long dateTo, double value, User user) {
+    public Budget(Long dateFrom, Long dateTo, double startValue, double currentValue, User user) {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.value = value;
+        this.startValue = startValue;
+        this.currentValue = currentValue;
+
         this.user = user;
     }
 
@@ -55,11 +58,20 @@ public class Budget {
         this.dateTo = dateTo;
     }
 
-    public double getValue() {
-        return value;
+    public double getStartValue() {
+        return startValue;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setStartValue(double startValue) {
+        this.startValue = startValue;
+    }
+
+    public void setCurrentValue(double currentValue) {
+        this.currentValue = currentValue;
+    }
+
+    public double getCurrentValue() {
+        return currentValue;
+
     }
 }
