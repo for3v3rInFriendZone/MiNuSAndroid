@@ -156,6 +156,13 @@ public class AddBillActivity extends AppCompatActivity {
             }
         });
 
+        returnBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavUtils.navigateUpTo(AddBillActivity.this, new Intent(AddBillActivity.this, MainActivity.class));
+            }
+        });
+
         //temporary data for bill. It saves only when save is clcked.
         items = (ArrayList<Item>) getIntent().getSerializableExtra("listOfItems");
         if(items == null) {
