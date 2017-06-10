@@ -66,6 +66,7 @@ public class AddBillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_bill);
 
         activity = this;
+        int a = 5;
 
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         billDao = retrofit.create(BillDAO.class);
