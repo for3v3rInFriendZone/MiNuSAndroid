@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         if(isValid()) {
             User user = new User(username.getText().toString(), password.getText().toString(),
                     email.getText().toString(), firstname.getText().toString(),
-                    lastname.getText().toString(), toBase64(iconBitmap), "sans", "default");
+                    lastname.getText().toString(), toBase64(iconBitmap), "sans", "default", true);
 
             userDao.save(user).enqueue(this);
         }

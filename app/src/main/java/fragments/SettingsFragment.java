@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -32,6 +33,7 @@ public class SettingsFragment extends PreferenceFragment {
     private User logedUser;
     private UserDAO userDao;
     private Retrofit retrofit;
+    private CheckBoxPreference checkBoxPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,42 @@ public class SettingsFragment extends PreferenceFragment {
 
         logedUser = SharedSession.getSavedObjectFromPreference(getActivity().getApplicationContext(), "userSession", "user", User.class);
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
+
+        checkBoxPreference = (CheckBoxPreference) getPreferenceManager().findPreference("pref_sync_notify");
+
+        if(logedUser.isNotification()){
+            checkBoxPreference.setChecked(true);
+        }else{
+            checkBoxPreference.setChecked(false);
+        }
+
         userDao = retrofit.create(UserDAO.class);
+
+        checkBoxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if(newValue.toString().equals("true")){
+                    logedUser.setNotification(true);
+                }else{
+                    logedUser.setNotification(false);
+                }
+
+                SharedSession.saveObjectToSharedPreference(getActivity().getApplicationContext(), "userSession", "user", logedUser);
+                userDao.editUser(logedUser).enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+
+                    }
+                });
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -116,8 +153,6 @@ public class SettingsFragment extends PreferenceFragment {
                 }
             });
         }
-
-
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
 

@@ -13,12 +13,13 @@ public class User implements Serializable{
     private String image;
     private String font;
     private String color;
+    private boolean notification;
 
     public User() {
         super();
     }
 
-    public User(String username, String password, String email, String firstname, String lastname, String image, String font, String color) {
+    public User(String username, String password, String email, String firstname, String lastname, String image, String font, String color, boolean notification) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -27,6 +28,7 @@ public class User implements Serializable{
         this.image = image;
         this.font = font;
         this.color = color;
+        this.notification = notification;
     }
 
     public Long getId() {
@@ -95,5 +97,13 @@ public class User implements Serializable{
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isNotification() {
+        return notification;
+    }
+
+    public void setNotification(boolean notification) {
+        this.notification = notification;
     }
 }

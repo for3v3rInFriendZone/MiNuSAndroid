@@ -290,14 +290,15 @@ public class AddBillActivity extends AppCompatActivity {
 
                                                         }
                                                     });
-
-                                                    if((budget.getStartValue()/0.2) > (budzet - b.getPrice())){
-                                                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
-                                                        mBuilder.setSmallIcon(R.drawable.m);
-                                                        mBuilder.setContentTitle("Oprez!!!");
-                                                        mBuilder.setContentText("Ostalo vam je još " + String.valueOf(budzet - b.getPrice()) + " od predviđenog dnevnog budžeta.");
-                                                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                                        mNotificationManager.notify(0, mBuilder.build());
+                                                    if(logedUser.isNotification()) {
+                                                        if ((budget.getStartValue() / 0.2) > (budzet - b.getPrice())) {
+                                                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                                                            mBuilder.setSmallIcon(R.drawable.m);
+                                                            mBuilder.setContentTitle("Oprez!!!");
+                                                            mBuilder.setContentText("Ostalo vam je još " + String.valueOf(budzet - b.getPrice()) + " od predviđenog dnevnog budžeta.");
+                                                            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                            mNotificationManager.notify(0, mBuilder.build());
+                                                        }
                                                     }
                                                 }
                                             }
@@ -318,14 +319,15 @@ public class AddBillActivity extends AppCompatActivity {
 
                                                         }
                                                     });
-
-                                                    if((budget.getStartValue()/0.2) > (budzet - b.getPrice())){
-                                                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
-                                                        mBuilder.setSmallIcon(R.drawable.m);
-                                                        mBuilder.setContentTitle("Oprez!!!");
-                                                        mBuilder.setContentText("Ostalo vam je još " + String.valueOf(budzet - b.getPrice()) + " od predviđenog mesečnog budžeta.");
-                                                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                                        mNotificationManager.notify(1, mBuilder.build());
+                                                    if(logedUser.isNotification()) {
+                                                        if ((budget.getStartValue() / 0.2) > (budzet - b.getPrice())) {
+                                                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                                                            mBuilder.setSmallIcon(R.drawable.m);
+                                                            mBuilder.setContentTitle("Oprez!!!");
+                                                            mBuilder.setContentText("Ostalo vam je još " + String.valueOf(budzet - b.getPrice()) + " od predviđenog mesečnog budžeta.");
+                                                            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                            mNotificationManager.notify(1, mBuilder.build());
+                                                        }
                                                     }
                                                 }
                                             }
