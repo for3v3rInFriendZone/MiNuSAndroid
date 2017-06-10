@@ -148,6 +148,9 @@ public class Month extends Fragment {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(response.isSuccessful()) {
                         Toast.makeText(activity.getApplicationContext(), "Mesečni budžet uspešno postavljen.", Toast.LENGTH_SHORT).show();
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(new Date(budget.getDateFrom()));
+                        checkIfBudgetExist(c.get(Calendar.MONTH), c.get(Calendar.YEAR));
                     }
                 }
 

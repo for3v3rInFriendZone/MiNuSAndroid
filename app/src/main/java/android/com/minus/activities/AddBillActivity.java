@@ -301,8 +301,37 @@ public class AddBillActivity extends AppCompatActivity {
                                                     }
                                                 }
                                             }
+
+                                            if(!dateFrom.getTime().equals(dateTo.getTime())){
+                                                if((dateFrom.get(Calendar.MONTH) == budgetMonth) &&
+                                                        (dateFrom.get(Calendar.YEAR) == budgetYear)){
+                                                    double budzet = budget.getCurrentValue();
+                                                    budget.setCurrentValue(budzet - b.getPrice());
+                                                    budgetDAO.update(budget).enqueue(new Callback<Budget>() {
+                                                        @Override
+                                                        public void onResponse(Call<Budget> call, Response<Budget> response) {
+                                                            Toast.makeText(getApplicationContext(), "Vaš mesečni budžet se promenio.", Toast.LENGTH_SHORT).show();
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<Budget> call, Throwable t) {
+
+                                                        }
+                                                    });
+
+                                                    if((budget.getStartValue()/0.2) > (budzet - b.getPrice())){
+                                                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                                                        mBuilder.setSmallIcon(R.drawable.m);
+                                                        mBuilder.setContentTitle("Oprez!!!");
+                                                        mBuilder.setContentText("Ostalo vam je još " + String.valueOf(budzet - b.getPrice()) + " od predviđenog mesečnog budžeta.");
+                                                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                        mNotificationManager.notify(1, mBuilder.build());
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
+
                                     @Override
                                     public void onFailure(Call<List<Budget>> call, Throwable t) {
 
