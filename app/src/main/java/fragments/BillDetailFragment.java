@@ -19,12 +19,14 @@ import java.util.Date;
 import DAO.BillDAO;
 import DAO.UserDAO;
 import model.Bill;
+import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import adapter.ItemRecyclerViewAdapter;
 import util.RetrofitBuilder;
+import util.SharedSession;
 import util.SimpleDividerItemDecoration;
 
 
@@ -37,7 +39,7 @@ public class BillDetailFragment extends Fragment {
     private Retrofit retrofit;
     private BillDAO billDao;
     private TextView billIssuer, billLocation, billSumPrice, billDate, artikal, kolicina, cena, ukupna_cena, datum_kupovine;
-    private SharedPreferences shared_font;
+    private User logedUser;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -52,7 +54,7 @@ public class BillDetailFragment extends Fragment {
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         billDao = retrofit.create(BillDAO.class);
         activity = this.getActivity();
-        shared_font = activity.getApplicationContext().getSharedPreferences("font", 0);
+        logedUser = SharedSession.getSavedObjectFromPreference(getActivity().getApplicationContext(), "userSession", "user", User.class);
     }
 
     @Override
@@ -73,11 +75,7 @@ public class BillDetailFragment extends Fragment {
         ukupna_cena = (TextView) rootView.findViewById(R.id.ukupna_cena_bill);
         datum_kupovine = (TextView) rootView.findViewById(R.id.datum_kupovine);
 
-        String appFont = shared_font.getString("app_font", "");
-
-        if(!appFont.equals("")) {
-            setFont(appFont);
-        }
+        setFont(logedUser.getFont());
 
         billDao.findOne(getArguments().getLong(ARG_ITEM_ID)).enqueue(new Callback<Bill>() {
             @Override

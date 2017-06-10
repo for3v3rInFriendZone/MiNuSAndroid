@@ -106,11 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
 
-        shared_color = getApplicationContext().getSharedPreferences("color", 0);
-        String colorRGB = shared_color.getString("bgColor", "");
-        if(!colorRGB.equals("")) {
-            setColor(colorRGB);
-        }
+        setColor(logedUser.getColor());
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);

@@ -50,7 +50,6 @@ public class AddBillActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private EditText billName, locationName, issuerBill;
     private User logedUser;
-    private SharedPreferences shared_font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,6 @@ public class AddBillActivity extends AppCompatActivity {
         billDao = retrofit.create(BillDAO.class);
 
         logedUser = SharedSession.getSavedObjectFromPreference(getApplicationContext(), "userSession", "user", User.class);
-        shared_font = getApplicationContext().getSharedPreferences("font", 0);
-        String app_font = shared_font.getString("app_font", "");
 
         novi_racun = (TextView) findViewById(R.id.novi_racun);
         artikal = (TextView) findViewById(R.id.textView9);
@@ -139,10 +136,7 @@ public class AddBillActivity extends AppCompatActivity {
             sumPrice.setText(price.toString());
         }
 
-        if(!app_font.equals("")) {
-            setFont(app_font);
-        }
-
+        setFont(logedUser.getFont());
     }
 
     /**
@@ -246,24 +240,38 @@ public class AddBillActivity extends AppCompatActivity {
     }
 
     public void saveBill() throws ParseException {
-
-        Bill b = new Bill(billName.getText().toString(),
-                locationName.getText().toString(), issuerBill.getText().toString(),
-                new SimpleDateFormat("dd.MM.yyyy").parse(dateView.getText().toString()).getTime(),
-                Double.parseDouble(sumPrice.getText().toString()), items, logedUser);
-        billDao.save(b)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.isSuccessful()) {
-                            NavUtils.navigateUpTo(AddBillActivity.this, new Intent(AddBillActivity.this, MainActivity.class));
+        if(isValid()) {
+            Bill b = new Bill(billName.getText().toString(),
+                    locationName.getText().toString(), issuerBill.getText().toString(),
+                    new SimpleDateFormat("dd.MM.yyyy").parse(dateView.getText().toString()).getTime(),
+                    Double.parseDouble(sumPrice.getText().toString()), items, logedUser);
+            billDao.save(b)
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if(response.isSuccessful()) {
+                                NavUtils.navigateUpTo(AddBillActivity.this, new Intent(AddBillActivity.this, MainActivity.class));
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+        }
+
+    }
+
+    private boolean isValid() {
+        if(billName.getText().toString().length() == 0) {
+            billName.setError("Morate uneti ime računa.");
+            return false;
+        } else if(locationName.getText().toString().length() == 0) {
+            locationName.setError("Morate uneti lokaciju.");
+            return false;
+        }
+
+        return true;
     }
 }

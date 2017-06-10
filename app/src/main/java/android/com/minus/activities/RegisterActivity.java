@@ -1,8 +1,10 @@
 package android.com.minus.activities;
 
+import android.com.minus.BuildConfig;
 import android.com.minus.R;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -91,6 +93,9 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
     }
 
     public String toBase64(Bitmap bitmap) {
+        if(bitmap == null) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_user);
+        }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
         byte[] image = stream.toByteArray();
@@ -104,12 +109,9 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         if(isValid()) {
             User user = new User(username.getText().toString(), password.getText().toString(),
                     email.getText().toString(), firstname.getText().toString(),
-                    lastname.getText().toString(), toBase64(iconBitmap));
+                    lastname.getText().toString(), toBase64(iconBitmap), "sans", "default");
 
             userDao.save(user).enqueue(this);
-
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
         }
     }
 
@@ -139,6 +141,8 @@ public class RegisterActivity extends AppCompatActivity implements Callback<Resp
         if(response.isSuccessful()) {
             Toast.makeText(getApplicationContext(), "Uspesno je dodan korisnik.",
                     Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
         } else {
             Toast.makeText(getApplicationContext(), response.message(),
                     Toast.LENGTH_SHORT).show();

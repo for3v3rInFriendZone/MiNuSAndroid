@@ -11,18 +11,22 @@ public class User implements Serializable{
     private String firstname;
     private String lastname;
     private String image;
+    private String font;
+    private String color;
 
     public User() {
         super();
     }
 
-    public User(String username, String password, String email, String firstname, String lastname, String image) {
+    public User(String username, String password, String email, String firstname, String lastname, String image, String font, String color) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.image = image;
+        this.font = font;
+        this.color = color;
     }
 
     public Long getId() {
@@ -75,5 +79,21 @@ public class User implements Serializable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

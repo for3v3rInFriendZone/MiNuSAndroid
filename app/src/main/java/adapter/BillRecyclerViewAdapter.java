@@ -21,29 +21,31 @@ import java.util.List;
 
 import fragments.BillDetailFragment;
 import model.Bill;
+import model.User;
 import util.BillViewHolder;
+import util.SharedSession;
 
 public class BillRecyclerViewAdapter extends RecyclerView.Adapter<BillViewHolder> {
 
     private List<Bill> mValues;
     private List<Bill> mValuesCopy;
-    private SharedPreferences shared_font;
+    private User logedUser;
     private Typeface font;
 
     public BillRecyclerViewAdapter(List<Bill> items, Activity activity) {
         this.mValues = items;
         this.mValuesCopy = new ArrayList<Bill>(mValues);
-        shared_font = activity.getApplicationContext().getSharedPreferences("font", 0);
-        String app_font = shared_font.getString("app_font", "");
+        logedUser = SharedSession.getSavedObjectFromPreference(activity.getApplicationContext(), "userSession", "user", User.class);
 
-        if(app_font.equals("serif")) {
+
+        if(logedUser.getFont().equals("serif")) {
             font = Typeface.SERIF;
-        } else if(app_font.equals("sans")) {
+        } else if(logedUser.getFont().equals("sans")) {
             font = Typeface.SANS_SERIF;
-        } else if(app_font.equals("monospace")) {
+        } else if(logedUser.getFont().equals("monospace")) {
             font = Typeface.MONOSPACE;
         } else {
-            font = Typeface.createFromAsset(activity.getAssets(), "fonts/arbutus.ttf");
+            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + logedUser.getFont() + ".ttf");
         }
     }
 

@@ -13,29 +13,31 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import model.Item;
+import model.User;
 import util.ItemViewHolder;
+import util.SharedSession;
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder>{
 
     private List<Item> mValues;
     private List<Item> mValuesCopy;
-    private SharedPreferences shared_font;
+    private User logedUser;
     private Typeface font;
 
     public ItemRecyclerViewAdapter(List<Item> mValues, Activity activity) {
         this.mValues = mValues;
         this.mValuesCopy = new ArrayList<>(mValues);
-        shared_font = activity.getApplicationContext().getSharedPreferences("font", 0);
-        String app_font = shared_font.getString("app_font", "");
+        logedUser = SharedSession.getSavedObjectFromPreference(activity.getApplicationContext(), "userSession", "user", User.class);
 
-        if(app_font.equals("serif")) {
+
+        if(logedUser.getFont().equals("serif")) {
             font = Typeface.SERIF;
-        } else if(app_font.equals("sans")) {
+        } else if(logedUser.getFont().equals("sans")) {
             font = Typeface.SANS_SERIF;
-        } else if(app_font.equals("monospace")) {
+        } else if(logedUser.getFont().equals("monospace")) {
             font = Typeface.MONOSPACE;
         } else {
-            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + app_font + ".ttf");
+            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + logedUser.getFont() + ".ttf");
         }
 
     }

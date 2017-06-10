@@ -14,12 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Item;
+import model.User;
+import util.SharedSession;
 
 public class BillItemsAdapter extends BaseAdapter{
 
     private Activity activity;
     public List<Item> items;
-    private SharedPreferences shared_font;
+    private User logedUser;
     private Typeface font;
 
     public BillItemsAdapter(List<Item> items, Activity activity) {
@@ -27,17 +29,16 @@ public class BillItemsAdapter extends BaseAdapter{
         this.items = items;
         this.activity = activity;
 
-        shared_font = activity.getApplicationContext().getSharedPreferences("font", 0);
-        String app_font = shared_font.getString("app_font", "");
+        logedUser = SharedSession.getSavedObjectFromPreference(activity.getApplicationContext(), "userSession", "user", User.class);
 
-        if(app_font.equals("serif")) {
+        if(logedUser.getFont().equals("serif")) {
             font = Typeface.SERIF;
-        } else if(app_font.equals("sans")) {
+        } else if(logedUser.getFont().equals("sans")) {
             font = Typeface.SANS_SERIF;
-        } else if(app_font.equals("monospace")) {
+        } else if(logedUser.getFont().equals("monospace")) {
             font = Typeface.MONOSPACE;
         } else {
-            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + app_font + ".ttf");
+            font = Typeface.createFromAsset(activity.getAssets(), "fonts/" + logedUser.getFont() + ".ttf");
         }
     }
 
