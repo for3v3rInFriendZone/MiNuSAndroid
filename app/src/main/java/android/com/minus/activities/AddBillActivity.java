@@ -20,6 +20,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,7 +63,9 @@ public class AddBillActivity extends AppCompatActivity {
     private EditText billName, locationName, issuerBill;
     private User logedUser;
     private BudgetDAO budgetDAO;
+    private PlacePicker.IntentBuilder pl;
     private Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,8 @@ public class AddBillActivity extends AppCompatActivity {
         budgetDay = day;
         budgetMonth = month;
         budgetYear = year;
+
+        pl = new PlacePicker.IntentBuilder();
 
         //Showing current date when window is opened first time
         showDate(year, month+1, day);
@@ -125,6 +134,18 @@ public class AddBillActivity extends AppCompatActivity {
 
         //location button
         locationButton.setImageResource(R.mipmap.ic_map_marker);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivityForResult(pl.build(activity), 1);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         //select date button
         datePicker.setImageResource(R.mipmap.ic_calendar_range);
@@ -152,6 +173,15 @@ public class AddBillActivity extends AppCompatActivity {
         }
 
         setFont(logedUser.getFont());
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                locationName.setText(place.getName());
+            }
+        }
     }
 
     /**
