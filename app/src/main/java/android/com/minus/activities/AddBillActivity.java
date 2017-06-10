@@ -1,5 +1,6 @@
 package android.com.minus.activities;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -57,11 +58,14 @@ public class AddBillActivity extends AppCompatActivity {
     private EditText billName, locationName, issuerBill;
     private User logedUser;
     private BudgetDAO budgetDAO;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bill);
+
+        activity = this;
 
         retrofit = RetrofitBuilder.getInstance(UserDAO.BASE_URL);
         billDao = retrofit.create(BillDAO.class);
